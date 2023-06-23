@@ -1,7 +1,8 @@
 <p align="center">
 	<img alt="logo" src="https://oscimg.oschina.net/oscnet/up-d3d0a9303e11d522a06cd263f3079027715.png">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi v3.8.5</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">TourismManagementSystem</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">某旅游管理系统</h1>
 <h4 align="center">基于SpringBoot+Vue前后端分离的Java快速开发框架</h4>
 <p align="center">
 	<a href="https://gitee.com/y_project/RuoYi-Vue/stargazers"><img src="https://gitee.com/y_project/RuoYi-Vue/badge/star.svg?theme=dark"></a>
@@ -10,6 +11,8 @@
 </p>
 
 ## 平台简介
+
+* A tourism management system in Java, developed by a group of students during the Mxxfxxking internship in Hwadee Co., Ltd
 
 * 前端采用Vue、Element UI。
 * 后端采用Spring Boot、Spring Security、Redis & Jwt。
@@ -34,6 +37,4 @@
 16. 缓存监控：对系统的缓存信息查询，命令统计等。
 17. 在线构建器：拖动表单元素生成相应的HTML代码。
 18. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
-
-# TourManagement
-A tourism management system in Java, developed by a group of students during the Mxxfxxking internship in Hwadee Co., Ltd
+19. 以上都是假的。
