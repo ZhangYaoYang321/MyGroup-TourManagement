@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfVisitorsMapper">
+    
+    <resultMap type="SelfVisitors" id="SelfVisitorsResult">
+        <result property="id"    column="id"    />
+        <result property="cnId"    column="cn_id"    />
+        <result property="visitorsName"    column="visitors_name"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="ticketId"    column="ticket_id"    />
+    </resultMap>
+
+    <sql id="selectSelfVisitorsVo">
+        select id, cn_id, visitors_name, phone_number, order_id, ticket_id from self_visitors
+    </sql>
+
+    <select id="selectSelfVisitorsList" parameterType="SelfVisitors" resultMap="SelfVisitorsResult">
+        <include refid="selectSelfVisitorsVo"/>
+        <where>  
+            <if test="cnId != null  and cnId != ''"> and cn_id like concat('%', #{cnId}, '%')</if>
+            <if test="visitorsName != null  and visitorsName != ''"> and visitors_name like concat('%', #{visitorsName}, '%')</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number like concat('%', #{phoneNumber}, '%')</if>
+            <if test="orderId != null "> and order_id like concat('%', #{orderId}, '%')</if>
+            <if test="ticketId != null "> and ticket_id like concat('%', #{ticketId}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSelfVisitorsById" parameterType="Long" resultMap="SelfVisitorsResult">
+        <include refid="selectSelfVisitorsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSelfVisitors" parameterType="SelfVisitors" useGeneratedKeys="true" keyProperty="id">
+        insert into self_visitors
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cnId != null and cnId != ''">cn_id,</if>
+            <if test="visitorsName != null and visitorsName != ''">visitors_name,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="ticketId != null">ticket_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cnId != null and cnId != ''">#{cnId},</if>
+            <if test="visitorsName != null and visitorsName != ''">#{visitorsName},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="ticketId != null">#{ticketId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSelfVisitors" parameterType="SelfVisitors">
+        update self_visitors
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="cnId != null and cnId != ''">cn_id = #{cnId},</if>
+            <if test="visitorsName != null and visitorsName != ''">visitors_name = #{visitorsName},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="ticketId != null">ticket_id = #{ticketId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelfVisitorsById" parameterType="Long">
+        delete from self_visitors where id = #{id}
+    </delete>
+
+    <delete id="deleteSelfVisitorsByIds" parameterType="String">
+        delete from self_visitors where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

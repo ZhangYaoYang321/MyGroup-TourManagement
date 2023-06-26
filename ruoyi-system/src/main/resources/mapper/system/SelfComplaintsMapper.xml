@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfComplaintsMapper">
+    
+    <resultMap type="SelfComplaints" id="SelfComplaintsResult">
+        <result property="id"    column="id"    />
+        <result property="complaintsId"    column="complaints_id"    />
+        <result property="complaintsMessage"    column="complaints_message"    />
+        <result property="complaintsDate"    column="complaints_date"    />
+        <result property="stateComplaints"    column="state_complaints"    />
+        <result property="complaintsReplyDate"    column="complaints_reply_date"    />
+        <result property="complaintsReplyMessage"    column="complaints_reply_message"    />
+    </resultMap>
+
+    <sql id="selectSelfComplaintsVo">
+        select id, complaints_id, complaints_message, complaints_date, state_complaints, complaints_reply_date, complaints_reply_message from self_complaints
+    </sql>
+
+    <select id="selectSelfComplaintsList" parameterType="SelfComplaints" resultMap="SelfComplaintsResult">
+        <include refid="selectSelfComplaintsVo"/>
+        <where>  
+            <if test="complaintsId != null "> and complaints_id = #{complaintsId}</if>
+            <if test="complaintsMessage != null  and complaintsMessage != ''"> and complaints_message like concat('%', #{complaintsMessage}, '%')</if>
+            <if test="params.beginComplaintsDate != null and params.beginComplaintsDate != '' and params.endComplaintsDate != null and params.endComplaintsDate != ''"> and complaints_date between #{params.beginComplaintsDate} and #{params.endComplaintsDate}</if>
+            <if test="stateComplaints != null  and stateComplaints != ''"> and state_complaints = #{stateComplaints}</if>
+            <if test="params.beginComplaintsReplyDate != null and params.beginComplaintsReplyDate != '' and params.endComplaintsReplyDate != null and params.endComplaintsReplyDate != ''"> and complaints_reply_date between #{params.beginComplaintsReplyDate} and #{params.endComplaintsReplyDate}</if>
+            <if test="complaintsReplyMessage != null  and complaintsReplyMessage != ''"> and complaints_reply_message like concat('%', #{complaintsReplyMessage}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSelfComplaintsById" parameterType="Long" resultMap="SelfComplaintsResult">
+        <include refid="selectSelfComplaintsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSelfComplaints" parameterType="SelfComplaints" useGeneratedKeys="true" keyProperty="id">
+        insert into self_complaints
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="complaintsId != null">complaints_id,</if>
+            <if test="complaintsMessage != null and complaintsMessage != ''">complaints_message,</if>
+            <if test="complaintsDate != null">complaints_date,</if>
+            <if test="stateComplaints != null">state_complaints,</if>
+            <if test="complaintsReplyDate != null">complaints_reply_date,</if>
+            <if test="complaintsReplyMessage != null">complaints_reply_message,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="complaintsId != null">#{complaintsId},</if>
+            <if test="complaintsMessage != null and complaintsMessage != ''">#{complaintsMessage},</if>
+            <if test="complaintsDate != null">#{complaintsDate},</if>
+            <if test="stateComplaints != null">#{stateComplaints},</if>
+            <if test="complaintsReplyDate != null">#{complaintsReplyDate},</if>
+            <if test="complaintsReplyMessage != null">#{complaintsReplyMessage},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSelfComplaints" parameterType="SelfComplaints">
+        update self_complaints
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="complaintsId != null">complaints_id = #{complaintsId},</if>
+            <if test="complaintsMessage != null and complaintsMessage != ''">complaints_message = #{complaintsMessage},</if>
+            <if test="complaintsDate != null">complaints_date = #{complaintsDate},</if>
+            <if test="stateComplaints != null">state_complaints = #{stateComplaints},</if>
+            <if test="complaintsReplyDate != null">complaints_reply_date = #{complaintsReplyDate},</if>
+            <if test="complaintsReplyMessage != null">complaints_reply_message = #{complaintsReplyMessage},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelfComplaintsById" parameterType="Long">
+        delete from self_complaints where id = #{id}
+    </delete>
+
+    <delete id="deleteSelfComplaintsByIds" parameterType="String">
+        delete from self_complaints where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
