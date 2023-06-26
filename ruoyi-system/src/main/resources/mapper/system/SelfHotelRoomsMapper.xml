@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfHotelRoomsMapper">
+    
+    <resultMap type="SelfHotelRooms" id="SelfHotelRoomsResult">
+        <result property="id"    column="id"    />
+        <result property="roomId"    column="room_id"    />
+        <result property="typeRoom"    column="type_room"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="stateRoom"    column="state_room"    />
+    </resultMap>
+
+    <sql id="selectSelfHotelRoomsVo">
+        select id, room_id, type_room, order_id, state_room from self_hotel_rooms
+    </sql>
+
+    <select id="selectSelfHotelRoomsList" parameterType="SelfHotelRooms" resultMap="SelfHotelRoomsResult">
+        <include refid="selectSelfHotelRoomsVo"/>
+        <where>  
+            <if test="roomId != null "> and room_id like concat('%', #{roomId}, '%')</if>
+            <if test="typeRoom != null  and typeRoom != ''"> and type_room = #{typeRoom}</if>
+            <if test="orderId != null "> and order_id like concat('%', #{orderId}, '%')</if>
+            <if test="stateRoom != null  and stateRoom != ''"> and state_room = #{stateRoom}</if>
+        </where>
+    </select>
+    
+    <select id="selectSelfHotelRoomsById" parameterType="Long" resultMap="SelfHotelRoomsResult">
+        <include refid="selectSelfHotelRoomsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSelfHotelRooms" parameterType="SelfHotelRooms" useGeneratedKeys="true" keyProperty="id">
+        insert into self_hotel_rooms
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">room_id,</if>
+            <if test="typeRoom != null">type_room,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="stateRoom != null">state_room,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roomId != null">#{roomId},</if>
+            <if test="typeRoom != null">#{typeRoom},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="stateRoom != null">#{stateRoom},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSelfHotelRooms" parameterType="SelfHotelRooms">
+        update self_hotel_rooms
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="roomId != null">room_id = #{roomId},</if>
+            <if test="typeRoom != null">type_room = #{typeRoom},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="stateRoom != null">state_room = #{stateRoom},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelfHotelRoomsById" parameterType="Long">
+        delete from self_hotel_rooms where id = #{id}
+    </delete>
+
+    <delete id="deleteSelfHotelRoomsByIds" parameterType="String">
+        delete from self_hotel_rooms where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

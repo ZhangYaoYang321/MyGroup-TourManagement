@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfHotelPricesMapper">
+    
+    <resultMap type="SelfHotelPrices" id="SelfHotelPricesResult">
+        <result property="id"    column="id"    />
+        <result property="typeRoom"    column="type_room"    />
+        <result property="priceRoom"    column="price_room"    />
+        <result property="totalRooms"    column="total_rooms"    />
+        <result property="freeRooms"    column="free_rooms"    />
+    </resultMap>
+
+    <sql id="selectSelfHotelPricesVo">
+        select id, type_room, price_room, total_rooms, free_rooms from self_hotel_prices
+    </sql>
+
+    <select id="selectSelfHotelPricesList" parameterType="SelfHotelPrices" resultMap="SelfHotelPricesResult">
+        <include refid="selectSelfHotelPricesVo"/>
+        <where>  
+            <if test="typeRoom != null  and typeRoom != ''"> and type_room like concat('%', #{typeRoom}, '%')</if>
+            <if test="priceRoom != null  and priceRoom != ''"> and price_room like concat('%', #{priceRoom}, '%')</if>
+            <if test="totalRooms != null "> and total_rooms like concat('%', #{totalRooms}, '%')</if>
+            <if test="freeRooms != null "> and free_rooms like concat('%', #{freeRooms}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSelfHotelPricesById" parameterType="Long" resultMap="SelfHotelPricesResult">
+        <include refid="selectSelfHotelPricesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSelfHotelPrices" parameterType="SelfHotelPrices" useGeneratedKeys="true" keyProperty="id">
+        insert into self_hotel_prices
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeRoom != null">type_room,</if>
+            <if test="priceRoom != null">price_room,</if>
+            <if test="totalRooms != null">total_rooms,</if>
+            <if test="freeRooms != null">free_rooms,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeRoom != null">#{typeRoom},</if>
+            <if test="priceRoom != null">#{priceRoom},</if>
+            <if test="totalRooms != null">#{totalRooms},</if>
+            <if test="freeRooms != null">#{freeRooms},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSelfHotelPrices" parameterType="SelfHotelPrices">
+        update self_hotel_prices
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeRoom != null">type_room = #{typeRoom},</if>
+            <if test="priceRoom != null">price_room = #{priceRoom},</if>
+            <if test="totalRooms != null">total_rooms = #{totalRooms},</if>
+            <if test="freeRooms != null">free_rooms = #{freeRooms},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelfHotelPricesById" parameterType="Long">
+        delete from self_hotel_prices where id = #{id}
+    </delete>
+
+    <delete id="deleteSelfHotelPricesByIds" parameterType="String">
+        delete from self_hotel_prices where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

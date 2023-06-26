@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfTicketPricesMapper">
+    
+    <resultMap type="SelfTicketPrices" id="SelfTicketPricesResult">
+        <result property="id"    column="id"    />
+        <result property="typeTicket"    column="type_ticket"    />
+        <result property="priceTicket"    column="price_ticket"    />
+    </resultMap>
+
+    <sql id="selectSelfTicketPricesVo">
+        select id, type_ticket, price_ticket from self_ticket_prices
+    </sql>
+
+    <select id="selectSelfTicketPricesList" parameterType="SelfTicketPrices" resultMap="SelfTicketPricesResult">
+        <include refid="selectSelfTicketPricesVo"/>
+        <where>  
+            <if test="typeTicket != null  and typeTicket != ''"> and type_ticket like concat('%', #{typeTicket}, '%')</if>
+            <if test="priceTicket != null  and priceTicket != ''"> and price_ticket like concat('%', #{priceTicket}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSelfTicketPricesById" parameterType="Long" resultMap="SelfTicketPricesResult">
+        <include refid="selectSelfTicketPricesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSelfTicketPrices" parameterType="SelfTicketPrices" useGeneratedKeys="true" keyProperty="id">
+        insert into self_ticket_prices
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeTicket != null">type_ticket,</if>
+            <if test="priceTicket != null">price_ticket,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typeTicket != null">#{typeTicket},</if>
+            <if test="priceTicket != null">#{priceTicket},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSelfTicketPrices" parameterType="SelfTicketPrices">
+        update self_ticket_prices
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeTicket != null">type_ticket = #{typeTicket},</if>
+            <if test="priceTicket != null">price_ticket = #{priceTicket},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelfTicketPricesById" parameterType="Long">
+        delete from self_ticket_prices where id = #{id}
+    </delete>
+
+    <delete id="deleteSelfTicketPricesByIds" parameterType="String">
+        delete from self_ticket_prices where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfParkingCarsMapper">
+    
+    <resultMap type="SelfParkingCars" id="SelfParkingCarsResult">
+        <result property="id"    column="id"    />
+        <result property="carId"    column="car_id"    />
+        <result property="carInTime"    column="car_in_time"    />
+        <result property="carOutTime"    column="car_out_time"    />
+        <result property="parkingCost"    column="parking_cost"    />
+        <result property="stateParking"    column="state_parking"    />
+    </resultMap>
+
+    <sql id="selectSelfParkingCarsVo">
+        select id, car_id, car_in_time, car_out_time, parking_cost, state_parking from self_parking_cars
+    </sql>
+
+    <select id="selectSelfParkingCarsList" parameterType="SelfParkingCars" resultMap="SelfParkingCarsResult">
+        <include refid="selectSelfParkingCarsVo"/>
+        <where>  
+            <if test="carId != null  and carId != ''"> and car_id like concat('%', #{carId}, '%')</if>
+            <if test="params.beginCarInTime != null and params.beginCarInTime != '' and params.endCarInTime != null and params.endCarInTime != ''"> and car_in_time between #{params.beginCarInTime} and #{params.endCarInTime}</if>
+            <if test="params.beginCarOutTime != null and params.beginCarOutTime != '' and params.endCarOutTime != null and params.endCarOutTime != ''"> and car_out_time between #{params.beginCarOutTime} and #{params.endCarOutTime}</if>
+            <if test="parkingCost != null  and parkingCost != ''"> and parking_cost like concat('%', #{parkingCost}, '%')</if>
+            <if test="stateParking != null  and stateParking != ''"> and state_parking = #{stateParking}</if>
+        </where>
+    </select>
+    
+    <select id="selectSelfParkingCarsById" parameterType="Long" resultMap="SelfParkingCarsResult">
+        <include refid="selectSelfParkingCarsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSelfParkingCars" parameterType="SelfParkingCars" useGeneratedKeys="true" keyProperty="id">
+        insert into self_parking_cars
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="carId != null">car_id,</if>
+            <if test="carInTime != null">car_in_time,</if>
+            <if test="carOutTime != null">car_out_time,</if>
+            <if test="parkingCost != null">parking_cost,</if>
+            <if test="stateParking != null">state_parking,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="carId != null">#{carId},</if>
+            <if test="carInTime != null">#{carInTime},</if>
+            <if test="carOutTime != null">#{carOutTime},</if>
+            <if test="parkingCost != null">#{parkingCost},</if>
+            <if test="stateParking != null">#{stateParking},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSelfParkingCars" parameterType="SelfParkingCars">
+        update self_parking_cars
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="carId != null">car_id = #{carId},</if>
+            <if test="carInTime != null">car_in_time = #{carInTime},</if>
+            <if test="carOutTime != null">car_out_time = #{carOutTime},</if>
+            <if test="parkingCost != null">parking_cost = #{parkingCost},</if>
+            <if test="stateParking != null">state_parking = #{stateParking},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelfParkingCarsById" parameterType="Long">
+        delete from self_parking_cars where id = #{id}
+    </delete>
+
+    <delete id="deleteSelfParkingCarsByIds" parameterType="String">
+        delete from self_parking_cars where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

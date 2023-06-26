@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfTicketServicesMapper">
+    
+    <resultMap type="SelfTicketServices" id="SelfTicketServicesResult">
+        <result property="id"    column="id"    />
+        <result property="ticketId"    column="ticket_id"    />
+        <result property="cnId"    column="cn_id"    />
+        <result property="scheduledDate"    column="scheduled_date"    />
+        <result property="visitorInTime"    column="visitor_in_time"    />
+        <result property="visitorOutTime"    column="visitor_out_time"    />
+        <result property="stateVisit"    column="state_visit"    />
+        <result property="typeTicket"    column="type_ticket"    />
+    </resultMap>
+
+    <sql id="selectSelfTicketServicesVo">
+        select id, ticket_id, cn_id, scheduled_date, visitor_in_time, visitor_out_time, state_visit, type_ticket from self_ticket_services
+    </sql>
+
+    <select id="selectSelfTicketServicesList" parameterType="SelfTicketServices" resultMap="SelfTicketServicesResult">
+        <include refid="selectSelfTicketServicesVo"/>
+        <where>  
+            <if test="ticketId != null "> and ticket_id like concat('%', #{ticketId}, '%')</if>
+            <if test="cnId != null  and cnId != ''"> and cn_id like concat('%', #{cnId}, '%')</if>
+            <if test="params.beginScheduledDate != null and params.beginScheduledDate != '' and params.endScheduledDate != null and params.endScheduledDate != ''"> and scheduled_date between #{params.beginScheduledDate} and #{params.endScheduledDate}</if>
+            <if test="params.beginVisitorInTime != null and params.beginVisitorInTime != '' and params.endVisitorInTime != null and params.endVisitorInTime != ''"> and visitor_in_time between #{params.beginVisitorInTime} and #{params.endVisitorInTime}</if>
+            <if test="params.beginVisitorOutTime != null and params.beginVisitorOutTime != '' and params.endVisitorOutTime != null and params.endVisitorOutTime != ''"> and visitor_out_time between #{params.beginVisitorOutTime} and #{params.endVisitorOutTime}</if>
+            <if test="stateVisit != null  and stateVisit != ''"> and state_visit = #{stateVisit}</if>
+            <if test="typeTicket != null  and typeTicket != ''"> and type_ticket like concat('%', #{typeTicket}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSelfTicketServicesById" parameterType="Long" resultMap="SelfTicketServicesResult">
+        <include refid="selectSelfTicketServicesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSelfTicketServices" parameterType="SelfTicketServices" useGeneratedKeys="true" keyProperty="id">
+        insert into self_ticket_services
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ticketId != null">ticket_id,</if>
+            <if test="cnId != null">cn_id,</if>
+            <if test="scheduledDate != null">scheduled_date,</if>
+            <if test="visitorInTime != null">visitor_in_time,</if>
+            <if test="visitorOutTime != null">visitor_out_time,</if>
+            <if test="stateVisit != null">state_visit,</if>
+            <if test="typeTicket != null">type_ticket,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ticketId != null">#{ticketId},</if>
+            <if test="cnId != null">#{cnId},</if>
+            <if test="scheduledDate != null">#{scheduledDate},</if>
+            <if test="visitorInTime != null">#{visitorInTime},</if>
+            <if test="visitorOutTime != null">#{visitorOutTime},</if>
+            <if test="stateVisit != null">#{stateVisit},</if>
+            <if test="typeTicket != null">#{typeTicket},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSelfTicketServices" parameterType="SelfTicketServices">
+        update self_ticket_services
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ticketId != null">ticket_id = #{ticketId},</if>
+            <if test="cnId != null">cn_id = #{cnId},</if>
+            <if test="scheduledDate != null">scheduled_date = #{scheduledDate},</if>
+            <if test="visitorInTime != null">visitor_in_time = #{visitorInTime},</if>
+            <if test="visitorOutTime != null">visitor_out_time = #{visitorOutTime},</if>
+            <if test="stateVisit != null">state_visit = #{stateVisit},</if>
+            <if test="typeTicket != null">type_ticket = #{typeTicket},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelfTicketServicesById" parameterType="Long">
+        delete from self_ticket_services where id = #{id}
+    </delete>
+
+    <delete id="deleteSelfTicketServicesByIds" parameterType="String">
+        delete from self_ticket_services where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

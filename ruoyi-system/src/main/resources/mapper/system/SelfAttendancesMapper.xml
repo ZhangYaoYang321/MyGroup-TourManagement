@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfAttendancesMapper">
+    
+    <resultMap type="SelfAttendances" id="SelfAttendancesResult">
+        <result property="id"    column="id"    />
+        <result property="employeeId"    column="employee_id"    />
+        <result property="employeeName"    column="employee_name"    />
+        <result property="stateWorking"    column="state_working"    />
+    </resultMap>
+
+    <sql id="selectSelfAttendancesVo">
+        select id, employee_id, employee_name, state_working from self_attendances
+    </sql>
+
+    <select id="selectSelfAttendancesList" parameterType="SelfAttendances" resultMap="SelfAttendancesResult">
+        <include refid="selectSelfAttendancesVo"/>
+        <where>  
+            <if test="employeeId != null  and employeeId != ''"> and employee_id like concat('%', #{employeeId}, '%')</if>
+            <if test="employeeName != null  and employeeName != ''"> and employee_name like concat('%', #{employeeName}, '%')</if>
+            <if test="stateWorking != null  and stateWorking != ''"> and state_working = #{stateWorking}</if>
+        </where>
+    </select>
+    
+    <select id="selectSelfAttendancesById" parameterType="Long" resultMap="SelfAttendancesResult">
+        <include refid="selectSelfAttendancesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSelfAttendances" parameterType="SelfAttendances" useGeneratedKeys="true" keyProperty="id">
+        insert into self_attendances
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="employeeId != null">employee_id,</if>
+            <if test="employeeName != null">employee_name,</if>
+            <if test="stateWorking != null">state_working,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="employeeId != null">#{employeeId},</if>
+            <if test="employeeName != null">#{employeeName},</if>
+            <if test="stateWorking != null">#{stateWorking},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSelfAttendances" parameterType="SelfAttendances">
+        update self_attendances
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="employeeId != null">employee_id = #{employeeId},</if>
+            <if test="employeeName != null">employee_name = #{employeeName},</if>
+            <if test="stateWorking != null">state_working = #{stateWorking},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelfAttendancesById" parameterType="Long">
+        delete from self_attendances where id = #{id}
+    </delete>
+
+    <delete id="deleteSelfAttendancesByIds" parameterType="String">
+        delete from self_attendances where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
