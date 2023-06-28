@@ -114,4 +114,12 @@ public class SelfAttendancesController extends BaseController
     {
         return toAjax(selfAttendancesService.deleteSelfAttendancesByIds(ids));
     }
+
+    @PreAuthorize("@ss.hasPermi('system:attendances:remove')")
+    @Log(title = "考勤信息", businessType = BusinessType.DELETE)
+    @DeleteMapping("/resetKQAttendances/{ids}")
+    public AjaxResult resetKQAttendances(@PathVariable Long[] ids)
+    {
+        return toAjax(selfAttendancesService.resetKQAttendances(ids));
+    }
 }

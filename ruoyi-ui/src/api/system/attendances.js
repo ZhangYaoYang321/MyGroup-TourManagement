@@ -50,3 +50,10 @@ export function delAttendances(id) {
     method: 'delete'
   })
 }
+
+export function resetKQAttendances(id) {
+  return request({
+    url: '/system/attendances/resetKQAttendances/' + id,
+    method: 'delete'
+  })
+}
