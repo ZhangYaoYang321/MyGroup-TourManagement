@@ -42,3 +42,35 @@ export function delCars(id) {
     method: 'delete'
   })
 }
+
+// 车辆进场
+export function parkingCars(carIdKey) {
+  return request({
+    url: '/system/cars/parkingCars/' + carIdKey,
+    method: 'get'
+  })
+}
+
+// 车辆出场
+export function leavingCars(carIdKey) {
+  return request({
+    url: '/system/cars/leavingCars/' + carIdKey,
+    method: 'get'
+  })
+}
+
+// 查询车辆信息
+export function searchCars(id) {
+  return request({
+    url: '/system/cars/searchCars/' + id,
+    method: 'get'
+  })
+}
+
+// 获取停车场车辆数
+export function getParkingCount() {
+  return request({
+    url: '/system/cars/getParkingCount',
+    method: 'get',
+  })
+}
