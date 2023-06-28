@@ -9,6 +9,14 @@ export function listAttendances(query) {
   })
 }
 
+export function listCurAttendances(query) {
+  return request({
+    url: '/system/attendances/listcur',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询考勤信息详细
 export function getAttendances(id) {
   return request({
