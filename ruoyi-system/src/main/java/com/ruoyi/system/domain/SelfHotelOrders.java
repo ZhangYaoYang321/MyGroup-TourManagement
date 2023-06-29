@@ -7,7 +7,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 酒店订单对象 self_hotel_orders
- * 
+ *
  * @author ruoyi
  * @date 2023-06-26
  */
@@ -26,30 +26,30 @@ public class SelfHotelOrders extends BaseEntity
     @Excel(name = "身份证号")
     private String cnId;
 
-    public void setId(Long id) 
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setOrderId(Long orderId) 
+    public void setOrderId(Long orderId)
     {
         this.orderId = orderId;
     }
 
-    public Long getOrderId() 
+    public Long getOrderId()
     {
         return orderId;
     }
-    public void setCnId(String cnId) 
+    public void setCnId(String cnId)
     {
         this.cnId = cnId;
     }
 
-    public String getCnId() 
+    public String getCnId()
     {
         return cnId;
     }

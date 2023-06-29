@@ -53,6 +53,19 @@
           <router-link class="link-type" :to="'/register'">立即注册</router-link>
         </div>
       </el-form-item>
+
+      <el-form-item style="width:100%;">
+        <el-button
+          :loading1="loading1"
+          size="medium"
+          type="primary"
+          style="width:100%;"
+          @click.native.prevent="handleLogin1"
+        >
+          <span v-if="!loading1">游 客 登 录</span>
+          <span v-else>登 录 中...</span>
+        </el-button>
+      </el-form-item>
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
@@ -88,10 +101,11 @@ export default {
         code: [{ required: true, trigger: "change", message: "请输入验证码" }]
       },
       loading: false,
+      loading1: false,
       // 验证码开关
       captchaEnabled: true,
       // 注册开关
-      register: false,
+      register: true,
       redirect: undefined
     };
   },
@@ -144,6 +158,27 @@ export default {
             this.$router.push({ path: this.redirect || "/" }).catch(()=>{});
           }).catch(() => {
             this.loading = false;
+            if (this.captchaEnabled) {
+              this.getCode();
+            }
+          });
+        }
+      });
+    },
+
+    handleLogin1() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading1 = true;
+          this.loginForm.username = "youke";
+          this.loginForm.password = "123456";
+          Cookies.remove("username");
+          Cookies.remove("password");
+          Cookies.remove('rememberMe');
+          this.$store.dispatch("Login", this.loginForm).then(() => {
+            this.$router.push({ path: this.redirect || "/" }).catch(()=>{});
+          }).catch(() => {
+            this.loading1 = false;
             if (this.captchaEnabled) {
               this.getCode();
             }
