@@ -4,10 +4,6 @@ GIT::
 3.push, 远程库更新
 4.pr, 合并到远程主分支
 
-git add .
-git commit -m "英文修改的信息"
-git push ori dev(你的分支名)
-
 PROJECT::
 0.application-druid.yml中修改数据库连接方式
 1.打开Navicat, 新建数据库tourmgtsys, 将sql文件夹下的tourmgtsys.sql复制粘贴到Navicat中运行

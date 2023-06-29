@@ -100,39 +100,21 @@
     </el-row>
 
     <el-table v-loading="loading" :data="carsList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="55" align="center"/>
-      <el-table-column label="ID" align="center" prop="id"/>
-      <el-table-column label="车牌号" align="center" prop="carId"/>
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="ID" align="center" prop="id" />
+      <el-table-column label="车牌号" align="center" prop="carId" />
       <el-table-column label="入场时间" align="center" prop="carInTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.carInTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+          <span>{{ parseTime(scope.row.carInTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="出场时间" align="center" prop="carOutTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.carOutTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
+          <span>{{ parseTime(scope.row.carOutTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="停车费" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.parkingCost }}</span>
-          <span>元</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="停车状态" align="center" prop="stateParking">
-        <template slot-scope="scope">
-          <span :style="{
-            'background-color': scope.row.stateParking == 1 ? '#00afff' : scope.row.stateParking == 2 ? '#808080' : '#ff0000',
-            'border-radius': '30px',
-            'color': 'white',
-            'padding': '5px 9px',
-            'display': 'inline-block',
-            'box-shadow': '0 2px 5px rgba(0, 0, 0, 0.3)'
-          }">
-            {{ scope.row.stateParking == 1 ? "已入场" : scope.row.stateParking == 2 ? "已出场" : "警告" }}
-          </span>
-        </template>
-      </el-table-column>
+      <el-table-column label="停车费" align="center" prop="parkingCost" />
+      <el-table-column label="停车状态" align="center" prop="stateParking" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -141,20 +123,18 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:cars:edit']"
-          >修改
-          </el-button>
+          >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:cars:remove']"
-          >删除
-          </el-button>
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -186,17 +166,10 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="停车费" prop="parkingCost">
-          <el-input
-            v-model="form.parkingCost"
-            placeholder="请输入停车费"
-            :rules="rules.parkingCost"
-          />
+          <el-input v-model="form.parkingCost" placeholder="请输入停车费" />
         </el-form-item>
         <el-form-item label="停车状态" prop="stateParking">
-          <el-select v-model="form.stateParking" placeholder="请选择停车状态">
-            <el-option label="已入场" value="1" />
-            <el-option label="已出场" value="2" />
-          </el-select>
+          <el-input v-model="form.stateParking" placeholder="请输入停车状态" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -250,10 +223,6 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        parkingCost: [
-          { required: true, message: '停车费不能为空', trigger: 'blur' },
-          { validator: this.validateParkingCost, trigger: 'blur' }
-        ]
       }
     };
   },
@@ -261,15 +230,6 @@ export default {
     this.getList();
   },
   methods: {
-    /** 限制车费只能输入整数 */
-    validateParkingCost(rule, value, callback) {
-      const pattern = /^\d+$/; // 正则表达式，匹配整数
-      if (!pattern.test(value)) {
-        callback(new Error('停车费必须为整数'));
-      } else {
-        callback(); // 校验通过，不传递参数
-      }
-    },
     /** 查询车辆列表 */
     getList() {
       this.loading = true;

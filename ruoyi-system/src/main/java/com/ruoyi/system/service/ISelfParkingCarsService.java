@@ -58,10 +58,4 @@ public interface ISelfParkingCarsService
      * @return 结果
      */
     public int deleteSelfParkingCarsById(Long id);
-
-    /**
-     * 计算并更新停车费用
-     */
-    public void calculateAndUpdateParkingFee();
-
 }

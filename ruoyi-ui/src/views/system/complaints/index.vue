@@ -127,7 +127,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -145,11 +145,11 @@
         <el-form-item label="投诉信息" prop="complaintsMessage">
           <el-input v-model="form.complaintsMessage" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="投诉日期" prop="complaintsDate">
+        <el-form-item label="投诉时间" prop="complaintsDate">
           <el-date-picker clearable
             v-model="form.complaintsDate"
-            type="date"
-            value-format="yyyy-MM-dd"
+            type="datetime"
+            value-format="yyyy-MM-dd hh:mm:ss"
             placeholder="请选择投诉日期">
           </el-date-picker>
         </el-form-item>

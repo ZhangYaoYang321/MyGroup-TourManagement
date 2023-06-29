@@ -6,6 +6,7 @@ import errorCode from '@/utils/errorCode'
 import { tansParams, blobValidate } from "@/utils/ruoyi";
 import cache from '@/plugins/cache'
 import { saveAs } from 'file-saver'
+import moment from 'moment'
 
 let downloadLoadingInstance;
 // 是否显示重新登录
@@ -22,6 +23,13 @@ const service = axios.create({
 
 // request拦截器
 service.interceptors.request.use(config => {
+  // 日期选择转化
+  for (const k in config.data)
+{
+  if (config.data[k] && config.data[k] instanceof Date) {
+    config.data[k] = moment(config.data[k]).add(8, 'hours').local().toISOString()
+  }
+}
   // 是否需要设置 token
   const isToken = (config.headers || {}).isToken === false
   // 是否需要防止数据重复提交

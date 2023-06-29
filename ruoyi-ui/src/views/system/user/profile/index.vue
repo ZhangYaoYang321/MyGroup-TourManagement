@@ -51,9 +51,6 @@
             <el-tab-pane label="修改密码" name="resetPwd">
               <resetPwd />
             </el-tab-pane>
-            <el-tab-pane label="个人考勤" name="userKaoQin">
-              <userKaoQin />
-            </el-tab-pane>
           </el-tabs>
         </el-card>
       </el-col>
@@ -65,12 +62,11 @@
 import userAvatar from "./userAvatar";
 import userInfo from "./userInfo";
 import resetPwd from "./resetPwd";
-import userKaoQin from "./userKaoQin";
 import { getUserProfile } from "@/api/system/user";
 
 export default {
   name: "Profile",
-  components: { userAvatar, userInfo, resetPwd, userKaoQin },
+  components: { userAvatar, userInfo, resetPwd },
   data() {
     return {
       user: {},
