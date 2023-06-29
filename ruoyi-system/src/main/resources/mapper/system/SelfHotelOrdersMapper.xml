@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.SelfHotelOrdersMapper">
-
+    
     <resultMap type="SelfHotelOrders" id="SelfHotelOrdersResult">
         <result property="id"    column="id"    />
         <result property="orderId"    column="order_id"    />
@@ -16,17 +16,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectSelfHotelOrdersList" parameterType="SelfHotelOrders" resultMap="SelfHotelOrdersResult">
         <include refid="selectSelfHotelOrdersVo"/>
-        <where>
+        <where>  
             <if test="orderId != null "> and order_id like concat('%', #{orderId}, '%')</if>
             <if test="cnId != null  and cnId != ''"> and cn_id like concat('%', #{cnId}, '%')</if>
         </where>
     </select>
-
+    
     <select id="selectSelfHotelOrdersById" parameterType="Long" resultMap="SelfHotelOrdersResult">
         <include refid="selectSelfHotelOrdersVo"/>
         where id = #{id}
     </select>
-
+        
     <insert id="insertSelfHotelOrders" parameterType="SelfHotelOrders" useGeneratedKeys="true" keyProperty="id">
         insert into self_hotel_orders
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteSelfHotelOrdersByIds" parameterType="String">
-        delete from self_hotel_orders where id in
+        delete from self_hotel_orders where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -73,27 +73,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
-
-    <select id="selectUnfinishedParkingCars" resultMap="SelfParkingCarsResult">
-        select * from self_parking_cars
-        where state_parking = 1 -- 已入场
-    </select>
-
-    <update id="updateOutTimeToNull" parameterType="SelfParkingCars">
-        update self_parking_cars
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="carId != null">car_id = #{carId},</if>
-            <if test="carInTime != null">car_in_time = #{carInTime},</if>
-            <if test="carOutTime != null">car_out_time = #{carOutTime},</if>
-            <if test="carOutTime == null">car_out_time = null,</if>
-            <if test="parkingCost != null">parking_cost = #{parkingCost},</if>
-            <if test="stateParking != null">state_parking = #{stateParking},</if>
-        </trim>
-        where id = #{id}
-    </update>
-
-    <select id="getCurrentParkingCounts" resultType="int">
-        select count(*) from self_parking_cars
-        where state_parking = 1 -- 已入场
-    </select>
 </mapper>

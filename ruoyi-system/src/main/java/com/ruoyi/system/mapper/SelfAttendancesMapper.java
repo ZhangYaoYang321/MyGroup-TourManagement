@@ -58,6 +58,4 @@ public interface SelfAttendancesMapper
      * @return 结果
      */
     public int deleteSelfAttendancesByIds(Long[] ids);
-    public int resetKQAttendancesByIds(Long[] ids);
-
 }

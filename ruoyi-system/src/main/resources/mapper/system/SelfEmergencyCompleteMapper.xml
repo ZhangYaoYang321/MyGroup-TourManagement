@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfEmergencyCompleteMapper">
+    
+    <resultMap type="SelfEmergencyComplete" id="SelfEmergencyCompleteResult">
+        <result property="id"    column="id"    />
+        <result property="location"    column="location"    />
+        <result property="emergenciesMessage"    column="emergencies_message"    />
+        <result property="department"    column="department"    />
+        <result property="stateEmergencies"    column="state_emergencies"    />
+        <result property="emergenciesLevel"    column="emergencies_level"    />
+        <result property="emergenciesTime"    column="emergencies_time"    />
+    </resultMap>
+
+    <sql id="selectSelfEmergencyCompleteVo">
+        select id, location, emergencies_message, department, state_emergencies, emergencies_level, emergencies_time from self_emergencies
+    </sql>
+
+    <select id="selectSelfEmergencyCompleteList" parameterType="SelfEmergencyComplete" resultMap="SelfEmergencyCompleteResult">
+        <include refid="selectSelfEmergencyCompleteVo"/>
+        <where>  
+            <if test="location != null  and location != ''"> and location like concat('%', #{location}, '%')</if>
+            <if test="emergenciesMessage != null  and emergenciesMessage != ''"> and emergencies_message like concat('%', #{emergenciesMessage}, '%')</if>
+            <if test="department != null  and department != ''"> and department like concat('%', #{department}, '%')</if>
+            <if test="stateEmergencies != null  and stateEmergencies != ''"> and state_emergencies = #{stateEmergencies}</if>
+            <if test="emergenciesLevel != null  and emergenciesLevel != ''"> and emergencies_level = #{emergenciesLevel}</if>
+            <if test="params.beginEmergenciesTime != null and params.beginEmergenciesTime != '' and params.endEmergenciesTime != null and params.endEmergenciesTime != ''"> and emergencies_time between #{params.beginEmergenciesTime} and #{params.endEmergenciesTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSelfEmergencyCompleteById" parameterType="Long" resultMap="SelfEmergencyCompleteResult">
+        <include refid="selectSelfEmergencyCompleteVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSelfEmergencyComplete" parameterType="SelfEmergencyComplete" useGeneratedKeys="true" keyProperty="id">
+        insert into self_emergencies
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="location != null">location,</if>
+            <if test="emergenciesMessage != null">emergencies_message,</if>
+            <if test="department != null">department,</if>
+            <if test="stateEmergencies != null">state_emergencies,</if>
+            <if test="emergenciesLevel != null">emergencies_level,</if>
+            <if test="emergenciesTime != null">emergencies_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="location != null">#{location},</if>
+            <if test="emergenciesMessage != null">#{emergenciesMessage},</if>
+            <if test="department != null">#{department},</if>
+            <if test="stateEmergencies != null">#{stateEmergencies},</if>
+            <if test="emergenciesLevel != null">#{emergenciesLevel},</if>
+            <if test="emergenciesTime != null">#{emergenciesTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSelfEmergencyComplete" parameterType="SelfEmergencyComplete">
+        update self_emergencies
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="location != null">location = #{location},</if>
+            <if test="emergenciesMessage != null">emergencies_message = #{emergenciesMessage},</if>
+            <if test="department != null">department = #{department},</if>
+            <if test="stateEmergencies != null">state_emergencies = #{stateEmergencies},</if>
+            <if test="emergenciesLevel != null">emergencies_level = #{emergenciesLevel},</if>
+            <if test="emergenciesTime != null">emergencies_time = #{emergenciesTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelfEmergencyCompleteById" parameterType="Long">
+        delete from self_emergencies where id = #{id}
+    </delete>
+
+    <delete id="deleteSelfEmergencyCompleteByIds" parameterType="String">
+        delete from self_emergencies where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
