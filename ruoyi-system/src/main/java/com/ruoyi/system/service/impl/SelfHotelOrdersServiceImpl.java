@@ -9,19 +9,19 @@ import com.ruoyi.system.service.ISelfHotelOrdersService;
 
 /**
  * 酒店订单Service业务层处理
- * 
+ *
  * @author ruoyi
  * @date 2023-06-26
  */
 @Service
-public class SelfHotelOrdersServiceImpl implements ISelfHotelOrdersService 
+public class SelfHotelOrdersServiceImpl implements ISelfHotelOrdersService
 {
     @Autowired
     private SelfHotelOrdersMapper selfHotelOrdersMapper;
 
     /**
      * 查询酒店订单
-     * 
+     *
      * @param id 酒店订单主键
      * @return 酒店订单
      */
@@ -33,7 +33,7 @@ public class SelfHotelOrdersServiceImpl implements ISelfHotelOrdersService
 
     /**
      * 查询酒店订单列表
-     * 
+     *
      * @param selfHotelOrders 酒店订单
      * @return 酒店订单
      */
@@ -45,7 +45,7 @@ public class SelfHotelOrdersServiceImpl implements ISelfHotelOrdersService
 
     /**
      * 新增酒店订单
-     * 
+     *
      * @param selfHotelOrders 酒店订单
      * @return 结果
      */
@@ -57,7 +57,7 @@ public class SelfHotelOrdersServiceImpl implements ISelfHotelOrdersService
 
     /**
      * 修改酒店订单
-     * 
+     *
      * @param selfHotelOrders 酒店订单
      * @return 结果
      */
@@ -69,7 +69,7 @@ public class SelfHotelOrdersServiceImpl implements ISelfHotelOrdersService
 
     /**
      * 批量删除酒店订单
-     * 
+     *
      * @param ids 需要删除的酒店订单主键
      * @return 结果
      */
@@ -81,7 +81,7 @@ public class SelfHotelOrdersServiceImpl implements ISelfHotelOrdersService
 
     /**
      * 删除酒店订单信息
-     * 
+     *
      * @param id 酒店订单主键
      * @return 结果
      */

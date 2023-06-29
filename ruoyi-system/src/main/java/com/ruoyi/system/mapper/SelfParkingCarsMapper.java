@@ -1,5 +1,6 @@
 package com.ruoyi.system.mapper;
 
+import java.util.Date;
 import java.util.List;
 import com.ruoyi.system.domain.SelfParkingCars;
 
@@ -58,4 +59,20 @@ public interface SelfParkingCarsMapper
      * @return 结果
      */
     public int deleteSelfParkingCarsByIds(Long[] ids);
+
+    /**
+     * 查询所有已入场但未出场的车辆信息
+     */
+    List<SelfParkingCars> selectUnfinishedParkingCars();
+
+    /**
+     * 车辆入场状态时将出场时间设置为空
+     */
+    public int updateOutTimeToNull(SelfParkingCars selfParkingCars);
+
+    /**
+     * 查询当前停车场停车数
+     */
+    public int getCurrentParkingCounts();
+
 }

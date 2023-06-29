@@ -58,4 +58,6 @@ public interface ISelfAttendancesService
      * @return 结果
      */
     public int deleteSelfAttendancesById(Long id);
+
+    public int resetKQAttendances(Long[] ids);
 }
