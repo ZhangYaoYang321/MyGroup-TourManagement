@@ -101,7 +101,7 @@
       <el-table-column label="ID" align="center" prop="id" />
       <el-table-column label="事件地点" align="center" prop="location" />
       <el-table-column label="事件信息" align="center" prop="emergenciesMessage" />
-      <el-table-column label="归属部门" align="center" prop="department" />
+      <el-table-column label="处理部门" align="center" prop="department" />
       <el-table-column label="处理状态" align="center" prop="stateEmergencies" />
       <el-table-column label="紧急程度" align="center" prop="emergenciesLevel" />
       <el-table-column label="发生日期" align="center" prop="emergenciesTime" width="180">
@@ -128,7 +128,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -146,11 +146,8 @@
         <el-form-item label="事件信息" prop="emergenciesMessage">
           <el-input v-model="form.emergenciesMessage" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="处理部门" prop="department" v-if="false">
+        <el-form-item label="处理部门" prop="department">
           <el-input v-model="form.department" placeholder="请输入处理部门" />
-        </el-form-item>
-        <el-form-item label="归属部门" prop="deptId">
-          <treeselect ref="dept" v-model="form.deptId" :options="deptOptions" :show-count="true" placeholder="请选择归属部门" />
         </el-form-item>
         <el-form-item label="处理状态" prop="stateEmergencies">
           <el-input v-model="form.stateEmergencies" placeholder="请输入处理状态" />
@@ -177,14 +174,9 @@
 
 <script>
 import { listEmergencies, getEmergencies, delEmergencies, addEmergencies, updateEmergencies } from "@/api/system/emergencies";
-import { listUser, getUser, delUser, addUser, updateUser, resetUserPwd, changeUserStatus, deptTreeSelect } from "@/api/system/user";
-import { getToken } from "@/utils/auth";
-import Treeselect from "@riophae/vue-treeselect";
-import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 export default {
   name: "Emergencies",
-  components: { Treeselect },
   data() {
     return {
       // 遮罩层
@@ -203,12 +195,8 @@ export default {
       emergenciesList: [],
       // 弹出层标题
       title: "",
-      // 部门树选项
-      deptOptions: undefined,
       // 是否显示弹出层
       open: false,
-      // 部门名称
-      deptName: undefined,
       // 发生日期时间范围
       daterangeEmergenciesTime: [],
       // 查询参数
@@ -229,15 +217,8 @@ export default {
       }
     };
   },
-  watch: {
-    // 根据名称筛选部门树
-    deptName(val) {
-      this.$refs.tree.filter(val);
-    }
-  },
   created() {
     this.getList();
-    this.getDeptTree();
   },
   methods: {
     /** 查询事件列表 */
@@ -252,12 +233,6 @@ export default {
         this.emergenciesList = response.rows;
         this.total = response.total;
         this.loading = false;
-      });
-    },
-    /** 查询部门下拉树结构 */
-    getDeptTree() {
-      deptTreeSelect().then(response => {
-        this.deptOptions = response.data;
       });
     },
     // 取消按钮
@@ -291,8 +266,8 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.id);
-      this.single = selection.length!==1;
+      this.ids = selection.map(item => item.id)
+      this.single = selection.length!==1
       this.multiple = !selection.length
     },
     /** 新增按钮操作 */
@@ -304,18 +279,15 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id || this.ids;
+      const id = row.id || this.ids
       getEmergencies(id).then(response => {
         this.form = response.data;
-        this.form.deptId = this.form.department;
-        console.log(JSON.parse(JSON.stringify(this.deptOptions)));
         this.open = true;
         this.title = "修改事件";
       });
     },
     /** 提交按钮 */
     submitForm() {
-      this.form.department = this.form.deptId;
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {

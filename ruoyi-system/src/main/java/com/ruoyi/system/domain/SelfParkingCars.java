@@ -25,13 +25,13 @@ public class SelfParkingCars extends BaseEntity
     private String carId;
 
     /** 入场时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "入场时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "入场时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date carInTime;
 
     /** 出场时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "出场时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "出场时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date carOutTime;
 
     /** 停车费 */
