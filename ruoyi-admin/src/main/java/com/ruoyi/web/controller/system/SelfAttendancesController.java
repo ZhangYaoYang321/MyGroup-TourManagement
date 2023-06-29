@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.system;
 
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,6 +44,17 @@ public class SelfAttendancesController extends BaseController
     {
         startPage();
         List<SelfAttendances> list = selfAttendancesService.selectSelfAttendancesList(selfAttendances);
+        return getDataTable(list);
+    }
+
+    @GetMapping("/listcur")
+    public TableDataInfo listcur(SelfAttendances selfAttendances)
+    {
+        startPage();
+        Long userId = getLoginUser().getUserId();
+        SelfAttendances selfAttendances1 = selfAttendancesService.selectSelfAttendancesById(userId);
+        List<SelfAttendances> list = new LinkedList<>();
+        list.add(selfAttendances1);
         return getDataTable(list);
     }
 
@@ -100,5 +112,12 @@ public class SelfAttendancesController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(selfAttendancesService.deleteSelfAttendancesByIds(ids));
+    }
+
+    @Log(title = "考勤信息", businessType = BusinessType.DELETE)
+    @DeleteMapping("/resetKQAttendances/{ids}")
+    public AjaxResult resetKQAttendances(@PathVariable Long[] ids)
+    {
+        return toAjax(selfAttendancesService.resetKQAttendances(ids));
     }
 }
