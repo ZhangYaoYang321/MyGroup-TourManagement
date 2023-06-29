@@ -1,4 +1,4 @@
-package com.ruoyi.web.controller.system;
+package com.ruoyi.web.controller.hotel;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -23,12 +23,12 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 酒店订单Controller
- * 
+ *
  * @author ruoyi
  * @date 2023-06-26
  */
 @RestController
-@RequestMapping("/system/orders")
+@RequestMapping("/hotel/orders")
 public class SelfHotelOrdersController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 查询酒店订单列表
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:list')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfHotelOrders selfHotelOrders)
     {
@@ -49,7 +49,7 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 导出酒店订单列表
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:export')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:export')")
     @Log(title = "酒店订单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfHotelOrders selfHotelOrders)
@@ -62,7 +62,7 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 获取酒店订单详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:query')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 新增酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:add')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:add')")
     @Log(title = "酒店订单", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfHotelOrders selfHotelOrders)
@@ -83,7 +83,7 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 修改酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:edit')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:edit')")
     @Log(title = "酒店订单", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfHotelOrders selfHotelOrders)
@@ -94,7 +94,7 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 删除酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:remove')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:remove')")
     @Log(title = "酒店订单", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
