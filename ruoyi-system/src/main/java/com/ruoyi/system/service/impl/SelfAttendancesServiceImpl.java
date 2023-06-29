@@ -79,12 +79,6 @@ public class SelfAttendancesServiceImpl implements ISelfAttendancesService
         return selfAttendancesMapper.deleteSelfAttendancesByIds(ids);
     }
 
-    @Override
-    public int resetKQAttendances(Long[] ids)
-    {
-        return selfAttendancesMapper.resetKQAttendancesByIds(ids);
-    }
-
     /**
      * 删除考勤信息信息
      * 

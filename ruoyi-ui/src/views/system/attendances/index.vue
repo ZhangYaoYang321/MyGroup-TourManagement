@@ -28,7 +28,6 @@
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetKQ">新的一天</el-button>
       </el-form-item>
     </el-form>
 
@@ -103,7 +102,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    
     <pagination
       v-show="total>0"
       :total="total"
@@ -134,7 +133,7 @@
 </template>
 
 <script>
-import { listAttendances, getAttendances, delAttendances, addAttendances, updateAttendances , resetKQAttendances} from "@/api/system/attendances";
+import { listAttendances, getAttendances, delAttendances, addAttendances, updateAttendances } from "@/api/system/attendances";
 
 export default {
   name: "Attendances",
@@ -210,15 +209,6 @@ export default {
     resetQuery() {
       this.resetForm("queryForm");
       this.handleQuery();
-    },
-    resetKQ(row) {
-      const ids = row.id || this.ids;
-      this.$modal.confirm('是否确认重置考勤信息编号为"' + ids + '"的数据项？').then(function() {
-        return resetKQAttendances(ids);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("重置成功");
-      }).catch(() => {});
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
