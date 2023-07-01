@@ -20,6 +20,8 @@ public interface ISelfTicketServicesService
      */
     public SelfTicketServices selectSelfTicketServicesById(Long id);
 
+    public int getPeopleCounts();
+
     /**
      * 查询票务列表
      *
@@ -46,6 +48,8 @@ public interface ISelfTicketServicesService
 
 
     public int updateVisitorInTime (String cnId);
+    public int updateVisitorInTime2 (Long id);
+    public int updateVisitorOutTime2 (Long id);
 
     public int updateVisitorOutTime (String cnId);
 

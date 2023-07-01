@@ -23,7 +23,6 @@ public class SelfTicketServicesServiceImpl implements ISelfTicketServicesService
     private SelfTicketServicesMapper selfTicketServicesMapper;
 
 
-
     /**
      * 查询票务
      *
@@ -43,6 +42,10 @@ public class SelfTicketServicesServiceImpl implements ISelfTicketServicesService
         return selfTicketServicesMapper.selectSelfTicketServicesByCnId(cnId);
     }
 
+    @Override
+    public int getPeopleCounts() {
+        return selfTicketServicesMapper.getPeopleCounts();
+    }
 
     /**
      * 查询票务列表
@@ -115,5 +118,14 @@ public class SelfTicketServicesServiceImpl implements ISelfTicketServicesService
         return selfTicketServicesMapper.deleteSelfTicketServicesById(id);
     }
 
+    @Override
+    public int updateVisitorInTime2(Long id) {
+        return selfTicketServicesMapper.updateVisitorInTime2(id);
+    }
+
+    @Override
+    public int updateVisitorOutTime2(Long id) {
+        return selfTicketServicesMapper.updateVisitorOutTime2(id);
+    }
 
 }
