@@ -169,7 +169,7 @@ public class SelfParkingCarsController extends BaseController
                 return toAjax(selfParkingCarsService.updateSelfParkingCars(selfParkingCars));
             }
         }
-        return AjaxResult.error("车辆信息不存在");
+        return AjaxResult.error("该车辆不在停车场中");
     }
 
     /**
@@ -181,6 +181,7 @@ public class SelfParkingCarsController extends BaseController
         SelfParkingCars car = new SelfParkingCars();
         car.setCarId(carIdKey);
         List<SelfParkingCars> carList = this.selfParkingCarsMapper.selectSelfParkingCarsList(car);
+        System.out.println(carList + "-------------------------");
         // 获取当前日期（年月日）
         LocalDate currentDate = LocalDate.now();
         // 创建新的列表，用于存储年月日相同的元素
@@ -189,13 +190,15 @@ public class SelfParkingCarsController extends BaseController
         for (SelfParkingCars parkingCar : carList) {
             // 提取carInTime的年月日
             LocalDate carInDate = parkingCar.getCarInTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
             // 将提取的年月日与当前日期进行比较
             if (carInDate.isEqual(currentDate)) {
-                // 入场年月日相同，将元素添加到新的列表中
+                // 入场年月日相同
+                filteredList.add(parkingCar);
+            } else if (parkingCar.getCarOutTime() == null) {
+                // 已入场车辆未出场
                 filteredList.add(parkingCar);
             } else if (parkingCar.getCarOutTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(currentDate)) {
-                // 出场年月日相同，将元素添加到新的列表中
+                // 出场年月日相同
                 filteredList.add(parkingCar);
             }
         }

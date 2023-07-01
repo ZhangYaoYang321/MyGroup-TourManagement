@@ -70,28 +70,33 @@
                width="500px"
                append-to-body
                class="car-info-dialog">
-      <div v-for="(result, index) in carInfo.rows" :key="index">
-        <el-row>
-          <el-col :span="6">车牌号：</el-col>
-          <el-col :span="18">{{ result.carId }}</el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="6">入场时间：</el-col>
-          <el-col :span="18">{{ parseTime(result.carInTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="6">出场时间：</el-col>
-          <el-col :span="18">{{ parseTime(result.carOutTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="6">停车状态：</el-col>
-          <el-col :span="18">{{ result.stateParking == 1 ? "已入场" : result.stateParking == 2 ? "已出场" : "警告" }}</el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="6">停车费：</el-col>
-          <el-col :span="18">{{ result.parkingCost }}元</el-col>
-        </el-row>
-        <hr v-if="index !== carInfo.length - 1" />
+      <div v-if="carInfo.rows.length == 0">
+        无该车辆信息
+      </div>
+      <div v-else>
+        <div v-for="(result, index) in carInfo.rows" :key="index">
+          <el-row>
+            <el-col :span="6">车牌号：</el-col>
+            <el-col :span="18">{{ result.carId }}</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">入场时间：</el-col>
+            <el-col :span="18">{{ parseTime(result.carInTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">出场时间：</el-col>
+            <el-col :span="18">{{ parseTime(result.carOutTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">停车状态：</el-col>
+            <el-col :span="18">{{ result.stateParking == 1 ? "已入场" : result.stateParking == 2 ? "已出场" : "警告" }}</el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="6">停车费：</el-col>
+            <el-col :span="18">{{ result.parkingCost }}元</el-col>
+          </el-row>
+          <hr v-if="index !== carInfo.length - 1" />
+        </div>
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="carInfoDialog = false">确 定</el-button>
