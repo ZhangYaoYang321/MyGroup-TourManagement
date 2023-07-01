@@ -137,7 +137,7 @@
             type="primary"
             plain
             icon="el-icon-plus"
-            size="mini"
+            size="large"
             @click="handleAppoint"
             v-hasPermi="['system:ticket_services:appoint']"
           >预约</el-button>
@@ -148,7 +148,7 @@
             type="success"
             plain
             icon="el-icon-search"
-            size="mini"
+            size="large"
             @click="handleCheckInfo"
             v-hasPermi="['system:ticket_services:checkInfo']"
           >查询预约信息</el-button>
@@ -158,19 +158,33 @@
             type="warning"
             plain
             icon="el-icon-right"
-            size="mini"
+            size="large"
             @click="handleInPark()"
             v-hasPermi="['system:ticket_services:inPark']"
           >入园登记</el-button>
         </el-col>
+        <el-col :span="1.5">
           <el-button
             type="info"
             plain
             icon="el-icon-left"
-            size="mini"
+            size="large"
             @click="handleOutPark()"
             v-hasPermi="['system:ticket_services:outPark']"
           >出园登记</el-button>
+        </el-col>
+        <el-col :span="1.5">
+          <div class="capacity">
+            <div class="peopleInfo" :class="isFull ? 'full' : 'not-full'">
+              <div class="count">
+                {{ this.peopleCount }} / {{ this.totalCount }}
+              </div>
+              <div class="status">
+                {{ isFull ? '已满' : '未满' }}
+              </div>
+            </div>
+          </div>
+        </el-col>
         <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
       </el-row>
 
@@ -327,8 +341,9 @@ import {
   appointTicket_services,
   checkInfoTicket_services,
   returnCheckInfoTicket_services,
-  inParkTicket_services, outParkTicket_services
+  inParkTicket_services, outParkTicket_services, getPeopleCounts
 } from "@/api/system/ticket_services";
+import {getParkingCount} from "@/api/system/cars";
 
 export default {
   name: "Ticket_services",
@@ -336,6 +351,9 @@ export default {
     return {
 
       selectedRow: [],
+
+      peopleCount: 0,
+      totalCount: 10,
 
       // 遮罩层
       loading: true,
@@ -410,6 +428,12 @@ export default {
   created() {
     this.getList();
   },
+
+  computed: {
+    isFull() {
+      return this.peopleCount >= this.totalCount;
+    }
+  },
   methods: {
 
     handleRowClick(row, column, event) {
@@ -421,6 +445,7 @@ export default {
     getList() {
       this.loading = true;
       this.queryParams.params = {};
+      this.fetchPeopleData();
       if (null != this.daterangeScheduledDate && '' != this.daterangeScheduledDate) {
         this.queryParams.params["beginScheduledDate"] = this.daterangeScheduledDate[0];
         this.queryParams.params["endScheduledDate"] = this.daterangeScheduledDate[1];
@@ -435,10 +460,20 @@ export default {
       }
       listTicket_services(this.queryParams).then(response => {
         this.ticket_servicesList = response.rows;
+        console.log(this.ticket_servicesList);
         this.total = response.total;
         this.loading = false;
       });
     },
+
+    fetchPeopleData() {
+      getPeopleCounts().then(response => {
+        console.log(response);
+        this.totalCount = response.rows[0].value;
+        this.peopleCount = response.rows[1].value;
+      });
+    },
+
     // 取消按钮
     cancel() {
       this.open = false;
@@ -483,6 +518,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd() {
+      this.fetchPeopleData();
       this.reset();
       this.open = true;
       this.title = "添加票务";
@@ -491,12 +527,14 @@ export default {
 
     /** 预约按钮操作 */
     handleAppoint() {
+      this.fetchPeopleData();
       this.reset();
       this.open = true;
       this.title = "游客预约";
     },
 
     handleCheckInfo() {
+      this.fetchPeopleData();
       this.reset();
       this.open2 = true;
       this.title = "查看详情";
@@ -515,6 +553,7 @@ export default {
 
     /** 提交按钮 */
     submitForm() {
+      this.fetchPeopleData();
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
@@ -535,6 +574,7 @@ export default {
     },
 
     submitFormQuery() {
+      this.fetchPeopleData();
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.cnId != null) {
@@ -591,12 +631,6 @@ export default {
     },
 
 
-    returnCheckInfoTicket_services() {
-      this.open3 = false;
-      this.open2 = true;
-    },
-
-
     queryInfoDialog() {
       this.open3 = true;
     },
@@ -616,9 +650,14 @@ export default {
 
 
     handleInPark() {
-      this.reset();
-      this.title = "入园登记";
-      this.open2 = true;
+      this.fetchPeopleData();
+      if ( this.isFull ) {
+        this.$message.warning("预约人数已满");
+      } else {
+        this.reset();
+        this.open2 = true;
+        this.title = "入园登记";
+      }
       // this.$modal.confirm('是否确认游客入园？').then(() => {
       //   ids.forEach(id => {  // 遍历 ids 数组
       //     inParkTicket_services(cnId)
@@ -632,6 +671,7 @@ export default {
 
 
     handleOutPark() {
+      this.fetchPeopleData();
       this.reset();
       this.title = "出园登记";
       this.open2 = true;
@@ -663,3 +703,39 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.container {
+  width: 800px; /* 宽度扩大为 800px */
+  height: 600px; /* 高度扩大为 600px */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto; /* 水平居中对齐 */
+  transform: scale(0.9); /* 缩小为原来的 90% */
+}
+.full {
+  background-color: lightcoral;
+  color: white;
+}
+.not-full {
+  background-color: lightgreen;
+}
+.peopleInfo {
+  width: 80px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 600px;
+}
+</style>
