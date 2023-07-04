@@ -48,7 +48,7 @@ public class SelfHotelReservationController extends BaseController {
     /**
      * 新增酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('hotel:orders:add')")
+    @PreAuthorize("@ss.hasPermi('hotel:reservation:add')")
     @Log(title = "酒店预约", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfHotelReservation selfHotelReservation)
@@ -65,6 +65,21 @@ public class SelfHotelReservationController extends BaseController {
     {
         return success(selfHotelReservationService.selectSelfHotelReservationById(id));
     }
+
+    /**
+     * 获取酒店房间详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('hotel:reservation:query')")
+    @GetMapping(value = "/1/{date}")
+    public TableDataInfo listRooms(@PathVariable("date") String date)
+    {
+        System.out.println(date);
+        startPage();
+        List<Integer> list=selfHotelReservationService.selectSelfHotelReservationRoomsByDate(date);
+        //System.out.println(list);
+        return getDataTable(list);
+    }
+
 
     /**
      * 修改酒店订单

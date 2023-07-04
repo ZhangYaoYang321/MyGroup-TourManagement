@@ -90,6 +90,10 @@
       <el-table-column label="ID" align="center" prop="id" />
       <el-table-column label="订单号" align="center" prop="orderId" />
       <el-table-column label="身份证号" align="center" prop="cnId" />
+      <el-table-column label="房间号" align="center" prop="roomNum" />
+      <el-table-column label="房间类型" align="center" prop="type" />
+      <el-table-column label="开始日期" align="center" prop="startDate" />
+      <el-table-column label="结束日期" align="center" prop="endDate" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -97,7 +101,7 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['hotel:orders:edit']"
+            v-hasPermi="['hotel:reservation:edit']"
           >修改</el-button>
           <el-button
             size="mini"
@@ -118,21 +122,76 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改酒店订单对话框 -->
+    <!-- 添加酒店订单对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="订单号" prop="orderId">
-          <el-input v-model="form.orderId" placeholder="请输入订单号" />
+        <el-form-item label="姓名" prop="orderId">
+          <el-input
+            v-model="form.name"
+            placeholder="请输入姓名"
+            clearable
+            @keyup.enter.native="handleQuery"
+          />
         </el-form-item>
         <el-form-item label="身份证号" prop="cnId">
-          <el-input v-model="form.cnId" placeholder="请输入身份证号" />
+          <el-input
+            v-model="form.cnId"
+            placeholder="请输入身份证号"
+            clearable
+            @keyup.enter.native="handleQuery"
+          />
         </el-form-item>
+        <el-form-item label="电话号码" prop="phoneNum">
+          <el-input
+            v-model="form.phoneNum"
+            placeholder="请输入电话号码"
+            clearable
+            @keyup.enter.native="handleQuery"
+          />
+        </el-form-item>
+        <el-form-item label="开始日期" prop="field104">
+          <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                          :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
+        </el-form-item>
+        <el-form-item label="结束日期" prop="field105">
+          <el-date-picker v-model="form.endDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                          :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
+        </el-form-item>
+        <el-form-item label="房间选择" prop="field102">
+          <el-cascader v-model="form.field102" :options="field102Options" :props="field102Props"
+                       :style="{width: '100%'}" placeholder="请选择房间" clearable></el-cascader>
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!-- 修改酒店订单对话框 -->
+    <el-dialog :title="title" :visible.sync="open1" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="开始日期" prop="field104">
+          <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                          :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
+        </el-form-item>
+        <el-form-item label="结束日期" prop="field105">
+          <el-date-picker v-model="form.endDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+                          :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
+        </el-form-item>
+        <el-form-item label="房间选择" prop="field102">
+          <el-cascader v-model="form.field102" :options="field102Options" :props="field102Props"
+                       :style="{width: '100%'}" placeholder="请选择房间" clearable></el-cascader>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -172,6 +231,61 @@ export default {
       form: {},
       // 表单校验
       rules: {
+        startDate: [{
+          required: true,
+          message: '请选择日期选择',
+          trigger: 'change'
+        }],
+        endDate: [{
+          required: true,
+          message: '请选择日期选择',
+          trigger: 'change'
+        }],
+        field102: [{
+          required: true,
+          type: 'array',
+          message: '请至少选择一个field102',
+          trigger: 'change'
+        }],
+      },
+      field102Options: [{
+        "label": "单人间",
+        "value": "单人间",
+        "id": 101,
+        "children": [{
+          "label": "101",
+          "value": 101,
+          "id": 104
+        }, {
+          "label": "102",
+          "value": 102,
+          "id": 105,
+        }, {
+          "label": "103",
+          "value": 103,
+          "id": 106,
+        }]
+      }, {
+        "label": "标准间",
+        "value": "标准间",
+        "id": 102,
+        "children": [{
+          "label": "104",
+          "value": 104,
+          "id": 108
+        }]
+      }, {
+        "label": "家庭套房",
+        "value": "家庭套房",
+        "id": 103,
+        "children": [{
+          "label": "120",
+          "value": 120,
+          "id": 107
+        }]
+      }],
+      field102Props: {
+        "multiple": false
       }
     };
   },
@@ -196,6 +310,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
+        field102: [],
         id: null,
         name:null,
         orderId: null,
@@ -203,7 +318,7 @@ export default {
         type:null,
         startDate:null,
         endDate:null,
-        room:null,
+        roomNum:null,
         state:null,
         phoneNum:null
       };

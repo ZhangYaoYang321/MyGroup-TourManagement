@@ -53,4 +53,12 @@ public interface ISelfHotelReservationService {
      */
     public int deleteSelfHotelReservationById(Long id);
 
+    /**
+     * 查询酒店房间信息
+     *
+     * @param date 酒店订单主键
+     * @return 结果
+     */
+    public List<Integer> selectSelfHotelReservationRoomsByDate(String date);
+
 }

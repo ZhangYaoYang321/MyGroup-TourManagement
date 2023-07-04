@@ -8,52 +8,131 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="orderId"    column="order_id"    />
         <result property="cnId"    column="cn_id"    />
+        <result property="name"    column="visitors_name"    />
+        <result property="phoneNum"    column="phone_number"    />
+        <result property="startDate"    column="start_day"    />
+        <result property="endDate"    column="end_day"    />
+        <result property="type"    column="type_room"    />
+        <result property="state"    column="state_room"    />
+        <result property="roomNum"    column="room_id"    />
     </resultMap>
 
     <sql id="selectSelfHotelOrdersVo">
-        select id, order_id, cn_id from self_hotel_orders
+        select distinct (self_hotel_orders.id), self_hotel_orders.order_id, self_hotel_orders.cn_id,self_hotel_orders.room_id,self_hotel_orders.start_day,self_hotel_orders.end_day,self_hotel_orders.type_room
+        from self_hotel_orders left join self_hotel_rooms
     </sql>
 
     <select id="selectSelfHotelOrdersList" parameterType="SelfHotelOrders" resultMap="SelfHotelOrdersResult">
         <include refid="selectSelfHotelOrdersVo"/>
+        on self_hotel_orders.order_id=self_hotel_rooms.order_id
         <where>
-            <if test="orderId != null "> and order_id like concat('%', #{orderId}, '%')</if>
-            <if test="cnId != null  and cnId != ''"> and cn_id like concat('%', #{cnId}, '%')</if>
+            <if test="orderId != null "> and self_hotel_orders.order_id like concat('%', #{orderId}, '%')</if>
+            <if test="cnId != null  and cnId != ''"> and self_hotel_orders.cn_id like concat('%', #{cnId}, '%')</if>
         </where>
     </select>
 
-    <select id="selectSelfHotelOrdersById" parameterType="Long" resultMap="SelfHotelOrdersResult">
-        <include refid="selectSelfHotelOrdersVo"/>
-        where id = #{id}
-    </select>
 
-    <insert id="insertSelfHotelOrders" parameterType="SelfHotelOrders" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelfHotelOrders1" parameterType="SelfHotelOrders" useGeneratedKeys="true" keyProperty="id">
         insert into self_hotel_orders
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderId != null">order_id,</if>
             <if test="cnId != null">cn_id,</if>
-         </trim>
+            <if test="roomNum != null">room_id,</if>
+            <if test="startDate != null">start_day,</if>
+            <if test="endDate != null">end_day,</if>
+            <if test="type != null">type_room,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderId != null">#{orderId},</if>
             <if test="cnId != null">#{cnId},</if>
-         </trim>
+            <if test="roomNum != null">#{roomNum},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="type != null">#{type},</if>
+        </trim>
     </insert>
 
-    <update id="updateSelfHotelOrders" parameterType="SelfHotelOrders">
+    <insert id="insertSelfHotelOrders2" parameterType="SelfHotelOrders">
+        insert into self_hotel_rooms
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="arg0 != null">order_id,</if>
+            <if test="arg1 != null">type_room,</if>
+            <if test="arg3 != null">state_room,</if>
+            <if test="arg2 != null">room_id,</if>
+            <if test="arg4 != null">room_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="arg0 != null">#{arg0},</if>
+            <if test="arg1 != null">#{arg1},</if>
+            <if test="arg3 != null">#{arg3},</if>
+            <if test="arg2 != null">#{arg2},</if>
+            <if test="arg4 != null">#{arg4},</if>
+        </trim>
+    </insert>
+
+    <insert id="insertSelfHotelOrders3" parameterType="SelfHotelOrders" useGeneratedKeys="true" keyProperty="id">
+        insert into self_visitors
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="cnId != null">cn_id,</if>
+            <if test="name != null">visitors_name,</if>
+            <if test="phoneNum != null">phone_number,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="cnId != null">#{cnId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="phoneNum != null">#{phoneNum},</if>
+        </trim>
+        on duplicate key update
+        cn_id = #{cnId}
+    </insert>
+
+    <select id="selectSelfHotelOrdersRoomsByDate2" resultType="java.lang.Integer">
+        select distinct self_hotel_rooms.room_id
+        from self_hotel_rooms
+        where self_hotel_rooms.room_date= #{arg0} and (self_hotel_rooms.state_room="已预约" or self_hotel_rooms.state_room="已入住") and self_hotel_rooms.room_id=#{arg1}
+    </select>
+
+
+
+    <update id="updateSelfHotelOrders1" parameterType="SelfHotelOrders">
         update self_hotel_orders
         <trim prefix="SET" suffixOverrides=",">
-            <if test="orderId != null">order_id = #{orderId},</if>
-            <if test="cnId != null">cn_id = #{cnId},</if>
+            <if test="roomNum != null">room_id=#{roomNum},</if>
+            <if test="startDate != null">start_day=#{startDate},</if>
+            <if test="endDate != null">end_day=#{endDate},</if>
+            <if test="type != null">type_room=#{type},</if>
         </trim>
         where id = #{id}
     </update>
 
+    <update id="updateSelfHotelOrders2" parameterType="SelfHotelOrders">
+        delete self_hotel_rooms
+        from self_hotel_orders left join self_hotel_rooms
+        on self_hotel_orders.order_id=self_hotel_rooms.order_id
+        where self_hotel_orders.id = #{id}
+    </update>
+
+    <select id="selectSelfHotelOrdersById" parameterType="Long" resultMap="SelfHotelOrdersResult">
+        <include refid="selectSelfHotelOrdersVo"/>
+        on self_hotel_orders.order_id=self_hotel_rooms.order_id
+        where self_hotel_orders.id = #{id}
+    </select>
+
     <delete id="deleteSelfHotelOrdersById" parameterType="Long">
-        delete from self_hotel_orders where id = #{id}
+        delete self_hotel_orders ,self_hotel_rooms
+        from self_hotel_orders left join self_hotel_rooms
+        on self_hotel_orders.order_id=self_hotel_rooms.order_id
+        where self_hotel_orders.id = #{id}
     </delete>
 
+
     <delete id="deleteSelfHotelOrdersByIds" parameterType="String">
-        delete from self_hotel_orders where id in
+        delete self_hotel_orders ,self_hotel_rooms
+        from self_hotel_orders left join self_hotel_rooms
+        on self_hotel_orders.order_id=self_hotel_rooms.order_id
+        where self_hotel_orders.id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
