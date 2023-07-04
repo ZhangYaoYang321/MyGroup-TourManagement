@@ -1,6 +1,9 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.SelfParkingCarsMapper;
@@ -90,4 +93,26 @@ public class SelfParkingCarsServiceImpl implements ISelfParkingCarsService
     {
         return selfParkingCarsMapper.deleteSelfParkingCarsById(id);
     }
+
+    /**
+     * 更新停车费
+     */
+    @Override
+    public void calculateAndUpdateParkingFee() {
+        // 获取所有已入场但未出场的车辆信息
+        List<SelfParkingCars> carsList = selfParkingCarsMapper.selectUnfinishedParkingCars();
+        // 遍历车辆列表，计算并更新停车费用
+        for (SelfParkingCars car : carsList) {
+            Date carInTime = car.getCarInTime();
+            Date now = new Date();
+            long diffMillis = now.getTime() - carInTime.getTime();
+            long diffHours = TimeUnit.MILLISECONDS.toHours(diffMillis);
+            int unitPrice = 2; // 假设单价为2元/小时
+            int parkingFee = (int) (diffHours * unitPrice) + 3;
+            // 更新停车费用
+            car.setParkingCost(String.valueOf(parkingFee));
+            selfParkingCarsMapper.updateSelfParkingCars(car);
+        }
+    }
+
 }
