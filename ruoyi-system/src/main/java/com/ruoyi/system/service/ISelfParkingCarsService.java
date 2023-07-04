@@ -64,4 +64,12 @@ public interface ISelfParkingCarsService
      */
     public void calculateAndUpdateParkingFee();
 
+    /**
+     * 对列表进行排序
+     *
+     * @param sortedList 排序列表
+     * @return 排序后的车辆集合
+     */
+    public List<SelfParkingCars> pageByList(List sortedList, Integer pageNum, Integer pageSize);
+
 }

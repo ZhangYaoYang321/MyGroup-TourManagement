@@ -6,8 +6,12 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import com.github.pagehelper.PageInfo;
+import com.ruoyi.common.core.page.PageDomain;
+import com.ruoyi.common.core.page.TableSupport;
 import com.ruoyi.system.mapper.SelfParkingCarsMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,7 +39,6 @@ public class SelfParkingCarsController extends BaseController
 {
     @Autowired
     private ISelfParkingCarsService selfParkingCarsService;
-
     @Autowired
     private SelfParkingCarsMapper selfParkingCarsMapper;
 
@@ -46,9 +49,7 @@ public class SelfParkingCarsController extends BaseController
     @GetMapping("/list")
     public TableDataInfo list(SelfParkingCars selfParkingCars)
     {
-        startPage();
-        List<SelfParkingCars> list = selfParkingCarsService.selectSelfParkingCarsList(selfParkingCars);
-        return getDataTable(list);
+        return sortList(selfParkingCars, "1");
     }
 
     /**
@@ -239,6 +240,33 @@ public class SelfParkingCarsController extends BaseController
         countsList.add(parkingCountMap);
         System.out.println("获取停车场停车数成功 - " + parkingCount);
         return getDataTable(countsList);
+    }
+
+    /**
+     * 排序
+     */
+    @PreAuthorize("@ss.hasPermi('system:cars:sort')")
+    @GetMapping("/sort/{sortsId}")
+    public TableDataInfo sortList(SelfParkingCars selfParkingCars, @PathVariable String sortsId) {
+        PageDomain pageDomain = TableSupport.buildPageRequest();
+        Integer pageNum = pageDomain.getPageNum();
+        Integer pageSize = pageDomain.getPageSize();
+        // 获取数据库中所有值并让id反向排序
+        List<SelfParkingCars> cars = selfParkingCarsService.selectSelfParkingCarsList(selfParkingCars)
+                .stream().sorted(Comparator.comparing(SelfParkingCars::getId).reversed())
+                .collect(Collectors.toList());
+        String approach = sortsId;
+        switch (approach) { //根据sortsId不同此处可拓展多种排序方式
+            case "1":          //id降序
+                break;
+            default:
+                break;
+        }
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(0);
+        rspData.setRows(selfParkingCarsService.pageByList(cars, pageNum, pageSize));
+        rspData.setTotal(new PageInfo(cars).getTotal());
+        return rspData;
     }
 
 }

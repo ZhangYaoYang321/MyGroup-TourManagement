@@ -115,4 +115,37 @@ public class SelfParkingCarsServiceImpl implements ISelfParkingCarsService
         }
     }
 
+    /**
+     * 对列表进行排序
+     *
+     * @param sortedList 排序列表
+     * @return 排序后的车辆集合
+     */
+    @Override
+    public List<SelfParkingCars> pageByList(List sortedList, Integer pageNum, Integer pageSize) {
+        if (sortedList == null) {
+            return null;
+        }
+        if (sortedList.size() == 0) {
+            return null;
+        }
+        Integer count = sortedList.size(); // 记录总数
+        Integer pageCount = 0; // 页数
+        if (count % pageSize == 0) {
+            pageCount = count / pageSize;
+        } else {
+            pageCount = count / pageSize + 1;
+        }
+        int fromIndex = 0; // 开始索引
+        int toIndex = 0; // 结束索引
+        if (pageNum != pageCount) {
+            fromIndex = (pageNum - 1) * pageSize;
+            toIndex = fromIndex + pageSize;
+        } else {
+            fromIndex = (pageNum - 1) * pageSize;
+            toIndex = count;
+        }
+        List pageList = sortedList.subList(fromIndex, toIndex);
+        return pageList;
+    }
 }
