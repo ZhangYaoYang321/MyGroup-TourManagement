@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: '若依管理系统',
+      title: '旅游综合信息平台',
       logo: logoImg
     }
   }
