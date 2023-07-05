@@ -170,7 +170,7 @@
     </el-dialog>
 
     <!-- 修改酒店订单对话框 -->
-    <el-dialog :title="title" :visible.sync="open1" width="500px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open2" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="开始日期" prop="field104">
           <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
@@ -220,6 +220,7 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      open2:false,
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -264,6 +265,90 @@ export default {
           "label": "103",
           "value": 103,
           "id": 106,
+        },{
+          "label": "201",
+          "value": 201,
+          "id": 104
+        }, {
+          "label": "202",
+          "value": 202,
+          "id": 105,
+        }, {
+          "label": "203",
+          "value": 203,
+          "id": 106,
+        },{
+          "label": "301",
+          "value": 301,
+          "id": 104
+        }, {
+          "label": "302",
+          "value": 302,
+          "id": 105,
+        }, {
+          "label": "303",
+          "value": 303,
+          "id": 106,
+        },{
+          "label": "401",
+          "value": 401,
+          "id": 104
+        }, {
+          "label": "402",
+          "value": 402,
+          "id": 105,
+        }, {
+          "label": "403",
+          "value": 403,
+          "id": 106,
+        },{
+          "label": "501",
+          "value": 501,
+          "id": 104
+        }, {
+          "label": "502",
+          "value": 502,
+          "id": 105,
+        }, {
+          "label": "503",
+          "value": 503,
+          "id": 106,
+        },{
+          "label": "601",
+          "value": 601,
+          "id": 104
+        }, {
+          "label": "602",
+          "value": 602,
+          "id": 105,
+        }, {
+          "label": "603",
+          "value": 603,
+          "id": 106,
+        },{
+          "label": "701",
+          "value": 701,
+          "id": 104
+        }, {
+          "label": "702",
+          "value": 702,
+          "id": 105,
+        }, {
+          "label": "703",
+          "value": 703,
+          "id": 106,
+        },{
+          "label": "801",
+          "value": 801,
+          "id": 104
+        }, {
+          "label": "802",
+          "value": 802,
+          "id": 105,
+        }, {
+          "label": "803",
+          "value": 803,
+          "id": 106,
         }]
       }, {
         "label": "标准间",
@@ -272,6 +357,450 @@ export default {
         "children": [{
           "label": "104",
           "value": 104,
+          "id": 108
+        },{
+          "label": "105",
+          "value": 105,
+          "id": 108
+        },{
+          "label": "106",
+          "value": 106,
+          "id": 108
+        },{
+          "label": "107",
+          "value": 107,
+          "id": 108
+        },{
+          "label": "108",
+          "value": 108,
+          "id": 108
+        },{
+          "label": "109",
+          "value": 109,
+          "id": 108
+        },{
+          "label": "110",
+          "value": 110,
+          "id": 108
+        },{
+          "label": "111",
+          "value": 111,
+          "id": 108
+        },{
+          "label": "112",
+          "value": 112,
+          "id": 108
+        },{
+          "label": "113",
+          "value": 113,
+          "id": 108
+        },{
+          "label": "114",
+          "value": 114,
+          "id": 108
+        },{
+          "label": "115",
+          "value": 115,
+          "id": 108
+        },{
+          "label": "116",
+          "value": 116,
+          "id": 108
+        },{
+          "label": "117",
+          "value": 117,
+          "id": 108
+        },{
+          "label": "204",
+          "value": 204,
+          "id": 108
+        },{
+          "label": "205",
+          "value": 205,
+          "id": 108
+        },{
+          "label": "206",
+          "value": 206,
+          "id": 108
+        },{
+          "label": "207",
+          "value": 207,
+          "id": 108
+        },{
+          "label": "208",
+          "value": 208,
+          "id": 108
+        },{
+          "label": "209",
+          "value": 209,
+          "id": 108
+        },{
+          "label": "210",
+          "value": 210,
+          "id": 108
+        },{
+          "label": "211",
+          "value": 211,
+          "id": 108
+        },{
+          "label": "212",
+          "value": 212,
+          "id": 108
+        },{
+          "label": "213",
+          "value": 213,
+          "id": 108
+        },{
+          "label": "214",
+          "value": 214,
+          "id": 108
+        },{
+          "label": "215",
+          "value": 215,
+          "id": 108
+        },{
+          "label": "216",
+          "value": 216,
+          "id": 108
+        },{
+          "label": "217",
+          "value": 217,
+          "id": 108
+        },{
+          "label": "304",
+          "value": 304,
+          "id": 108
+        },{
+          "label": "305",
+          "value": 305,
+          "id": 108
+        },{
+          "label": "306",
+          "value": 306,
+          "id": 108
+        },{
+          "label": "307",
+          "value": 307,
+          "id": 108
+        },{
+          "label": "308",
+          "value": 308,
+          "id": 108
+        },{
+          "label": "309",
+          "value": 309,
+          "id": 108
+        },{
+          "label": "310",
+          "value": 310,
+          "id": 108
+        },{
+          "label": "311",
+          "value": 311,
+          "id": 108
+        },{
+          "label": "312",
+          "value": 312,
+          "id": 108
+        },{
+          "label": "313",
+          "value": 313,
+          "id": 108
+        },{
+          "label": "314",
+          "value": 314,
+          "id": 108
+        },{
+          "label": "315",
+          "value": 315,
+          "id": 108
+        },{
+          "label": "316",
+          "value": 316,
+          "id": 108
+        },{
+          "label": "317",
+          "value": 317,
+          "id": 108
+        },{
+          "label": "404",
+          "value": 404,
+          "id": 108
+        },{
+          "label": "405",
+          "value": 405,
+          "id": 108
+        },{
+          "label": "406",
+          "value": 406,
+          "id": 108
+        },{
+          "label": "407",
+          "value": 407,
+          "id": 108
+        },{
+          "label": "408",
+          "value": 408,
+          "id": 108
+        },{
+          "label": "409",
+          "value": 409,
+          "id": 108
+        },{
+          "label": "410",
+          "value": 410,
+          "id": 108
+        },{
+          "label": "411",
+          "value": 411,
+          "id": 108
+        },{
+          "label": "412",
+          "value": 412,
+          "id": 108
+        },{
+          "label": "413",
+          "value": 413,
+          "id": 108
+        },{
+          "label": "414",
+          "value": 414,
+          "id": 108
+        },{
+          "label": "415",
+          "value": 415,
+          "id": 108
+        },{
+          "label": "416",
+          "value": 416,
+          "id": 108
+        },{
+          "label": "417",
+          "value": 417,
+          "id": 108
+        },,{
+          "label": "504",
+          "value": 504,
+          "id": 108
+        },{
+          "label": "505",
+          "value": 505,
+          "id": 108
+        },{
+          "label": "506",
+          "value": 506,
+          "id": 108
+        },{
+          "label": "507",
+          "value": 507,
+          "id": 108
+        },{
+          "label": "508",
+          "value": 508,
+          "id": 108
+        },{
+          "label": "509",
+          "value": 509,
+          "id": 108
+        },{
+          "label": "510",
+          "value": 510,
+          "id": 108
+        },{
+          "label": "511",
+          "value": 511,
+          "id": 108
+        },{
+          "label": "512",
+          "value": 512,
+          "id": 108
+        },{
+          "label": "513",
+          "value": 513,
+          "id": 108
+        },{
+          "label": "514",
+          "value": 514,
+          "id": 108
+        },{
+          "label": "515",
+          "value": 515,
+          "id": 108
+        },{
+          "label": "516",
+          "value": 516,
+          "id": 108
+        },{
+          "label": "517",
+          "value": 517,
+          "id": 108
+        },,{
+          "label": "604",
+          "value": 604,
+          "id": 108
+        },{
+          "label": "605",
+          "value": 605,
+          "id": 108
+        },{
+          "label": "606",
+          "value": 606,
+          "id": 108
+        },{
+          "label": "607",
+          "value": 607,
+          "id": 108
+        },{
+          "label": "608",
+          "value": 608,
+          "id": 108
+        },{
+          "label": "609",
+          "value": 609,
+          "id": 108
+        },{
+          "label": "610",
+          "value": 610,
+          "id": 108
+        },{
+          "label": "611",
+          "value": 611,
+          "id": 108
+        },{
+          "label": "612",
+          "value": 612,
+          "id": 108
+        },{
+          "label": "613",
+          "value": 613,
+          "id": 108
+        },{
+          "label": "614",
+          "value": 614,
+          "id": 108
+        },{
+          "label": "615",
+          "value": 615,
+          "id": 108
+        },{
+          "label": "616",
+          "value": 616,
+          "id": 108
+        },{
+          "label": "617",
+          "value": 617,
+          "id": 108
+        },,{
+          "label": "704",
+          "value": 704,
+          "id": 108
+        },{
+          "label": "705",
+          "value": 705,
+          "id": 108
+        },{
+          "label": "706",
+          "value": 706,
+          "id": 108
+        },{
+          "label": "707",
+          "value": 707,
+          "id": 108
+        },{
+          "label": "708",
+          "value": 708,
+          "id": 108
+        },{
+          "label": "709",
+          "value": 709,
+          "id": 108
+        },{
+          "label": "710",
+          "value": 710,
+          "id": 108
+        },{
+          "label": "711",
+          "value": 711,
+          "id": 108
+        },{
+          "label": "712",
+          "value": 712,
+          "id": 108
+        },{
+          "label": "713",
+          "value": 713,
+          "id": 108
+        },{
+          "label": "714",
+          "value": 714,
+          "id": 108
+        },{
+          "label": "715",
+          "value": 715,
+          "id": 108
+        },{
+          "label": "716",
+          "value": 716,
+          "id": 108
+        },{
+          "label": "717",
+          "value": 717,
+          "id": 108
+        },{
+          "label": "804",
+          "value": 804,
+          "id": 108
+        },{
+          "label": "805",
+          "value": 805,
+          "id": 108
+        },{
+          "label": "806",
+          "value": 806,
+          "id": 108
+        },{
+          "label": "807",
+          "value": 807,
+          "id": 108
+        },{
+          "label": "808",
+          "value": 808,
+          "id": 108
+        },{
+          "label": "809",
+          "value": 809,
+          "id": 108
+        },{
+          "label": "810",
+          "value": 810,
+          "id": 108
+        },{
+          "label": "811",
+          "value": 811,
+          "id": 108
+        },{
+          "label": "812",
+          "value": 812,
+          "id": 108
+        },{
+          "label": "813",
+          "value": 813,
+          "id": 108
+        },{
+          "label": "814",
+          "value": 814,
+          "id": 108
+        },{
+          "label": "815",
+          "value": 815,
+          "id": 108
+        },{
+          "label": "816",
+          "value": 816,
+          "id": 108
+        },{
+          "label": "817",
+          "value": 817,
           "id": 108
         }]
       }, {
@@ -282,7 +811,100 @@ export default {
           "label": "120",
           "value": 120,
           "id": 107
-        }]
+        },{
+          "label": "119",
+          "value": 119,
+          "id": 107
+        },{
+          "label": "118",
+          "value": 118,
+          "id": 107
+        },{
+          "label": "220",
+          "value": 220,
+          "id": 107
+        },{
+          "label": "219",
+          "value": 219,
+          "id": 107
+        },{
+          "label": "218",
+          "value": 218,
+          "id": 107
+        },{
+          "label": "320",
+          "value": 320,
+          "id": 107
+        },{
+          "label": "319",
+          "value": 319,
+          "id": 107
+        },{
+          "label": "318",
+          "value": 318,
+          "id": 107
+        },{
+          "label": "420",
+          "value": 420,
+          "id": 107
+        },{
+          "label": "419",
+          "value": 419,
+          "id": 107
+        },{
+          "label": "418",
+          "value": 418,
+          "id": 107
+        },{
+          "label": "520",
+          "value": 520,
+          "id": 107
+        },{
+          "label": "519",
+          "value": 519,
+          "id": 107
+        },{
+          "label": "518",
+          "value": 518,
+          "id": 107
+        },{
+          "label": "620",
+          "value": 620,
+          "id": 107
+        },{
+          "label": "619",
+          "value": 619,
+          "id": 107
+        },{
+          "label": "618",
+          "value": 618,
+          "id": 107
+        },{
+          "label": "720",
+          "value": 720,
+          "id": 107
+        },{
+          "label": "719",
+          "value": 719,
+          "id": 107
+        },{
+          "label": "718",
+          "value": 718,
+          "id": 107
+        },{
+          "label": "820",
+          "value": 820,
+          "id": 107
+        },{
+          "label": "819",
+          "value": 819,
+          "id": 107
+        },{
+          "label": "818",
+          "value": 818,
+          "id": 107
+        },
+        ]
       }],
       field102Props: {
         "multiple": false
@@ -305,6 +927,7 @@ export default {
     // 取消按钮
     cancel() {
       this.open = false;
+      this.open2=false;
       this.reset();
     },
     // 表单重置
@@ -352,13 +975,15 @@ export default {
       const id = row.id || this.ids
       getOrders(id).then(response => {
         this.form = response.data;
-        this.open = true;
+        this.open2 = true;
         this.title = "修改酒店订单";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
+        this.form.type=this.form.field102.at(0)
+        this.form.roomNum=this.form.field102.at(1)
         if (valid) {
           if (this.form.id != null) {
             updateOrders(this.form).then(response => {

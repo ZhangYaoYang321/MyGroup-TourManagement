@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectSelfHotelOrdersVo">
-        select distinct (self_hotel_orders.id), self_hotel_orders.order_id, self_hotel_orders.cn_id,self_hotel_orders.room_id,self_hotel_orders.start_day,self_hotel_orders.end_day,self_hotel_orders.type_room
+        select distinct (self_hotel_orders.id),self_hotel_rooms.state_room, self_hotel_orders.order_id, self_hotel_orders.cn_id,self_hotel_orders.room_id,self_hotel_orders.start_day,self_hotel_orders.end_day,self_hotel_orders.type_room
         from self_hotel_orders left join self_hotel_rooms
     </sql>
 
