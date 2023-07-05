@@ -19,6 +19,7 @@ export function getOrders(id) {
 
 // 新增酒店订单
 export function addOrders(data) {
+  console.log("1111111111111")
   return request({
     url: '/hotel/orders',
     method: 'post',

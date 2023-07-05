@@ -135,7 +135,7 @@ public class SelfHotelCheckOut extends BaseEntity {
 
     @Override
     public String toString() {
-        return "SelfHotelReservation{" +
+        return "SelfHotelCheckOut{" +
                 "id=" + id +
                 ", orderId=" + orderId +
                 ", cnId='" + cnId + '\'' +

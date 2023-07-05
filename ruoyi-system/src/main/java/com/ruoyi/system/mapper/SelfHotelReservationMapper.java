@@ -54,4 +54,15 @@ public interface SelfHotelReservationMapper {
      * @return 结果
      */
     public int deleteSelfHotelReservationById1(Long id);
+
+    /**
+     * 获取酒店房间
+     *
+     * @param date 酒店订单主键
+     * @return 结果
+     */
+    public List<Integer> selectSelfHotelReservationRoomsByDate(String date);
+    public List<Integer> selectSelfHotelReservationRoomsByDate2(String date,int roomNum);
+
+
 }

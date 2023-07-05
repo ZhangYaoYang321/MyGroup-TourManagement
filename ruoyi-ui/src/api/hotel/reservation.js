@@ -9,6 +9,14 @@ export function listOrders(query) {
     params: query
   })
 }
+// 查询酒店房间列表
+export function listRooms(date) {
+  console.log("11111111111111111111111")
+  return request({
+    url: '/hotel/reservation/1/'+date,
+    method: 'get',
+  })
+}
 export function addOrders(data) {
   return request({
     url: '/hotel/reservation',

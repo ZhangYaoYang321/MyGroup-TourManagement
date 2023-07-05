@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.hotel;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +80,7 @@ public class SelfHotelOrdersController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody SelfHotelOrders selfHotelOrders)
     {
+        selfHotelOrders.setOrderId(randomOrderCode());
         return toAjax(selfHotelOrdersService.insertSelfHotelOrders(selfHotelOrders));
     }
 
@@ -100,5 +104,21 @@ public class SelfHotelOrdersController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(selfHotelOrdersService.deleteSelfHotelOrdersByIds(ids));
+    }
+
+    public static long randomOrderCode() {
+        SimpleDateFormat dmDate = new SimpleDateFormat("yyyyMMddHHmmss");
+        Random r=new Random();
+        long randata=0;
+        for(int i=0;i<2;i++){
+            randata=randata*10+r.nextInt(10);
+        }
+        String.valueOf(randata);
+        Date date = new Date();
+        String dateran = dmDate.format(date);
+        String Xsode = dateran + randata;
+        long code=Long.valueOf(Xsode);
+
+        return code;
     }
 }

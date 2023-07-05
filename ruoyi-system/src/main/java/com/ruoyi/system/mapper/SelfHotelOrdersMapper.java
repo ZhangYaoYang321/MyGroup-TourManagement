@@ -18,6 +18,7 @@ public interface SelfHotelOrdersMapper
      * @return 酒店订单
      */
     public SelfHotelOrders selectSelfHotelOrdersById(Long id);
+    public List<Integer> selectSelfHotelOrdersRoomsByDate2(String date,int roomNum);
 
     /**
      * 查询酒店订单列表
@@ -33,7 +34,10 @@ public interface SelfHotelOrdersMapper
      * @param selfHotelOrders 酒店订单
      * @return 结果
      */
-    public int insertSelfHotelOrders(SelfHotelOrders selfHotelOrders);
+    public int insertSelfHotelOrders1(SelfHotelOrders selfHotelOrders);
+    public int insertSelfHotelOrders2(Long id,String type,int roomNum,String state,String date);
+
+    public int insertSelfHotelOrders3(SelfHotelOrders selfHotelOrders);
 
     /**
      * 修改酒店订单
@@ -41,7 +45,8 @@ public interface SelfHotelOrdersMapper
      * @param selfHotelOrders 酒店订单
      * @return 结果
      */
-    public int updateSelfHotelOrders(SelfHotelOrders selfHotelOrders);
+    public int updateSelfHotelOrders1(SelfHotelOrders selfHotelOrders);
+    public int updateSelfHotelOrders2(SelfHotelOrders selfHotelOrders);
 
     /**
      * 删除酒店订单
