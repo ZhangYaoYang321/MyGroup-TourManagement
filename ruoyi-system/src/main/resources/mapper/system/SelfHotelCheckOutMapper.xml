@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SelfHotelCheckOutMapper">
+    <resultMap type="SelfHotelCheckOut" id="SelfHotelCheckOutResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="cnId"    column="cn_id"    />
+        <result property="name"    column="visitors_name"    />
+        <result property="phoneNum"    column="phone_number"    />
+        <result property="startDate"    column="start_day"    />
+        <result property="endDate"    column="end_day"    />
+        <result property="type"    column="type_room"    />
+        <result property="state"    column="state_room"    />
+        <result property="roomNum"    column="room_id"    />
+    </resultMap>
+
+    <sql id="selectSelfHotelCheckOutVo">
+        select distinct (self_hotel_orders.id), self_hotel_orders.order_id, self_hotel_orders.cn_id,self_hotel_orders.room_id,self_hotel_orders.start_day,self_hotel_orders.end_day,self_hotel_orders.type_room
+        from self_hotel_orders left join self_hotel_rooms
+    </sql>
+
+
+    <select id="selectSelfHotelCheckOutList" parameterType="SelfHotelCheckOut" resultMap="SelfHotelCheckOutResult">
+        <include refid="selectSelfHotelCheckOutVo"/>
+        on self_hotel_orders.order_id=self_hotel_rooms.order_id
+        where self_hotel_orders.cn_id = #{cnId} and self_hotel_rooms.state_room="已入住"
+    </select>
+
+    <update id="checkOutSelfHotelCheckOutById" parameterType="SelfHotelCheckOut">
+        update self_hotel_rooms
+        set state_room="已退房"
+        where order_id = #{id}
+    </update>
+</mapper>

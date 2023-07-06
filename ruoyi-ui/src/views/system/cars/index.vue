@@ -40,12 +40,12 @@
         />
       </el-form-item>
       <el-form-item label="停车状态" prop="stateParking">
-        <el-input
-          v-model="queryParams.stateParking"
-          placeholder="请输入停车状态"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
+        <el-select v-model="queryParams.stateParking"
+                   placeholder="请选择停车状态"
+                   clearable @change="handleQuery">
+          <el-option label="已入场" value="1" />
+          <el-option label="已出场" value="2" />
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -170,19 +170,23 @@
           <el-input v-model="form.carId" placeholder="请输入车牌号" />
         </el-form-item>
         <el-form-item label="入场时间" prop="carInTime">
-          <el-date-picker clearable
+          <el-date-picker
+            clearable
             v-model="form.carInTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择入场时间">
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="请选择入场时间"
+          >
           </el-date-picker>
         </el-form-item>
         <el-form-item label="出场时间" prop="carOutTime">
-          <el-date-picker clearable
+          <el-date-picker
+            clearable
             v-model="form.carOutTime"
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="请选择出场时间">
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="请选择出场时间"
+          >
           </el-date-picker>
         </el-form-item>
         <el-form-item label="停车费" prop="parkingCost">

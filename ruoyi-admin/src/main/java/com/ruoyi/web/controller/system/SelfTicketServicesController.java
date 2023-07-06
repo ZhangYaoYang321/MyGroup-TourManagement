@@ -1,12 +1,13 @@
 package com.ruoyi.web.controller.system;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.system.domain.SelfParkingCars;
 import com.ruoyi.system.domain.SelfVisitors;
+import com.ruoyi.system.mapper.SelfTicketServicesMapper;
 import com.ruoyi.system.service.ISelfVisitorsService;
 import org.apache.commons.lang3.builder.ToStringExclude;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -43,6 +44,9 @@ public class SelfTicketServicesController extends BaseController
 
     @Autowired
     private ISelfVisitorsService selfVisitorsService;
+
+    @Autowired
+    private SelfTicketServicesMapper selfTicketServicesMapper;
 
     /**
      * 查询票务列表
@@ -89,6 +93,7 @@ public class SelfTicketServicesController extends BaseController
     {
         SelfTicketServices selfTicketServices11 = selfTicketServices;
 //        System.out.println(selfTicketServices11);
+        selfTicketServices11.setTypeTicket("0");
         return toAjax(selfTicketServicesService.insertSelfTicketServices(selfTicketServices11));
     }
 
@@ -130,18 +135,37 @@ public class SelfTicketServicesController extends BaseController
     @PostMapping("/appoint")
     public AjaxResult appoint(@RequestBody SelfTicketServices selfTicketServices)
     {
+        if(selfTicketServices.getScheduledDate().toInstant().
+                atZone(ZoneId.systemDefault()).toLocalDate().isBefore(LocalDate.now())){
+            return AjaxResult.error("预约时间不能早于当前时间");
+        }
+
         SelfTicketServices selfTicketServices11 = selfTicketServices;
         System.out.println(selfTicketServices11);
         selfTicketServices11.setTicketId(Long.valueOf(getTicketIdHash(selfTicketServices11.getCnId())));
+
         SelfVisitors selfVisitors = new SelfVisitors();
         selfVisitors.setVisitorsName(selfTicketServices11.getVisitorsName());
         selfVisitors.setPhoneNumber(selfTicketServices11.getPhoneNumber());
         selfVisitors.setCnId(selfTicketServices11.getCnId());
         selfVisitors.setTicketId(selfTicketServices11.getTicketId());
 
+        List<SelfTicketServices> list = selfTicketServicesService.selectSelfTicketServicesByCnId(selfTicketServices11.getCnId());
+        for(SelfTicketServices selfTicketServices1 : list){
+            if(selfTicketServices1.getScheduledDate().toInstant()
+                    .atZone(ZoneId.systemDefault()).toLocalDate().equals(
+                            selfTicketServices.getScheduledDate().toInstant()
+                                    .atZone(ZoneId.systemDefault()).toLocalDate()
+                    )){
+                return AjaxResult.error("该游客已经预约了当日门票!");
+            }
+        }
+
+        selfTicketServices11.setStateVisit("0");
+
         selfVisitorsService.insertSelfVisitors(selfVisitors);//插入游客信息数据库中
 
-        return toAjax(selfTicketServicesService.insertSelfTicketServices(selfTicketServices));
+        return toAjax(selfTicketServicesService.insertSelfTicketServices(selfTicketServices11));
     }
 
     /**
@@ -162,18 +186,37 @@ public class SelfTicketServicesController extends BaseController
     public AjaxResult inPark(@PathVariable("cnId") String cnId)
     {
         List<SelfTicketServices> list = selfTicketServicesService.selectSelfTicketServicesByCnId(cnId);
+        int i = 0;
+        List<SelfTicketServices> listIsToday = new ArrayList<>();
+
         for (SelfTicketServices sts : list) {
-            if (cnId.equals(sts.getCnId()) && sts.getStateVisit()!=null && !Objects.equals(sts.getStateVisit(), "1")) {
-                //todo 0,1,2
-                return AjaxResult.error("请勿重复登记入园！");
-            }
+            LocalDate currentDate = LocalDate.now();
+            boolean isScheduledTime = sts.getScheduledDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(currentDate);
+            i++;
+            if (isScheduledTime) listIsToday.add(sts);
+            System.out.println(sts.getStateVisit() + " " + Objects.equals(sts.getStateVisit(), "1"));
         }
-        SelfTicketServices selfTicketServices = new SelfTicketServices();
-        selfTicketServices.setCnId(cnId);
-//        Date date = new Date();
-//        selfTicketServices.setVisitorInTime(date);
-        selfTicketServices.setStateVisit("1");
-        return toAjax(selfTicketServicesService.updateVisitorInTime(cnId));
+
+        if (!listIsToday.isEmpty()) {
+            for (SelfTicketServices j : listIsToday) {
+                if (cnId.equals(j.getCnId()) && j.getStateVisit()!=null &&
+                        Objects.equals(j.getStateVisit(), "1")) {
+                    if(i != list.size()) continue;
+                    return AjaxResult.error("请勿重复登记入园！");
+                }
+
+                if (cnId.equals(j.getCnId()) && j.getStateVisit()!=null &&
+                        Objects.equals(j.getStateVisit(), "2")){
+                    if(i != list.size()) continue;
+                    return AjaxResult.error("该票已经过期！请重新预约！");
+                }
+                return toAjax(selfTicketServicesService.updateVisitorInTime2(j.getId()));
+            }
+        } else {
+            if(i != list.size()) return AjaxResult.error("请在预约日期当天入园！");
+        }
+
+        return AjaxResult.error("该游客未预约！");
     }
 
     @PreAuthorize("@ss.hasPermi('system:ticket_services:outPark')")
@@ -181,14 +224,57 @@ public class SelfTicketServicesController extends BaseController
     public AjaxResult outPark(@PathVariable("cnId") String cnId)
     {
         List<SelfTicketServices> list = selfTicketServicesService.selectSelfTicketServicesByCnId(cnId);
+        int i = 0;
         for (SelfTicketServices sts : list) {
-            System.out.println(cnId.equals(sts.getCnId()));
-            System.out.println(sts.getStateVisit()==null);
-            System.out.println(!Objects.equals(sts.getStateVisit(), "1"));
-            if (cnId.equals(sts.getCnId()) && (!Objects.equals(sts.getStateVisit(), "1") || sts.getStateVisit()==null)) {
+            LocalDate currentDate = LocalDate.now();
+            boolean isScheduledTime = sts.getScheduledDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(currentDate);
+            i++;
+            if (cnId.equals(sts.getCnId()) && !isScheduledTime) {
+                if(i != list.size()) continue;
+                return AjaxResult.error("请在预约日期当天入园！");
+            }
+            if (cnId.equals(sts.getCnId()) && sts.getStateVisit()!=null &&
+                    Objects.equals(sts.getStateVisit(), "0")) {
+                if(i != list.size()) continue;
                 return AjaxResult.error("该游客未入园！");
             }
+            if (cnId.equals(sts.getCnId()) && sts.getStateVisit()!=null &&
+                    Objects.equals(sts.getStateVisit(), "2")){
+                if(i != list.size()) continue;
+                return AjaxResult.error("该游客已出园！");
+            }
+            return toAjax(selfTicketServicesService.updateVisitorOutTime2(sts.getId()));
         }
-        return toAjax(selfTicketServicesService.updateVisitorOutTime(cnId));
+        return AjaxResult.error("请刷新重试！！");
     }
+
+    @GetMapping(value = "/getPeopleCounts")
+    public TableDataInfo getPeopleCounts()
+    {
+        List countsList = new ArrayList<>();
+        int totalCount = 10;
+        int peopleCount = selfTicketServicesMapper.getPeopleCounts();
+        Map<String, Object> totalCountMap = new HashMap<>();
+        totalCountMap.put("name", "totalCount");
+        totalCountMap.put("value", totalCount);
+        countsList.add(totalCountMap); // 创建peopleCount的键值对，并添加到countsList中
+        Map<String, Object> peopleCountMap = new HashMap<>();
+        peopleCountMap.put("name", "peopleCount");
+        peopleCountMap.put("value", peopleCount);
+        countsList.add(peopleCountMap);
+        System.out.println("获取景区当前在园人数成功 : " + peopleCount);
+        return getDataTable(countsList);
+    }
+
+
+//        for (SelfTicketServices sts : list) {
+//            System.out.println(cnId.equals(sts.getCnId()));
+//            System.out.println(sts.getStateVisit()==null);
+//            System.out.println(!Objects.equals(sts.getStateVisit(), "1"));
+//            if (cnId.equals(sts.getCnId()) && (!Objects.equals(sts.getStateVisit(), "1") || sts.getStateVisit()==null)) {
+//                return AjaxResult.error("该游客未入园！");
+//            }
+//
+//        }
+//        return toAjax(selfTicketServicesService.updateVisitorOutTime(cnId));
 }

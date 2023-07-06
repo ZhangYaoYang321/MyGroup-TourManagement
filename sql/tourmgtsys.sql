@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50740
 File Encoding         : 65001
 
-Date: 2023-06-28 15:22:26
+Date: 2023-07-05 10:23:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -396,12 +396,23 @@ CREATE TABLE `self_complaints` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `self_complaints_complaints_id_uindex` (`complaints_id`),
   UNIQUE KEY `self_complaints_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='投诉表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='投诉表';
 
 -- ----------------------------
 -- Records of self_complaints
 -- ----------------------------
-INSERT INTO `self_complaints` VALUES ('1', '11111', '红红火火恍恍惚惚fu', '2023-06-06 00:00:00', '事实上是', '2023-06-28 00:00:00', '爱啊哎');
+INSERT INTO `self_complaints` VALUES ('6', '2023062727', '435245', '2023-06-27 00:00:00', '0', '2023-06-27 00:00:00', '爱上幅度萨芬');
+INSERT INTO `self_complaints` VALUES ('7', '2023062748', 'sfdgdsfg', '2023-06-27 00:00:00', '0', '2023-06-27 16:16:11', '是反对广泛大使馆反对');
+INSERT INTO `self_complaints` VALUES ('8', '2023062750', '48756865786578', '2023-06-27 00:00:00', '0', '2023-06-29 06:44:21', '什么东西');
+INSERT INTO `self_complaints` VALUES ('9', '2023062720', '的股价大幅改进改进', '2023-06-27 00:00:00', '0', null, null);
+INSERT INTO `self_complaints` VALUES ('10', '2023062774', '阿斯顿发大水发大水发', '2023-06-27 00:00:00', '0', null, null);
+INSERT INTO `self_complaints` VALUES ('11', '2023062780', '爱的故事梵蒂冈地方官', '2023-06-27 07:01:25', '0', null, null);
+INSERT INTO `self_complaints` VALUES ('12', '2023062724', '适当的方式敢死队风格', '2023-06-27 07:02:27', '0', null, null);
+INSERT INTO `self_complaints` VALUES ('13', '2023062718', '法国韩国合法化的', '2023-06-27 07:07:28', '0', null, null);
+INSERT INTO `self_complaints` VALUES ('14', '2023062798', '首付大概是反对鬼地方', '2023-06-27 07:14:48', '0', null, null);
+INSERT INTO `self_complaints` VALUES ('15', '2023062789', '单个或多个恢复共和国', '2023-06-27 07:37:33', '0', null, null);
+INSERT INTO `self_complaints` VALUES ('16', '2023062793', '随风倒敢死队风格顺丰大概', '2023-06-27 07:51:30', '0', null, null);
+INSERT INTO `self_complaints` VALUES ('17', '2023062795', '广泛的和规范化规范化', '2023-06-27 16:11:45', '0', null, null);
 
 -- ----------------------------
 -- Table structure for self_emergencies
@@ -417,11 +428,14 @@ CREATE TABLE `self_emergencies` (
   `emergencies_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `self_emergencies_id_uindex` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='事件表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='事件表';
 
 -- ----------------------------
 -- Records of self_emergencies
 -- ----------------------------
+INSERT INTO `self_emergencies` VALUES ('5', '的观点是发给', '士大夫盖房第三个对手犯规', '107', '1', '1', '2023-06-27 00:00:00');
+INSERT INTO `self_emergencies` VALUES ('6', '打算范德萨范德萨分', '阿斯蒂芬撒打发的算法', '108', '0', '3', '2023-06-27 00:00:00');
+INSERT INTO `self_emergencies` VALUES ('7', '的撒法撒旦法撒旦飞洒打发', '的说法啊手动阀第三方', '103', '1', '2', '2023-06-27 00:00:00');
 
 -- ----------------------------
 -- Table structure for self_hotel_orders
@@ -429,15 +443,21 @@ CREATE TABLE `self_emergencies` (
 DROP TABLE IF EXISTS `self_hotel_orders`;
 CREATE TABLE `self_hotel_orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) DEFAULT NULL,
+  `order_id` bigint(20) DEFAULT NULL,
   `cn_id` varchar(255) DEFAULT NULL,
+  `room_id` int(11) DEFAULT NULL,
+  `start_day` varchar(10) DEFAULT NULL,
+  `end_day` varchar(10) DEFAULT NULL,
+  `type_room` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `self_hotel_orders_id_uindex` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='酒店订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 COMMENT='酒店订单表';
 
 -- ----------------------------
 -- Records of self_hotel_orders
 -- ----------------------------
+INSERT INTO `self_hotel_orders` VALUES ('60', '2023062816380514', '11223344556', '104', '2023-06-04', '2023-06-12', '标准间');
+INSERT INTO `self_hotel_orders` VALUES ('61', '2023062820005612', '123456', '120', '2023-06-04', '2023-06-07', '家庭套房');
 
 -- ----------------------------
 -- Table structure for self_hotel_prices
@@ -464,16 +484,30 @@ DROP TABLE IF EXISTS `self_hotel_rooms`;
 CREATE TABLE `self_hotel_rooms` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `room_id` int(11) DEFAULT NULL,
-  `type_room` varchar(255) DEFAULT NULL,
-  `order_id` int(11) DEFAULT NULL,
-  `state_room` varchar(4) DEFAULT NULL,
+  `type_room` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `order_id` bigint(20) DEFAULT NULL,
+  `state_room` varchar(4) CHARACTER SET utf8 DEFAULT NULL,
+  `room_date` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `self_hotel_rooms_id_uindex` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='房间表';
+) ENGINE=InnoDB AUTO_INCREMENT=157 DEFAULT CHARSET=utf8mb4 COMMENT='房间表';
 
 -- ----------------------------
 -- Records of self_hotel_rooms
 -- ----------------------------
+INSERT INTO `self_hotel_rooms` VALUES ('144', '104', '标准间', '2023062816380514', '已预约', '2023-6-4');
+INSERT INTO `self_hotel_rooms` VALUES ('145', '104', '标准间', '2023062816380514', '已预约', '2023-6-5');
+INSERT INTO `self_hotel_rooms` VALUES ('146', '104', '标准间', '2023062816380514', '已预约', '2023-6-6');
+INSERT INTO `self_hotel_rooms` VALUES ('147', '104', '标准间', '2023062816380514', '已预约', '2023-6-7');
+INSERT INTO `self_hotel_rooms` VALUES ('148', '104', '标准间', '2023062816380514', '已预约', '2023-6-8');
+INSERT INTO `self_hotel_rooms` VALUES ('149', '104', '标准间', '2023062816380514', '已预约', '2023-6-9');
+INSERT INTO `self_hotel_rooms` VALUES ('150', '104', '标准间', '2023062816380514', '已预约', '2023-6-10');
+INSERT INTO `self_hotel_rooms` VALUES ('151', '104', '标准间', '2023062816380514', '已预约', '2023-6-11');
+INSERT INTO `self_hotel_rooms` VALUES ('152', '104', '标准间', '2023062816380514', '已预约', '2023-6-12');
+INSERT INTO `self_hotel_rooms` VALUES ('153', '120', '家庭套房', '2023062820005612', '已预约', '2023-6-4');
+INSERT INTO `self_hotel_rooms` VALUES ('154', '120', '家庭套房', '2023062820005612', '已预约', '2023-6-5');
+INSERT INTO `self_hotel_rooms` VALUES ('155', '120', '家庭套房', '2023062820005612', '已预约', '2023-6-6');
+INSERT INTO `self_hotel_rooms` VALUES ('156', '120', '家庭套房', '2023062820005612', '已预约', '2023-6-7');
 
 -- ----------------------------
 -- Table structure for self_parking_cars
@@ -488,22 +522,27 @@ CREATE TABLE `self_parking_cars` (
   `state_parking` varchar(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `self_parking_cars_id_uindex` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='车辆表';
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='车辆表';
 
 -- ----------------------------
 -- Records of self_parking_cars
 -- ----------------------------
-INSERT INTO `self_parking_cars` VALUES ('13', '川B224AA', '2023-06-28 09:41:49', null, '13', '1');
-INSERT INTO `self_parking_cars` VALUES ('15', '川C77633', '2023-06-28 09:40:45', null, '13', '1');
-INSERT INTO `self_parking_cars` VALUES ('22', '陕AUI998', '2023-06-28 09:45:26', null, '13', '1');
-INSERT INTO `self_parking_cars` VALUES ('23', '川AAA666', '2023-06-28 09:45:36', null, '13', '1');
+INSERT INTO `self_parking_cars` VALUES ('13', '川B224AA', '2023-06-28 09:41:49', '2023-07-03 14:51:24', '253', '2');
+INSERT INTO `self_parking_cars` VALUES ('15', '川C77633', '2023-06-28 09:40:45', null, '339', '1');
+INSERT INTO `self_parking_cars` VALUES ('22', '陕AUI998', '2023-06-28 09:45:26', '2023-07-02 09:48:53', '195', '2');
+INSERT INTO `self_parking_cars` VALUES ('23', '川AAA666', '2023-06-28 09:45:36', '2023-07-01 09:47:35', '147', '2');
 INSERT INTO `self_parking_cars` VALUES ('24', '川CCC999', '2023-06-28 09:45:46', '2023-06-28 09:53:37', '3', '2');
-INSERT INTO `self_parking_cars` VALUES ('25', '川B77NM9', '2023-06-28 09:58:26', null, '13', '1');
-INSERT INTO `self_parking_cars` VALUES ('27', '京A3W76V', '2023-06-28 10:00:19', null, '13', '1');
+INSERT INTO `self_parking_cars` VALUES ('25', '川B77NM9', '2023-06-28 09:58:26', '2023-07-04 10:04:47', '291', '2');
+INSERT INTO `self_parking_cars` VALUES ('27', '京A3W76V', '2023-06-28 10:00:19', null, '339', '1');
 INSERT INTO `self_parking_cars` VALUES ('28', '京A3301V', '2023-06-28 10:00:51', '2023-06-28 10:01:58', '3', '2');
 INSERT INTO `self_parking_cars` VALUES ('29', '京A3301V', '2023-06-28 10:02:07', '2023-06-28 10:02:13', '3', '2');
 INSERT INTO `self_parking_cars` VALUES ('30', '桂A33NH8', '2023-06-28 10:32:29', '2023-06-28 10:32:38', '3', '2');
-INSERT INTO `self_parking_cars` VALUES ('31', '桂B78BB2', '2023-06-28 10:55:22', null, '11', '1');
+INSERT INTO `self_parking_cars` VALUES ('31', '桂B78BB2', '2023-06-28 10:55:22', null, '337', '1');
+INSERT INTO `self_parking_cars` VALUES ('32', '琼B12345', '2023-07-01 09:40:10', '2023-07-01 09:45:43', '3', '2');
+INSERT INTO `self_parking_cars` VALUES ('33', '琼B12345', '2023-07-01 09:46:20', null, '195', '1');
+INSERT INTO `self_parking_cars` VALUES ('34', '川AAA666', '2023-07-03 14:55:22', '2023-07-03 15:29:02', '3', '2');
+INSERT INTO `self_parking_cars` VALUES ('35', '川B224AA', '2023-07-03 14:55:34', null, '89', '1');
+INSERT INTO `self_parking_cars` VALUES ('36', '川CCC999', '2023-07-03 14:55:58', '2023-07-04 10:04:19', '41', '2');
 
 -- ----------------------------
 -- Table structure for self_ticket_prices
@@ -536,11 +575,20 @@ CREATE TABLE `self_ticket_services` (
   `type_ticket` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `self_visit_victors_id_uindex` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='票务表';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='票务表';
 
 -- ----------------------------
 -- Records of self_ticket_services
 -- ----------------------------
+INSERT INTO `self_ticket_services` VALUES ('16', '16450036', '22222', '2023-06-05 00:00:00', null, null, null, '22222');
+INSERT INTO `self_ticket_services` VALUES ('19', '18806562', '354', '2023-06-04 00:00:00', '2023-06-28 16:07:50', '2023-06-28 16:07:54', '0', '5');
+INSERT INTO `self_ticket_services` VALUES ('21', '4567616', '13131', '2023-06-05 00:00:00', '2023-06-28 15:44:03', '2023-06-28 16:01:34', '0', '2');
+INSERT INTO `self_ticket_services` VALUES ('23', '84546609', '22222', '2023-06-04 00:00:00', null, null, null, '4');
+INSERT INTO `self_ticket_services` VALUES ('26', '51676665', '12321', '2023-06-04 00:00:00', '2023-06-28 15:43:52', '2023-06-28 16:03:35', '0', '3');
+INSERT INTO `self_ticket_services` VALUES ('28', '10321029', '456', '2023-06-06 00:00:00', '2023-06-28 16:15:09', '2023-06-28 16:15:15', '0', '2');
+INSERT INTO `self_ticket_services` VALUES ('29', '3743447', '465', '2023-06-05 00:00:00', '2023-06-28 16:18:17', '2023-06-28 16:18:20', '0', '3');
+INSERT INTO `self_ticket_services` VALUES ('30', '12495419', '1111', '2023-06-13 00:00:00', '2023-06-29 14:08:20', '2023-06-29 14:08:22', '0', '1');
+INSERT INTO `self_ticket_services` VALUES ('31', '39826743', '123', '2023-07-05 00:00:00', '2023-07-05 10:22:01', null, '1', '4');
 
 -- ----------------------------
 -- Table structure for self_visitors
@@ -554,13 +602,14 @@ CREATE TABLE `self_visitors` (
   `order_id` int(11) DEFAULT NULL,
   `ticket_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `self_visitors_cn_id_uindex` (`cn_id`),
   UNIQUE KEY `self_visitors_id_uindex` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='游客表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='游客表';
 
 -- ----------------------------
 -- Records of self_visitors
 -- ----------------------------
+INSERT INTO `self_visitors` VALUES ('1', '1111', '1111', '1111', null, '12495419');
+INSERT INTO `self_visitors` VALUES ('2', '123', '123', '123', null, '39826743');
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -587,7 +636,7 @@ INSERT INTO `sys_config` VALUES ('1', '主框架页-默认皮肤样式名称', '
 INSERT INTO `sys_config` VALUES ('2', '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', '2023-06-23 16:06:59', '', null, '初始化密码 123456');
 INSERT INTO `sys_config` VALUES ('3', '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', '2023-06-23 16:06:59', '', null, '深色主题theme-dark，浅色主题theme-light');
 INSERT INTO `sys_config` VALUES ('4', '账号自助-验证码开关', 'sys.account.captchaEnabled', 'true', 'Y', 'admin', '2023-06-23 16:06:59', '', null, '是否开启验证码功能（true开启，false关闭）');
-INSERT INTO `sys_config` VALUES ('5', '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 'Y', 'admin', '2023-06-23 16:06:59', '', null, '是否开启注册用户功能（true开启，false关闭）');
+INSERT INTO `sys_config` VALUES ('5', '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'true', 'Y', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-28 20:24:22', '是否开启注册用户功能（true开启，false关闭）');
 INSERT INTO `sys_config` VALUES ('6', '用户登录-黑名单列表', 'sys.login.blackIPList', '', 'Y', 'admin', '2023-06-23 16:06:59', '', null, '设置登录IP黑名单限制，多个匹配项以;分隔，支持匹配（*通配、网段）');
 
 -- ----------------------------
@@ -610,21 +659,37 @@ CREATE TABLE `sys_dept` (
   `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`dept_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COMMENT='部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8 COMMENT='部门表';
 
 -- ----------------------------
 -- Records of sys_dept
 -- ----------------------------
-INSERT INTO `sys_dept` VALUES ('100', '0', '0', '若依科技', '0', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
-INSERT INTO `sys_dept` VALUES ('101', '100', '0,100', '深圳总公司', '1', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
-INSERT INTO `sys_dept` VALUES ('102', '100', '0,100', '长沙分公司', '2', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
-INSERT INTO `sys_dept` VALUES ('103', '101', '0,100,101', '研发部门', '1', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
-INSERT INTO `sys_dept` VALUES ('104', '101', '0,100,101', '市场部门', '2', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
-INSERT INTO `sys_dept` VALUES ('105', '101', '0,100,101', '测试部门', '3', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
-INSERT INTO `sys_dept` VALUES ('106', '101', '0,100,101', '财务部门', '4', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
-INSERT INTO `sys_dept` VALUES ('107', '101', '0,100,101', '运维部门', '5', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
-INSERT INTO `sys_dept` VALUES ('108', '102', '0,100,102', '市场部门', '1', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
-INSERT INTO `sys_dept` VALUES ('109', '102', '0,100,102', '财务部门', '2', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', '', null);
+INSERT INTO `sys_dept` VALUES ('100', '0', '0', '景区综合服务有限公司', '0', '可汗', '15888888888', 'kehan@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 09:53:31');
+INSERT INTO `sys_dept` VALUES ('101', '100', '0,100', '物业管理部', '1', '金刀可汗', '15888888888', 'jindao@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 09:54:42');
+INSERT INTO `sys_dept` VALUES ('102', '100', '0,100', '酒店管理部', '2', '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 10:02:11');
+INSERT INTO `sys_dept` VALUES ('103', '101', '0,100,101', '安保处', '1', '安保可汗', '15888888888', 'anbao@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 10:00:12');
+INSERT INTO `sys_dept` VALUES ('104', '101', '0,100,101', '保洁处', '2', '保洁可汗', '15888888888', 'baojie@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 09:56:07');
+INSERT INTO `sys_dept` VALUES ('105', '101', '0,100,101', '维修处', '3', '维修可汗', '15888888888', 'weixiu@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 09:56:31');
+INSERT INTO `sys_dept` VALUES ('106', '101', '0,100,101', '仓储处', '4', '仓储可汗', '15888888888', 'cangchu@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 09:57:03');
+INSERT INTO `sys_dept` VALUES ('107', '101', '0,100,101', '工程处', '5', '工程可汗', '15888888888', 'gongcheng@qq.com', '0', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 09:58:55');
+INSERT INTO `sys_dept` VALUES ('108', '102', '0,100,102', '市场部门', '1', '若依', '15888888888', 'ry@qq.com', '0', '2', 'admin', '2023-06-23 16:06:59', '', null);
+INSERT INTO `sys_dept` VALUES ('109', '102', '0,100,102', '财务部门', '2', '若依', '15888888888', 'ry@qq.com', '0', '2', 'admin', '2023-06-23 16:06:59', '', null);
+INSERT INTO `sys_dept` VALUES ('110', '100', '0,100', '保安处', '1', null, null, null, '0', '2', 'admin', '2023-06-27 09:49:19', '', null);
+INSERT INTO `sys_dept` VALUES ('111', '101', '0,100,101', '调度办公室', '0', '调度可汗', null, 'diaodu@qq.com', '0', '0', 'admin', '2023-06-27 10:00:00', 'admin', '2023-06-27 10:00:16');
+INSERT INTO `sys_dept` VALUES ('112', '100', '0,100', '统筹组织部', '4', null, null, null, '0', '0', 'admin', '2023-06-27 10:03:20', 'admin', '2023-06-27 10:06:50');
+INSERT INTO `sys_dept` VALUES ('113', '112', '0,100,112', '财务处', '0', null, null, null, '0', '0', 'admin', '2023-06-27 10:04:02', '', null);
+INSERT INTO `sys_dept` VALUES ('114', '112', '0,100,112', '活动策划处', '1', null, null, null, '0', '0', 'admin', '2023-06-27 10:04:15', '', null);
+INSERT INTO `sys_dept` VALUES ('115', '112', '0,100,112', '秘书处', '2', null, null, null, '0', '0', 'admin', '2023-06-27 10:04:34', '', null);
+INSERT INTO `sys_dept` VALUES ('116', '112', '0,100,112', '对外事务处', '3', null, null, null, '0', '0', 'admin', '2023-06-27 10:05:58', '', null);
+INSERT INTO `sys_dept` VALUES ('117', '112', '0,100,112', '宣传处', '2', null, null, null, '0', '0', 'admin', '2023-06-27 10:07:30', '', null);
+INSERT INTO `sys_dept` VALUES ('118', '100', '0,100', '景区管理部', '4', null, null, null, '0', '0', 'admin', '2023-06-27 10:08:11', 'admin', '2023-06-27 10:12:36');
+INSERT INTO `sys_dept` VALUES ('119', '102', '0,100,102', '客房服务处', '1', null, null, null, '0', '0', 'admin', '2023-06-27 10:08:56', '', null);
+INSERT INTO `sys_dept` VALUES ('120', '102', '0,100,102', '安保处', '2', null, null, null, '0', '2', 'admin', '2023-06-27 10:09:29', '', null);
+INSERT INTO `sys_dept` VALUES ('121', '102', '0,100,102', '仓储处', '1', null, null, null, '0', '2', 'admin', '2023-06-27 10:09:41', '', null);
+INSERT INTO `sys_dept` VALUES ('122', '102', '0,100,102', '工程处', '1', null, null, null, '0', '2', 'admin', '2023-06-27 10:09:49', '', null);
+INSERT INTO `sys_dept` VALUES ('123', '102', '0,100,102', '管家处', '1', null, null, null, '0', '0', 'admin', '2023-06-27 10:11:06', '', null);
+INSERT INTO `sys_dept` VALUES ('124', '118', '0,100,118', '景区服务处', '1', null, null, null, '0', '0', 'admin', '2023-06-27 10:12:12', '', null);
+INSERT INTO `sys_dept` VALUES ('125', '118', '0,100,118', '导游处', '2', null, null, null, '0', '2', 'admin', '2023-06-27 10:12:26', '', null);
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -778,7 +843,7 @@ CREATE TABLE `sys_logininfor` (
   PRIMARY KEY (`info_id`),
   KEY `idx_sys_logininfor_s` (`status`),
   KEY `idx_sys_logininfor_lt` (`login_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=utf8 COMMENT='系统访问记录';
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -807,6 +872,23 @@ INSERT INTO `sys_logininfor` VALUES ('120', 'admin', '127.0.0.1', '内网IP', 'C
 INSERT INTO `sys_logininfor` VALUES ('121', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-06-27 22:17:04');
 INSERT INTO `sys_logininfor` VALUES ('122', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-06-28 09:05:40');
 INSERT INTO `sys_logininfor` VALUES ('123', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-06-28 13:31:46');
+INSERT INTO `sys_logininfor` VALUES ('124', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-01 09:08:35');
+INSERT INTO `sys_logininfor` VALUES ('125', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-01 09:13:11');
+INSERT INTO `sys_logininfor` VALUES ('126', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-01 10:33:41');
+INSERT INTO `sys_logininfor` VALUES ('127', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-01 11:17:51');
+INSERT INTO `sys_logininfor` VALUES ('128', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-01 16:04:11');
+INSERT INTO `sys_logininfor` VALUES ('129', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-07-02 09:40:30');
+INSERT INTO `sys_logininfor` VALUES ('130', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-02 09:40:36');
+INSERT INTO `sys_logininfor` VALUES ('131', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-02 10:47:36');
+INSERT INTO `sys_logininfor` VALUES ('132', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-02 14:42:44');
+INSERT INTO `sys_logininfor` VALUES ('133', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码已失效', '2023-07-03 13:57:38');
+INSERT INTO `sys_logininfor` VALUES ('134', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-03 13:57:42');
+INSERT INTO `sys_logininfor` VALUES ('135', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '1', '验证码错误', '2023-07-03 14:50:55');
+INSERT INTO `sys_logininfor` VALUES ('136', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-03 14:50:59');
+INSERT INTO `sys_logininfor` VALUES ('137', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-04 09:59:43');
+INSERT INTO `sys_logininfor` VALUES ('138', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-05 08:56:13');
+INSERT INTO `sys_logininfor` VALUES ('139', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-05 09:25:49');
+INSERT INTO `sys_logininfor` VALUES ('140', 'admin', '127.0.0.1', '内网IP', 'Chrome 11', 'Windows 10', '0', '登录成功', '2023-07-05 10:21:27');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -833,7 +915,7 @@ CREATE TABLE `sys_menu` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2131 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=2142 DEFAULT CHARSET=utf8 COMMENT='菜单权限表';
 
 -- ----------------------------
 -- Records of sys_menu
@@ -841,7 +923,7 @@ CREATE TABLE `sys_menu` (
 INSERT INTO `sys_menu` VALUES ('1', '系统管理', '0', '1', 'system', null, '', '1', '0', 'M', '0', '0', '', 'system', 'admin', '2023-06-23 16:06:59', '', null, '系统管理目录');
 INSERT INTO `sys_menu` VALUES ('2', '系统监控', '0', '2', 'monitor', null, '', '1', '0', 'M', '0', '0', '', 'monitor', 'admin', '2023-06-23 16:06:59', '', null, '系统监控目录');
 INSERT INTO `sys_menu` VALUES ('3', '系统工具', '0', '3', 'tool', null, '', '1', '0', 'M', '0', '0', '', 'tool', 'admin', '2023-06-23 16:06:59', '', null, '系统工具目录');
-INSERT INTO `sys_menu` VALUES ('4', '若依官网', '0', '4', 'http://ruoyi.vip', null, '', '0', '0', 'M', '1', '1', '', 'guide', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-26 10:23:18', '若依官网地址');
+INSERT INTO `sys_menu` VALUES ('4', '若依官网', '0', '20', 'http://ruoyi.vip', null, '', '0', '0', 'M', '1', '1', '', 'guide', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-29 14:32:12', '若依官网地址');
 INSERT INTO `sys_menu` VALUES ('100', '用户管理', '1', '1', 'user', 'system/user/index', '', '1', '0', 'C', '0', '0', 'system:user:list', 'user', 'admin', '2023-06-23 16:06:59', '', null, '用户管理菜单');
 INSERT INTO `sys_menu` VALUES ('101', '角色管理', '1', '2', 'role', 'system/role/index', '', '1', '0', 'C', '0', '0', 'system:role:list', 'peoples', 'admin', '2023-06-23 16:06:59', '', null, '角色管理菜单');
 INSERT INTO `sys_menu` VALUES ('102', '菜单管理', '1', '3', 'menu', 'system/menu/index', '', '1', '0', 'C', '0', '0', 'system:menu:list', 'tree-table', 'admin', '2023-06-23 16:06:59', '', null, '菜单管理菜单');
@@ -923,18 +1005,29 @@ INSERT INTO `sys_menu` VALUES ('1057', '生成删除', '116', '3', '#', '', '', 
 INSERT INTO `sys_menu` VALUES ('1058', '导入代码', '116', '4', '#', '', '', '1', '0', 'F', '0', '0', 'tool:gen:import', '#', 'admin', '2023-06-23 16:06:59', '', null, '');
 INSERT INTO `sys_menu` VALUES ('1059', '预览代码', '116', '5', '#', '', '', '1', '0', 'F', '0', '0', 'tool:gen:preview', '#', 'admin', '2023-06-23 16:06:59', '', null, '');
 INSERT INTO `sys_menu` VALUES ('1060', '生成代码', '116', '6', '#', '', '', '1', '0', 'F', '0', '0', 'tool:gen:code', '#', 'admin', '2023-06-23 16:06:59', '', null, '');
-INSERT INTO `sys_menu` VALUES ('2000', '平台管理', '0', '5', 'platform', null, null, '1', '0', 'M', '0', '0', null, 'bug', 'admin', '2023-06-26 09:23:38', '', null, '');
+INSERT INTO `sys_menu` VALUES ('2000', '平台管理', '0', '8', 'platform', null, null, '1', '0', 'M', '0', '0', '', 'bug', 'admin', '2023-06-26 09:23:38', 'admin', '2023-06-29 14:34:35', '');
 INSERT INTO `sys_menu` VALUES ('2115', '考勤信息', '2000', '1', 'attendances', 'system/attendances/index', null, '1', '0', 'C', '0', '0', 'system:attendances:list', '404', 'admin', '2023-06-26 14:02:20', 'admin', '2023-06-26 14:14:55', '考勤信息菜单');
 INSERT INTO `sys_menu` VALUES ('2121', '投诉菜单', '2000', '2', 'complaints', 'system/complaints/index', null, '1', '0', 'C', '0', '0', 'system:complaints:list', '404', 'admin', '2023-06-26 14:12:33', '', null, '');
 INSERT INTO `sys_menu` VALUES ('2122', '事件处理', '2000', '3', 'emergencies', 'system/emergencies/index', null, '1', '0', 'C', '0', '0', 'system:emergencies:list', '404', 'admin', '2023-06-26 14:16:21', '', null, '');
-INSERT INTO `sys_menu` VALUES ('2123', '酒店订单', '2000', '4', 'orders', 'system/orders/index', null, '1', '0', 'C', '0', '0', 'system:orders:list', '404', 'admin', '2023-06-26 14:17:23', '', null, '');
+INSERT INTO `sys_menu` VALUES ('2123', '酒店订单', '2000', '4', 'orders', 'system/orders/index', null, '1', '0', 'C', '1', '1', 'system:orders:list', '404', 'admin', '2023-06-26 14:17:23', 'admin', '2023-06-29 14:19:14', '');
 INSERT INTO `sys_menu` VALUES ('2124', '酒店价格', '2000', '5', 'hotel_prices', 'system/hotel_prices/index', null, '1', '0', 'C', '0', '0', 'system:hotel_prices:list', '404', 'admin', '2023-06-26 14:17:59', 'admin', '2023-06-26 14:19:42', '');
 INSERT INTO `sys_menu` VALUES ('2125', '酒店房间', '2000', '6', 'rooms', 'system/rooms/index', null, '1', '0', 'C', '0', '0', 'system:rooms:list', '404', 'admin', '2023-06-26 14:18:40', 'admin', '2023-06-26 14:19:46', '');
 INSERT INTO `sys_menu` VALUES ('2126', '停车场管理', '2000', '7', 'cars', 'system/cars/index', null, '1', '0', 'C', '0', '0', 'system:cars:list', '404', 'admin', '2023-06-26 14:19:35', 'admin', '2023-06-26 14:19:50', '');
 INSERT INTO `sys_menu` VALUES ('2127', '游客信息', '2000', '8', 'visitors', 'system/visitors/index', null, '1', '0', 'C', '0', '0', 'system:visitors:list', '404', 'admin', '2023-06-26 14:20:30', '', null, '');
 INSERT INTO `sys_menu` VALUES ('2128', '门票信息', '2000', '9', 'ticket_prices', 'system/ticket_prices/index', null, '1', '0', 'C', '0', '0', 'system:ticket_prices:list', '404', 'admin', '2023-06-26 14:21:22', '', null, '');
 INSERT INTO `sys_menu` VALUES ('2129', '票务管理', '2000', '10', 'ticket_services', 'system/ticket_services/index', null, '1', '0', 'C', '0', '0', 'system:ticket_services:list', '404', 'admin', '2023-06-26 14:22:25', '', null, '');
-INSERT INTO `sys_menu` VALUES ('2130', '停车场', '0', '3', 'parking', 'system/cars/parking', null, '1', '0', 'C', '0', '0', 'system:parking:list', 'system', 'admin', '2023-06-26 15:23:47', 'admin', '2023-06-26 15:24:47', '');
+INSERT INTO `sys_menu` VALUES ('2130', '停车场', '0', '5', 'parking', 'system/cars/parking', null, '1', '0', 'C', '0', '0', 'system:parking:list', 'system', 'admin', '2023-06-26 15:23:47', 'admin', '2023-06-29 14:32:46', '');
+INSERT INTO `sys_menu` VALUES ('2131', '景区', '0', '4', 'scenery', 'system/ticket_services/scenery', null, '1', '0', 'C', '0', '0', 'system:scenery:list', 'people', 'admin', '2023-06-29 14:07:07', 'admin', '2023-06-29 14:32:40', '');
+INSERT INTO `sys_menu` VALUES ('2132', '酒店管理', '0', '6', 'hotel', null, null, '1', '0', 'M', '0', '0', '', 'peoples', 'admin', '2023-06-29 14:12:20', 'admin', '2023-06-29 14:33:00', '');
+INSERT INTO `sys_menu` VALUES ('2133', '酒店订单', '2132', '1', 'order', 'hotel/orders/index', null, '1', '0', 'C', '0', '0', 'hotel:orders:index', 'documentation', 'admin', '2023-06-29 14:13:42', 'admin', '2023-06-29 14:20:38', '');
+INSERT INTO `sys_menu` VALUES ('2134', '酒店预约', '2132', '2', 'reservation', 'hotel/reservation/index', null, '1', '0', 'C', '0', '0', 'hotel:reservation:list', 'date-range', 'admin', '2023-06-29 14:14:53', '', null, '');
+INSERT INTO `sys_menu` VALUES ('2135', '酒店退房', '2132', '3', 'checkout', 'hotel/checkout/index', null, '1', '0', 'C', '0', '0', 'hotel:checkout:list', 'table', 'admin', '2023-06-29 14:16:10', '', null, '');
+INSERT INTO `sys_menu` VALUES ('2136', '登记入住', '2132', '4', 'checkin', 'hotel/checkin/index', null, '1', '0', 'C', '0', '0', 'hotel:checkin:list', 'checkbox', 'admin', '2023-06-29 14:16:49', '', null, '');
+INSERT INTO `sys_menu` VALUES ('2137', '事件与投诉', '0', '7', 'complaint_emergency', null, null, '1', '0', 'M', '0', '0', '', 'button', 'admin', '2023-06-29 14:31:35', 'admin', '2023-06-29 14:33:07', '');
+INSERT INTO `sys_menu` VALUES ('2138', '待处理事件', '2137', '1', 'emergency_complete', 'system/emergency_complete/index', null, '1', '0', 'C', '0', '0', 'system:emergency:complete', 'job', 'admin', '2023-06-29 14:37:19', '', null, '');
+INSERT INTO `sys_menu` VALUES ('2139', '事件上报', '2137', '2', 'emergency_add', 'system/emergency_add/index', null, '1', '0', 'C', '0', '0', 'system:emergency_add:add', 'bug', 'admin', '2023-06-29 14:39:15', '', null, '');
+INSERT INTO `sys_menu` VALUES ('2140', '待处理投诉', '2137', '3', 'complaint_complete', 'system/complaint_complete/index', '', '1', '0', 'C', '0', '0', 'system:complaint:complete', 'link', 'admin', '2023-06-29 14:40:27', 'admin', '2023-06-29 14:43:45', '');
+INSERT INTO `sys_menu` VALUES ('2141', '投诉', '2137', '4', 'complaint_add', 'system/complaint_add/index', '', '1', '0', 'C', '0', '0', 'system:complaint_add:add', 'question', 'admin', '2023-06-29 14:42:24', 'admin', '2023-06-29 14:43:58', '');
 
 -- ----------------------------
 -- Table structure for sys_notice
@@ -986,7 +1079,7 @@ CREATE TABLE `sys_oper_log` (
   KEY `idx_sys_oper_log_bt` (`business_type`),
   KEY `idx_sys_oper_log_s` (`status`),
   KEY `idx_sys_oper_log_ot` (`oper_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=523 DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
+) ENGINE=InnoDB AUTO_INCREMENT=590 DEFAULT CHARSET=utf8 COMMENT='操作日志记录';
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1414,6 +1507,73 @@ INSERT INTO `sys_oper_log` VALUES ('519', '车辆出场', '2', 'com.ruoyi.web.co
 INSERT INTO `sys_oper_log` VALUES ('520', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E6%A1%82A33NH8', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-28 10:32:29', '35');
 INSERT INTO `sys_oper_log` VALUES ('521', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E6%A1%82A33NH8', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-28 10:32:37', '6');
 INSERT INTO `sys_oper_log` VALUES ('522', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E6%A1%82B78BB2', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-28 10:55:21', '39');
+INSERT INTO `sys_oper_log` VALUES ('523', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/ticket_services/scenery\",\"createBy\":\"admin\",\"icon\":\"people\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"景区\",\"menuType\":\"C\",\"orderNum\":6,\"params\":{},\"parentId\":0,\"path\":\"scenery\",\"perms\":\"system:scenery:list\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:07:07', '15');
+INSERT INTO `sys_oper_log` VALUES ('524', '票务', '1', 'com.ruoyi.web.controller.system.SelfTicketServicesController.appoint()', 'POST', '1', 'admin', null, '/system/ticket_services/appoint', '127.0.0.1', '内网IP', '{\"cnId\":\"1111\",\"id\":30,\"params\":{},\"phoneNumber\":\"1111\",\"scheduledDate\":\"2023-06-13\",\"ticketId\":12495419,\"typeTicket\":\"1\",\"visitorsName\":\"1111\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:08:00', '17');
+INSERT INTO `sys_oper_log` VALUES ('525', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/ticket_services/scenery\",\"createTime\":\"2023-06-29 14:07:07\",\"icon\":\"people\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2131,\"menuName\":\"景区\",\"menuType\":\"C\",\"orderNum\":3,\"params\":{},\"parentId\":0,\"path\":\"scenery\",\"perms\":\"system:scenery:list\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:11:31', '8');
+INSERT INTO `sys_oper_log` VALUES ('526', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createBy\":\"admin\",\"icon\":\"peoples\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"酒店管理\",\"menuType\":\"M\",\"orderNum\":3,\"params\":{},\"parentId\":0,\"path\":\"hotel\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:12:20', '6');
+INSERT INTO `sys_oper_log` VALUES ('527', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"hotel:order:index\",\"createBy\":\"admin\",\"icon\":\"documentation\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"酒店订单\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2132,\"path\":\"hotel/order/index\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:13:42', '7');
+INSERT INTO `sys_oper_log` VALUES ('528', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"hotel/reservation/index\",\"createBy\":\"admin\",\"icon\":\"date-range\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"酒店预约\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2132,\"path\":\"reservation\",\"perms\":\"hotel:reservation:list\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:14:53', '5');
+INSERT INTO `sys_oper_log` VALUES ('529', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"hotel/order/index\",\"createTime\":\"2023-06-29 14:13:42\",\"icon\":\"documentation\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2133,\"menuName\":\"酒店订单\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2132,\"path\":\"order\",\"perms\":\"hotel:order:index\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:15:31', '6');
+INSERT INTO `sys_oper_log` VALUES ('530', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"hotel/checkout/index\",\"createBy\":\"admin\",\"icon\":\"table\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"酒店退房\",\"menuType\":\"C\",\"orderNum\":3,\"params\":{},\"parentId\":2132,\"path\":\"checkout\",\"perms\":\"hotel:checkout:list\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:16:10', '6');
+INSERT INTO `sys_oper_log` VALUES ('531', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"hotel/checkin/index\",\"createBy\":\"admin\",\"icon\":\"checkbox\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"登记入住\",\"menuType\":\"C\",\"orderNum\":4,\"params\":{},\"parentId\":2132,\"path\":\"checkin\",\"perms\":\"hotel:checkin:list\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:16:49', '6');
+INSERT INTO `sys_oper_log` VALUES ('532', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/orders/index\",\"createTime\":\"2023-06-26 14:17:23\",\"icon\":\"404\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2123,\"menuName\":\"酒店订单\",\"menuType\":\"C\",\"orderNum\":4,\"params\":{},\"parentId\":2000,\"path\":\"orders\",\"perms\":\"system:orders:list\",\"status\":\"1\",\"updateBy\":\"admin\",\"visible\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:19:14', '7');
+INSERT INTO `sys_oper_log` VALUES ('533', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"hotel/orders/index\",\"createTime\":\"2023-06-29 14:13:42\",\"icon\":\"documentation\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2133,\"menuName\":\"酒店订单\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2132,\"path\":\"order\",\"perms\":\"hotel:orders:index\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:20:38', '18');
+INSERT INTO `sys_oper_log` VALUES ('534', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createBy\":\"admin\",\"icon\":\"button\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"事件与投诉\",\"menuType\":\"M\",\"orderNum\":6,\"params\":{},\"parentId\":0,\"path\":\"complaint_emergency\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:31:35', '7');
+INSERT INTO `sys_oper_log` VALUES ('535', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2023-06-29 14:31:35\",\"icon\":\"button\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2137,\"menuName\":\"事件与投诉\",\"menuType\":\"M\",\"orderNum\":3,\"params\":{},\"parentId\":0,\"path\":\"complaint_emergency\",\"perms\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:31:53', '8');
+INSERT INTO `sys_oper_log` VALUES ('536', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2023-06-23 16:06:59\",\"icon\":\"guide\",\"isCache\":\"0\",\"isFrame\":\"0\",\"menuId\":4,\"menuName\":\"若依官网\",\"menuType\":\"M\",\"orderNum\":20,\"params\":{},\"parentId\":0,\"path\":\"http://ruoyi.vip\",\"perms\":\"\",\"query\":\"\",\"status\":\"1\",\"updateBy\":\"admin\",\"visible\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:32:12', '7');
+INSERT INTO `sys_oper_log` VALUES ('537', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/cars/parking\",\"createTime\":\"2023-06-26 15:23:47\",\"icon\":\"system\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2130,\"menuName\":\"停车场\",\"menuType\":\"C\",\"orderNum\":4,\"params\":{},\"parentId\":0,\"path\":\"parking\",\"perms\":\"system:parking:list\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:32:24', '5');
+INSERT INTO `sys_oper_log` VALUES ('538', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/ticket_services/scenery\",\"createTime\":\"2023-06-29 14:07:07\",\"icon\":\"people\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2131,\"menuName\":\"景区\",\"menuType\":\"C\",\"orderNum\":4,\"params\":{},\"parentId\":0,\"path\":\"scenery\",\"perms\":\"system:scenery:list\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:32:40', '6');
+INSERT INTO `sys_oper_log` VALUES ('539', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/cars/parking\",\"createTime\":\"2023-06-26 15:23:47\",\"icon\":\"system\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2130,\"menuName\":\"停车场\",\"menuType\":\"C\",\"orderNum\":5,\"params\":{},\"parentId\":0,\"path\":\"parking\",\"perms\":\"system:parking:list\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:32:46', '7');
+INSERT INTO `sys_oper_log` VALUES ('540', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2023-06-29 14:12:20\",\"icon\":\"peoples\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2132,\"menuName\":\"酒店管理\",\"menuType\":\"M\",\"orderNum\":6,\"params\":{},\"parentId\":0,\"path\":\"hotel\",\"perms\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:33:00', '6');
+INSERT INTO `sys_oper_log` VALUES ('541', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2023-06-29 14:31:35\",\"icon\":\"button\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2137,\"menuName\":\"事件与投诉\",\"menuType\":\"M\",\"orderNum\":7,\"params\":{},\"parentId\":0,\"path\":\"complaint_emergency\",\"perms\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:33:07', '6');
+INSERT INTO `sys_oper_log` VALUES ('542', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"createTime\":\"2023-06-26 09:23:38\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2000,\"menuName\":\"平台管理\",\"menuType\":\"M\",\"orderNum\":8,\"params\":{},\"parentId\":0,\"path\":\"platform\",\"perms\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:34:35', '6');
+INSERT INTO `sys_oper_log` VALUES ('543', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/emergency_complete/index\",\"createBy\":\"admin\",\"icon\":\"job\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"待处理事件\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":2137,\"path\":\"emergency_complete\",\"perms\":\"system:emergency:complete\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:37:19', '5');
+INSERT INTO `sys_oper_log` VALUES ('544', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/emergency_add/index\",\"createBy\":\"admin\",\"icon\":\"bug\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"事件上报\",\"menuType\":\"C\",\"orderNum\":2,\"params\":{},\"parentId\":2137,\"path\":\"emergency_add\",\"perms\":\"system:emergency_add:add\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:39:15', '6');
+INSERT INTO `sys_oper_log` VALUES ('545', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system:complaint:complete\",\"createBy\":\"admin\",\"icon\":\"link\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"待处理投诉\",\"menuType\":\"C\",\"orderNum\":3,\"params\":{},\"parentId\":2137,\"path\":\"complaint_complete\",\"perms\":\"system/complaint_complete/index\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:40:27', '5');
+INSERT INTO `sys_oper_log` VALUES ('546', '菜单管理', '1', 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system:complaint_add:add\",\"createBy\":\"admin\",\"icon\":\"question\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"投诉\",\"menuType\":\"C\",\"orderNum\":4,\"params\":{},\"parentId\":2137,\"path\":\"complaint_add\",\"perms\":\"system/complaint_add/index\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:42:24', '5');
+INSERT INTO `sys_oper_log` VALUES ('547', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/complaint_complete/index\",\"createTime\":\"2023-06-29 14:40:27\",\"icon\":\"link\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2140,\"menuName\":\"待处理投诉\",\"menuType\":\"C\",\"orderNum\":3,\"params\":{},\"parentId\":2137,\"path\":\"complaint_complete\",\"perms\":\"system:complaint:complete\",\"query\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:43:45', '6');
+INSERT INTO `sys_oper_log` VALUES ('548', '菜单管理', '2', 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', '1', 'admin', null, '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"system/complaint_add/index\",\"createTime\":\"2023-06-29 14:42:24\",\"icon\":\"question\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2141,\"menuName\":\"投诉\",\"menuType\":\"C\",\"orderNum\":4,\"params\":{},\"parentId\":2137,\"path\":\"complaint_add\",\"perms\":\"system:complaint_add:add\",\"query\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:43:58', '8');
+INSERT INTO `sys_oper_log` VALUES ('549', '投诉', '2', 'com.ruoyi.web.controller.system.SelfComplaintCompleteController.edit()', 'PUT', '1', 'admin', null, '/system/complaint_complete', '127.0.0.1', '内网IP', '{\"complaintsDate\":\"2023-06-27T12:00:00\",\"complaintsId\":2023062750,\"complaintsMessage\":\"48756865786578\",\"complaintsReplyDate\":\"2023-06-29T06:44:21\",\"complaintsReplyMessage\":\"什么东西\",\"id\":8,\"params\":{},\"stateComplaints\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-06-29 14:44:27', '8');
+INSERT INTO `sys_oper_log` VALUES ('550', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DB224AA', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆已在停车场中！\",\"code\":500}', '0', null, '2023-07-01 09:27:16', '6');
+INSERT INTO `sys_oper_log` VALUES ('551', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆信息不存在\",\"code\":500}', '0', null, '2023-07-01 09:38:44', '3');
+INSERT INTO `sys_oper_log` VALUES ('552', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆信息不存在\",\"code\":500}', '0', null, '2023-07-01 09:38:46', '3');
+INSERT INTO `sys_oper_log` VALUES ('553', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆信息不存在\",\"code\":500}', '0', null, '2023-07-01 09:38:47', '3');
+INSERT INTO `sys_oper_log` VALUES ('554', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆信息不存在\",\"code\":500}', '0', null, '2023-07-01 09:39:41', '3');
+INSERT INTO `sys_oper_log` VALUES ('555', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:40:05', '7');
+INSERT INTO `sys_oper_log` VALUES ('556', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-01 09:40:09', '35');
+INSERT INTO `sys_oper_log` VALUES ('557', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-01 09:45:42', '9');
+INSERT INTO `sys_oper_log` VALUES ('558', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:45:45', '3');
+INSERT INTO `sys_oper_log` VALUES ('559', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:45:49', '3');
+INSERT INTO `sys_oper_log` VALUES ('560', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:45:50', '3');
+INSERT INTO `sys_oper_log` VALUES ('561', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:45:50', '3');
+INSERT INTO `sys_oper_log` VALUES ('562', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:45:51', '4');
+INSERT INTO `sys_oper_log` VALUES ('563', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:45:51', '3');
+INSERT INTO `sys_oper_log` VALUES ('564', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:45:52', '3');
+INSERT INTO `sys_oper_log` VALUES ('565', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:45:52', '3');
+INSERT INTO `sys_oper_log` VALUES ('566', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"该车辆不在停车场中\",\"code\":500}', '0', null, '2023-07-01 09:46:07', '4');
+INSERT INTO `sys_oper_log` VALUES ('567', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-01 09:46:19', '26');
+INSERT INTO `sys_oper_log` VALUES ('568', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆已在停车场中！\",\"code\":500}', '0', null, '2023-07-01 09:46:23', '3');
+INSERT INTO `sys_oper_log` VALUES ('569', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E7%90%BCB12345', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆已在停车场中！\",\"code\":500}', '0', null, '2023-07-01 09:46:26', '2');
+INSERT INTO `sys_oper_log` VALUES ('570', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DAAA666', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆已在停车场中！\",\"code\":500}', '0', null, '2023-07-01 09:46:46', '3');
+INSERT INTO `sys_oper_log` VALUES ('571', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DAAA666', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆已在停车场中！\",\"code\":500}', '0', null, '2023-07-01 09:46:49', '4');
+INSERT INTO `sys_oper_log` VALUES ('572', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DAAA666', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆已在停车场中！\",\"code\":500}', '0', null, '2023-07-01 09:46:52', '5');
+INSERT INTO `sys_oper_log` VALUES ('573', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DAAA666', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆已在停车场中！\",\"code\":500}', '0', null, '2023-07-01 09:46:53', '3');
+INSERT INTO `sys_oper_log` VALUES ('574', '车辆出场', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.leaving()', 'GET', '1', 'admin', null, '/system/cars/leavingCars/%E5%B7%9DAAA666', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-01 09:47:35', '5');
+INSERT INTO `sys_oper_log` VALUES ('575', '事件处理', '2', 'com.ruoyi.web.controller.system.SelfEmergencyCompleteController.edit()', 'PUT', '1', 'admin', null, '/system/emergency_complete', '127.0.0.1', '内网IP', '{\"department\":\"103\",\"emergenciesLevel\":\"2\",\"emergenciesMessage\":\"的说法啊手动阀第三方\",\"emergenciesTime\":\"2023-06-27T12:00:00\",\"id\":7,\"location\":\"的撒法撒旦法撒旦飞洒打发\",\"params\":{},\"stateEmergencies\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-02 09:41:43', '8');
+INSERT INTO `sys_oper_log` VALUES ('576', '事件处理', '2', 'com.ruoyi.web.controller.system.SelfEmergencyCompleteController.edit()', 'PUT', '1', 'admin', null, '/system/emergency_complete', '127.0.0.1', '内网IP', '{\"department\":\"103\",\"emergenciesLevel\":\"2\",\"emergenciesMessage\":\"的说法啊手动阀第三方\",\"emergenciesTime\":\"2023-06-27T12:00:00\",\"id\":7,\"location\":\"的撒法撒旦法撒旦飞洒打发\",\"params\":{},\"stateEmergencies\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-02 09:41:48', '4');
+INSERT INTO `sys_oper_log` VALUES ('577', '事件处理', '2', 'com.ruoyi.web.controller.system.SelfEmergencyCompleteController.edit()', 'PUT', '1', 'admin', null, '/system/emergency_complete', '127.0.0.1', '内网IP', '{\"department\":\"103\",\"emergenciesLevel\":\"2\",\"emergenciesMessage\":\"的说法啊手动阀第三方\",\"emergenciesTime\":\"2023-06-27T12:00:00\",\"id\":7,\"location\":\"的撒法撒旦法撒旦飞洒打发\",\"params\":{},\"stateEmergencies\":\"1\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-02 09:41:50', '4');
+INSERT INTO `sys_oper_log` VALUES ('578', '车辆', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.edit()', 'PUT', '1', 'admin', null, '/system/cars', '127.0.0.1', '内网IP', '{\"carId\":\"陕AUI998\",\"carInTime\":\"2023-06-28 09:45:26\",\"carOutTime\":\"2023-07-02 09:48:53\",\"id\":22,\"params\":{},\"parkingCost\":\"195\",\"stateParking\":\"2\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-02 09:48:53', '7');
+INSERT INTO `sys_oper_log` VALUES ('579', '车辆', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.edit()', 'PUT', '1', 'admin', null, '/system/cars', '127.0.0.1', '内网IP', '{\"carId\":\"川B224AA\",\"carInTime\":\"2023-06-28 09:41:49\",\"carOutTime\":\"2023-07-03 14:51:24\",\"id\":13,\"params\":{},\"parkingCost\":\"253\",\"stateParking\":\"2\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-03 14:51:24', '11');
+INSERT INTO `sys_oper_log` VALUES ('580', '车辆', '5', 'com.ruoyi.web.controller.system.SelfParkingCarsController.export()', 'POST', '1', 'admin', null, '/system/cars/export', '127.0.0.1', '内网IP', '{\"pageSize\":\"10\",\"pageNum\":\"2\"}', null, '0', null, '2023-07-03 14:54:30', '610');
+INSERT INTO `sys_oper_log` VALUES ('581', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DAAA666', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-03 14:55:21', '25');
+INSERT INTO `sys_oper_log` VALUES ('582', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DB224AA', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-03 14:55:34', '24');
+INSERT INTO `sys_oper_log` VALUES ('583', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DB224AA', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆已在停车场中！\",\"code\":500}', '0', null, '2023-07-03 14:55:46', '3');
+INSERT INTO `sys_oper_log` VALUES ('584', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DAAA666', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"车辆已在停车场中！\",\"code\":500}', '0', null, '2023-07-03 14:55:54', '4');
+INSERT INTO `sys_oper_log` VALUES ('585', '车辆入场', '1', 'com.ruoyi.web.controller.system.SelfParkingCarsController.parking()', 'GET', '1', 'admin', null, '/system/cars/parkingCars/%E5%B7%9DCCC999', '127.0.0.1', '内网IP', '{}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-03 14:55:58', '38');
+INSERT INTO `sys_oper_log` VALUES ('586', '车辆', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.edit()', 'PUT', '1', 'admin', null, '/system/cars', '127.0.0.1', '内网IP', '{\"carId\":\"川AAA666\",\"carInTime\":\"2023-07-03 14:55:22\",\"carOutTime\":\"2023-07-03 15:29:02\",\"id\":34,\"params\":{},\"parkingCost\":\"3\",\"stateParking\":\"2\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-03 15:29:02', '8');
+INSERT INTO `sys_oper_log` VALUES ('587', '车辆', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.edit()', 'PUT', '1', 'admin', null, '/system/cars', '127.0.0.1', '内网IP', '{\"carId\":\"川CCC999\",\"carInTime\":\"2023-07-03 14:55:58\",\"carOutTime\":\"2023-07-04 10:04:18\",\"id\":36,\"params\":{},\"parkingCost\":\"41\",\"stateParking\":\"2\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-04 10:04:18', '14');
+INSERT INTO `sys_oper_log` VALUES ('588', '车辆', '2', 'com.ruoyi.web.controller.system.SelfParkingCarsController.edit()', 'PUT', '1', 'admin', null, '/system/cars', '127.0.0.1', '内网IP', '{\"carId\":\"川B77NM9\",\"carInTime\":\"2023-06-28 09:58:26\",\"carOutTime\":\"2023-07-04 10:04:47\",\"id\":25,\"params\":{},\"parkingCost\":\"291\",\"stateParking\":\"2\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-04 10:04:47', '6');
+INSERT INTO `sys_oper_log` VALUES ('589', '票务', '1', 'com.ruoyi.web.controller.system.SelfTicketServicesController.appoint()', 'POST', '1', 'admin', null, '/system/ticket_services/appoint', '127.0.0.1', '内网IP', '{\"cnId\":\"123\",\"id\":31,\"params\":{},\"phoneNumber\":\"123\",\"scheduledDate\":\"2023-07-05\",\"stateVisit\":\"0\",\"ticketId\":39826743,\"typeTicket\":\"4\",\"visitorsName\":\"123\"}', '{\"msg\":\"操作成功\",\"code\":200}', '0', null, '2023-07-05 10:21:53', '86');
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1431,15 +1591,26 @@ CREATE TABLE `sys_post` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='岗位信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='岗位信息表';
 
 -- ----------------------------
 -- Records of sys_post
 -- ----------------------------
 INSERT INTO `sys_post` VALUES ('1', 'ceo', '董事长', '1', '0', 'admin', '2023-06-23 16:06:59', '', null, '');
-INSERT INTO `sys_post` VALUES ('2', 'se', '项目经理', '2', '0', 'admin', '2023-06-23 16:06:59', '', null, '');
-INSERT INTO `sys_post` VALUES ('3', 'hr', '人力资源', '3', '0', 'admin', '2023-06-23 16:06:59', '', null, '');
-INSERT INTO `sys_post` VALUES ('4', 'user', '普通员工', '4', '0', 'admin', '2023-06-23 16:06:59', '', null, '');
+INSERT INTO `sys_post` VALUES ('2', 'se', '财务', '2', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 10:14:31', '');
+INSERT INTO `sys_post` VALUES ('5', 'ba', '安保', '1', '0', 'admin', '2023-06-27 09:49:33', 'admin', '2023-06-27 10:15:39', null);
+INSERT INTO `sys_post` VALUES ('6', 'hr', '人力资源', '0', '0', 'admin', '2023-06-27 10:14:41', '', null, null);
+INSERT INTO `sys_post` VALUES ('7', 'abcz', '安保处长', '0', '0', 'admin', '2023-06-27 10:15:23', '', null, null);
+INSERT INTO `sys_post` VALUES ('8', 'cwcz', '财务处长', '0', '0', 'admin', '2023-06-27 10:15:51', '', null, null);
+INSERT INTO `sys_post` VALUES ('9', 'bj', '保洁', '0', '0', 'admin', '2023-06-27 10:16:00', '', null, null);
+INSERT INTO `sys_post` VALUES ('10', 'bjcz', '保洁处长', '0', '0', 'admin', '2023-06-27 10:16:14', '', null, null);
+INSERT INTO `sys_post` VALUES ('11', 'wxy', '维修员', '0', '0', 'admin', '2023-06-27 10:16:30', '', null, null);
+INSERT INTO `sys_post` VALUES ('12', 'ms', '秘书', '0', '0', 'admin', '2023-06-27 10:16:39', '', null, null);
+INSERT INTO `sys_post` VALUES ('13', 'msz', '秘书长', '0', '0', 'admin', '2023-06-27 10:16:48', '', null, null);
+INSERT INTO `sys_post` VALUES ('14', 'xcy', '宣传员', '0', '0', 'admin', '2023-06-27 10:17:07', '', null, null);
+INSERT INTO `sys_post` VALUES ('15', 'xccz', '宣传处长', '0', '0', 'admin', '2023-06-27 10:17:18', '', null, null);
+INSERT INTO `sys_post` VALUES ('16', 'ccgly', '仓储管理员', '0', '0', 'admin', '2023-06-27 10:17:39', '', null, null);
+INSERT INTO `sys_post` VALUES ('17', 'cccz', '仓储处长', '0', '0', 'admin', '2023-06-27 10:17:50', '', null, null);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -1461,13 +1632,14 @@ CREATE TABLE `sys_role` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='角色信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色信息表';
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', '超级管理员', 'admin', '1', '1', '1', '1', '0', '0', 'admin', '2023-06-23 16:06:59', '', null, '超级管理员');
-INSERT INTO `sys_role` VALUES ('2', '普通角色', 'common', '2', '2', '1', '1', '0', '0', 'admin', '2023-06-23 16:06:59', '', null, '普通角色');
+INSERT INTO `sys_role` VALUES ('2', '普通角色', 'common', '2', '2', '1', '1', '0', '0', 'admin', '2023-06-23 16:06:59', 'admin', '2023-06-27 09:45:48', '普通角色');
+INSERT INTO `sys_role` VALUES ('3', '游客', 'youke', '0', '1', '1', '1', '0', '0', 'admin', '2023-06-26 15:30:00', '', null, '普通游客，只能看到服务界面');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -1499,91 +1671,17 @@ CREATE TABLE `sys_role_menu` (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
-INSERT INTO `sys_role_menu` VALUES ('2', '1');
-INSERT INTO `sys_role_menu` VALUES ('2', '2');
-INSERT INTO `sys_role_menu` VALUES ('2', '3');
-INSERT INTO `sys_role_menu` VALUES ('2', '4');
-INSERT INTO `sys_role_menu` VALUES ('2', '100');
-INSERT INTO `sys_role_menu` VALUES ('2', '101');
-INSERT INTO `sys_role_menu` VALUES ('2', '102');
-INSERT INTO `sys_role_menu` VALUES ('2', '103');
-INSERT INTO `sys_role_menu` VALUES ('2', '104');
-INSERT INTO `sys_role_menu` VALUES ('2', '105');
-INSERT INTO `sys_role_menu` VALUES ('2', '106');
-INSERT INTO `sys_role_menu` VALUES ('2', '107');
-INSERT INTO `sys_role_menu` VALUES ('2', '108');
-INSERT INTO `sys_role_menu` VALUES ('2', '109');
-INSERT INTO `sys_role_menu` VALUES ('2', '110');
-INSERT INTO `sys_role_menu` VALUES ('2', '111');
-INSERT INTO `sys_role_menu` VALUES ('2', '112');
-INSERT INTO `sys_role_menu` VALUES ('2', '113');
-INSERT INTO `sys_role_menu` VALUES ('2', '114');
-INSERT INTO `sys_role_menu` VALUES ('2', '115');
-INSERT INTO `sys_role_menu` VALUES ('2', '116');
-INSERT INTO `sys_role_menu` VALUES ('2', '117');
-INSERT INTO `sys_role_menu` VALUES ('2', '500');
-INSERT INTO `sys_role_menu` VALUES ('2', '501');
-INSERT INTO `sys_role_menu` VALUES ('2', '1000');
-INSERT INTO `sys_role_menu` VALUES ('2', '1001');
-INSERT INTO `sys_role_menu` VALUES ('2', '1002');
-INSERT INTO `sys_role_menu` VALUES ('2', '1003');
-INSERT INTO `sys_role_menu` VALUES ('2', '1004');
-INSERT INTO `sys_role_menu` VALUES ('2', '1005');
-INSERT INTO `sys_role_menu` VALUES ('2', '1006');
-INSERT INTO `sys_role_menu` VALUES ('2', '1007');
-INSERT INTO `sys_role_menu` VALUES ('2', '1008');
-INSERT INTO `sys_role_menu` VALUES ('2', '1009');
-INSERT INTO `sys_role_menu` VALUES ('2', '1010');
-INSERT INTO `sys_role_menu` VALUES ('2', '1011');
-INSERT INTO `sys_role_menu` VALUES ('2', '1012');
-INSERT INTO `sys_role_menu` VALUES ('2', '1013');
-INSERT INTO `sys_role_menu` VALUES ('2', '1014');
-INSERT INTO `sys_role_menu` VALUES ('2', '1015');
-INSERT INTO `sys_role_menu` VALUES ('2', '1016');
-INSERT INTO `sys_role_menu` VALUES ('2', '1017');
-INSERT INTO `sys_role_menu` VALUES ('2', '1018');
-INSERT INTO `sys_role_menu` VALUES ('2', '1019');
-INSERT INTO `sys_role_menu` VALUES ('2', '1020');
-INSERT INTO `sys_role_menu` VALUES ('2', '1021');
-INSERT INTO `sys_role_menu` VALUES ('2', '1022');
-INSERT INTO `sys_role_menu` VALUES ('2', '1023');
-INSERT INTO `sys_role_menu` VALUES ('2', '1024');
-INSERT INTO `sys_role_menu` VALUES ('2', '1025');
-INSERT INTO `sys_role_menu` VALUES ('2', '1026');
-INSERT INTO `sys_role_menu` VALUES ('2', '1027');
-INSERT INTO `sys_role_menu` VALUES ('2', '1028');
-INSERT INTO `sys_role_menu` VALUES ('2', '1029');
-INSERT INTO `sys_role_menu` VALUES ('2', '1030');
-INSERT INTO `sys_role_menu` VALUES ('2', '1031');
-INSERT INTO `sys_role_menu` VALUES ('2', '1032');
-INSERT INTO `sys_role_menu` VALUES ('2', '1033');
-INSERT INTO `sys_role_menu` VALUES ('2', '1034');
-INSERT INTO `sys_role_menu` VALUES ('2', '1035');
-INSERT INTO `sys_role_menu` VALUES ('2', '1036');
-INSERT INTO `sys_role_menu` VALUES ('2', '1037');
-INSERT INTO `sys_role_menu` VALUES ('2', '1038');
-INSERT INTO `sys_role_menu` VALUES ('2', '1039');
-INSERT INTO `sys_role_menu` VALUES ('2', '1040');
-INSERT INTO `sys_role_menu` VALUES ('2', '1041');
-INSERT INTO `sys_role_menu` VALUES ('2', '1042');
-INSERT INTO `sys_role_menu` VALUES ('2', '1043');
-INSERT INTO `sys_role_menu` VALUES ('2', '1044');
-INSERT INTO `sys_role_menu` VALUES ('2', '1045');
-INSERT INTO `sys_role_menu` VALUES ('2', '1046');
-INSERT INTO `sys_role_menu` VALUES ('2', '1047');
-INSERT INTO `sys_role_menu` VALUES ('2', '1048');
-INSERT INTO `sys_role_menu` VALUES ('2', '1049');
-INSERT INTO `sys_role_menu` VALUES ('2', '1050');
-INSERT INTO `sys_role_menu` VALUES ('2', '1051');
-INSERT INTO `sys_role_menu` VALUES ('2', '1052');
-INSERT INTO `sys_role_menu` VALUES ('2', '1053');
-INSERT INTO `sys_role_menu` VALUES ('2', '1054');
-INSERT INTO `sys_role_menu` VALUES ('2', '1055');
-INSERT INTO `sys_role_menu` VALUES ('2', '1056');
-INSERT INTO `sys_role_menu` VALUES ('2', '1057');
-INSERT INTO `sys_role_menu` VALUES ('2', '1058');
-INSERT INTO `sys_role_menu` VALUES ('2', '1059');
-INSERT INTO `sys_role_menu` VALUES ('2', '1060');
+INSERT INTO `sys_role_menu` VALUES ('2', '2000');
+INSERT INTO `sys_role_menu` VALUES ('2', '2115');
+INSERT INTO `sys_role_menu` VALUES ('2', '2121');
+INSERT INTO `sys_role_menu` VALUES ('2', '2122');
+INSERT INTO `sys_role_menu` VALUES ('2', '2123');
+INSERT INTO `sys_role_menu` VALUES ('2', '2124');
+INSERT INTO `sys_role_menu` VALUES ('2', '2125');
+INSERT INTO `sys_role_menu` VALUES ('2', '2126');
+INSERT INTO `sys_role_menu` VALUES ('2', '2127');
+INSERT INTO `sys_role_menu` VALUES ('2', '2128');
+INSERT INTO `sys_role_menu` VALUES ('2', '2129');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -1610,13 +1708,15 @@ CREATE TABLE `sys_user` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '103', 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-06-28 13:31:47', 'admin', '2023-06-23 16:06:59', '', '2023-06-28 13:31:46', '管理员');
+INSERT INTO `sys_user` VALUES ('1', '103', 'admin', '若依', '00', 'ry@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-07-05 10:21:27', 'admin', '2023-06-23 16:06:59', '', '2023-07-05 10:21:27', '管理员');
 INSERT INTO `sys_user` VALUES ('2', '105', 'ry', '若依', '00', 'ry@qq.com', '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2023-06-23 16:06:59', 'admin', '2023-06-23 16:06:59', '', null, '测试员');
+INSERT INTO `sys_user` VALUES ('3', null, 'youke', '游客', '00', '', '', '0', '', '$2a$10$Opl5kuomrCNzfbueQau/FeKD.KqfBBYz17.7y2xLbCV5l2eeUh.R6', '0', '0', '127.0.0.1', '2023-06-28 20:32:10', 'admin', '2023-06-26 15:30:51', 'admin', '2023-06-28 20:32:10', '普通游客');
+INSERT INTO `sys_user` VALUES ('4', '100', 'test', 'test', '00', '', '', '0', '', '$2a$10$4lNc9RnZdoRuZpczVb5hve9b9iLbW99YrpoeZbLaRC/9rOEADeyse', '0', '0', '127.0.0.1', '2023-06-27 09:47:32', 'admin', '2023-06-27 09:47:18', 'admin', '2023-06-27 10:01:07', null);
 
 -- ----------------------------
 -- Table structure for sys_user_post
@@ -1649,3 +1749,5 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES ('1', '1');
 INSERT INTO `sys_user_role` VALUES ('2', '2');
+INSERT INTO `sys_user_role` VALUES ('3', '3');
+INSERT INTO `sys_user_role` VALUES ('4', '2');

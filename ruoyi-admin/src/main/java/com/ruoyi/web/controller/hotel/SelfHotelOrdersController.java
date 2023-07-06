@@ -1,6 +1,9 @@
-package com.ruoyi.web.controller.system;
+package com.ruoyi.web.controller.hotel;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +26,12 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 酒店订单Controller
- * 
+ *
  * @author ruoyi
  * @date 2023-06-26
  */
 @RestController
-@RequestMapping("/system/orders")
+@RequestMapping("/hotel/orders")
 public class SelfHotelOrdersController extends BaseController
 {
     @Autowired
@@ -37,7 +40,7 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 查询酒店订单列表
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:list')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfHotelOrders selfHotelOrders)
     {
@@ -49,7 +52,7 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 导出酒店订单列表
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:export')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:export')")
     @Log(title = "酒店订单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfHotelOrders selfHotelOrders)
@@ -62,7 +65,7 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 获取酒店订单详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:query')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,18 +75,19 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 新增酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:add')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:add')")
     @Log(title = "酒店订单", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfHotelOrders selfHotelOrders)
     {
+        selfHotelOrders.setOrderId(randomOrderCode());
         return toAjax(selfHotelOrdersService.insertSelfHotelOrders(selfHotelOrders));
     }
 
     /**
      * 修改酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:edit')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:edit')")
     @Log(title = "酒店订单", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfHotelOrders selfHotelOrders)
@@ -94,11 +98,27 @@ public class SelfHotelOrdersController extends BaseController
     /**
      * 删除酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('system:orders:remove')")
+    @PreAuthorize("@ss.hasPermi('hotel:orders:remove')")
     @Log(title = "酒店订单", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(selfHotelOrdersService.deleteSelfHotelOrdersByIds(ids));
+    }
+
+    public static long randomOrderCode() {
+        SimpleDateFormat dmDate = new SimpleDateFormat("yyyyMMddHHmmss");
+        Random r=new Random();
+        long randata=0;
+        for(int i=0;i<2;i++){
+            randata=randata*10+r.nextInt(10);
+        }
+        String.valueOf(randata);
+        Date date = new Date();
+        String dateran = dmDate.format(date);
+        String Xsode = dateran + randata;
+        long code=Long.valueOf(Xsode);
+
+        return code;
     }
 }

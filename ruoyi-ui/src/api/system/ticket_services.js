@@ -74,3 +74,10 @@ export function outParkTicket_services(id) {
     method: 'get'
   })
 }
+
+export function getPeopleCounts() {
+  return request({
+    url: '/system/ticket_services/getPeopleCounts',
+    method: 'get',
+  })
+}

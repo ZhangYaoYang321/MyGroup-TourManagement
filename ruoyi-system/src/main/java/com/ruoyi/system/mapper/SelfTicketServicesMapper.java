@@ -33,6 +33,11 @@ public interface SelfTicketServicesMapper
 
     public int updateVisitorOutTime (String cnId);
 
+    public int updateVisitorInTime2 (Long id);
+    public int updateVisitorOutTime2 (Long id);
+
+    public int getPeopleCounts();
+
     /**
      * 新增票务
      *
@@ -64,4 +69,5 @@ public interface SelfTicketServicesMapper
      * @return 结果
      */
     public int deleteSelfTicketServicesByIds(Long[] ids);
+
 }
