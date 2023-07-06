@@ -52,9 +52,7 @@ public class SelfHotelCheckInController extends BaseController {
     public TableDataInfo listRoom(SelfHotelCheckIn selfHotelCheckIn)
     {
         startPage();
-        System.out.println("aaaaaaaaaaaaaaa");
         List<String> list = selfHotelCheckInService.checkInSelfHotelRooms(getDate());
-        System.out.println(list.get(1));
         return getDataTable(list);
     }
 
