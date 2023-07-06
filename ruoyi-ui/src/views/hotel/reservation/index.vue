@@ -81,7 +81,7 @@
     <el-form :model="form" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="日期选择" prop="field102">
         <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
-                        :style="{width: '100%'}" placeholder="请选择日期" clearable></el-date-picker>
+                        :style="{width: '100%'}":picker-options="pickerOptions" placeholder="请选择日期" clearable></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery2">搜索</el-button>
@@ -297,11 +297,11 @@
           />
         </el-form-item>
         <el-form-item label="开始日期" prop="field104">
-          <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+          <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd":picker-options="pickerOptions"
                           :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
         </el-form-item>
         <el-form-item label="结束日期" prop="field105">
-          <el-date-picker v-model="form.endDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+          <el-date-picker v-model="form.endDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd":picker-options="pickerOptions"
                           :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
         </el-form-item>
         <el-form-item label="房间选择" prop="field102">
@@ -321,11 +321,11 @@
     <el-dialog :title="title" :visible.sync="open1" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="开始日期" prop="field104">
-          <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+          <el-date-picker v-model="form.startDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd":picker-options="pickerOptions"
                           :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
         </el-form-item>
         <el-form-item label="结束日期" prop="field105">
-          <el-date-picker v-model="form.endDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd"
+          <el-date-picker v-model="form.endDate" format="yyyy-MM-dd" value-format="yyyy-MM-dd":picker-options="pickerOptions"
                           :style="{width: '100%'}" placeholder="请选择日期选择" clearable></el-date-picker>
         </el-form-item>
         <el-form-item label="房间选择" prop="field102">
@@ -390,7 +390,27 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
+      pickerOptions: {
+        disabledDate: (time) => {
+          return time.getTime() < Date.now() - 86400000; // 当前日期之前的日期都禁止选择
+        },
+      },
       rules: {
+        name: [
+          { required: true, message: '请姓名', trigger: 'blur' }
+        ],
+        phoneNum: [
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          {
+            validator: this.validatePhoneNumber,
+            trigger: 'blur',
+          },
+        ],
+        cnId:[{ required: true, message: '请输身份证号', trigger: 'blur' },
+          {
+            validator: this.validateCnId,
+            trigger: 'blur',
+          }],
         startDate: [{
           required: true,
           message: '请选择日期选择',
@@ -1117,7 +1137,7 @@ export default {
         id: null,
         name:null,
         orderId: null,
-        cnId: null,
+        cnId: "",
         type:null,
         startDate:null,
         endDate:null,
@@ -1166,26 +1186,48 @@ export default {
         this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
     },
+    validateCnId(rule, value, callback) {
+      // 验证身份证号格式
+      const pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+      if (!pattern.test(value)) {
+        callback(new Error('请输入有效的中华人民共和国身份证号'));
+      } else {
+        callback();
+      }
+    },
+    validatePhoneNumber(rule, value, callback) {
+      // 验证手机号格式
+      const pattern = /^1[0-9]{10}$/;
+      if (!pattern.test(value)) {
+        callback(new Error('请输入有效的手机号'));
+      } else {
+        callback();
+      }
+    },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
-        this.form.type=this.form.field102.at(0)
-        this.form.roomNum=this.form.field102.at(1)
-        if (valid) {
-          if (this.form.id != null) {
-            updateOrders(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
-              this.open = false;
-              this.open1 = false;
-              this.getList();
-            });
-          } else {
-            addOrders(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
-              this.open = false;
-              this.open1 = false;
-              this.getList();
-            });
+        if(this.form.endDate<this.form.startDate)
+          this.$modal.msgWarning("请输入正确日期");
+        else{
+          this.form.type=this.form.field102.at(0)
+          this.form.roomNum=this.form.field102.at(1)
+          if (valid) {
+            if (this.form.id != null) {
+              updateOrders(this.form).then(response => {
+                this.$modal.msgSuccess("修改成功");
+                this.open = false;
+                this.open1 = false;
+                this.getList();
+              });
+            } else {
+              addOrders(this.form).then(response => {
+                this.$modal.msgSuccess("新增成功");
+                this.open = false;
+                this.open1 = false;
+                this.getList();
+              });
+            }
           }
         }
       });
