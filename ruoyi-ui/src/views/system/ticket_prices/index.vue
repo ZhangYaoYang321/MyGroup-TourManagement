@@ -71,9 +71,14 @@
 
     <el-table v-loading="loading" :data="ticket_pricesList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="ID" align="center" prop="id" />
+      <el-table-column label="类型ID" align="center" prop="id" />
       <el-table-column label="门票类型" align="center" prop="typeTicket" />
-      <el-table-column label="门票价格" align="center" prop="priceTicket" />
+      <el-table-column label="门票价格" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.priceTicket }}</span>
+          <span>元</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -93,7 +98,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
