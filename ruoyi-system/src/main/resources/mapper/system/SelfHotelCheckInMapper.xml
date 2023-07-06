@@ -20,6 +20,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from self_hotel_orders left join self_hotel_rooms
     </sql>
 
+    <select id="checkInSelfHotelRooms" resultType="java.lang.String">
+        select self_hotel_rooms.state_room
+        from self_hotel_rooms
+        where (self_hotel_rooms.state_room = "已预约" or self_hotel_rooms.state_room = "已入住") and self_hotel_rooms.room_date=#{date}
+    </select>
+
 
     <select id="selectSelfHotelCheckInList" parameterType="SelfHotelCheckIn" resultMap="SelfHotelCheckInResult">
         <include refid="selectSelfHotelCheckInVo"/>

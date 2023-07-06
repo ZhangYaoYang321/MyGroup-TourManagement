@@ -245,40 +245,38 @@
       @pagination="getList"
     />
 
-    <template>
-      <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-        <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-          <el-form-item label="姓名" prop="visitorsName">
-            <el-input v-model="form.visitorsName" placeholder="请输入姓名" />
-          </el-form-item>
-          <el-form-item label="身份证" prop="cnId">
-            <el-input v-model="form.cnId" placeholder="请输入身份证号" />
-          </el-form-item>
-          <el-form-item label="手机号" prop="phoneNumber">
-            <el-input v-model="form.phoneNumber" placeholder="请输入手机号" />
-          </el-form-item>
-          <el-form-item label="预约日期" prop="scheduledDate">
-            <el-date-picker clearable
-                            v-model="form.scheduledDate"
-                            type="date"
-                            value-format="yyyy-MM-dd"
-                            :picker-options="pickerOptions"
-                            placeholder="请选择预约日期">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="门票类型" prop="typeTicket">
-            <el-select v-model="form.typeTicket" placeholder="请下拉选择" clearable :style="{width: '100%'}">
-              <el-option v-for="(item, index) in field101Options" :key="index" :label="item.label"
-                         :value="item.value" :disabled="item.disabled"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="submitForm">确 定</el-button>
-          <el-button @click="cancel">取 消</el-button>
-        </div>
-      </el-dialog>
-    </template>
+    <!-- 添加或修改票务对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="姓名" prop="visitorsName">
+          <el-input v-model="form.visitorsName" placeholder="请输入姓名" />
+        </el-form-item>
+        <el-form-item label="身份证" prop="cnId">
+          <el-input v-model="form.cnId" placeholder="请输入身份证号" />
+        </el-form-item>
+        <el-form-item label="手机号" prop="phoneNumber">
+          <el-input v-model="form.phoneNumber" placeholder="请输入手机号" />
+        </el-form-item>
+        <el-form-item label="预约日期" prop="scheduledDate">
+          <el-date-picker clearable
+                          v-model="form.scheduledDate"
+                          type="date"
+                          value-format="yyyy-MM-dd"
+                          placeholder="请选择预约日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="门票类型" prop="typeTicket">
+          <el-select v-model="form.typeTicket" placeholder="请下拉选择" clearable :style="{width: '100%'}">
+            <el-option v-for="(item, index) in field101Options" :key="index" :label="item.label"
+                       :value="item.value" :disabled="item.disabled"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
 
     <!-- 游客查询信息 -->
     <el-dialog :title="title" :visible.sync="open2" width="500px">
@@ -408,34 +406,6 @@ export default {
           message: '请下拉选择',
           trigger: 'change'
         }],
-        visitorsName: [
-          { required: true, message: '请输入姓名', trigger: 'blur' },
-        ],
-        cnId: [
-          { required: true, message: '请输入身份证号', trigger: 'blur' },
-          {
-            validator: this.validateCnId,
-            trigger: 'blur',
-          },
-        ],
-        phoneNumber: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
-          {
-            validator: this.validatePhoneNumber,
-            trigger: 'blur',
-          },
-        ],
-        scheduledDate: [
-          { required: true, message: '请选择预约日期', trigger: 'change' },
-        ],
-        typeTicket: [
-          { required: true, message: '请选择门票类型', trigger: 'change' },
-        ],
-      },
-      pickerOptions: {
-        disabledDate: (time) => {
-          return time.getTime() < Date.now() - 86400000; // 当前日期之前的日期都禁止选择
-        },
       },
       field101Options: [{
         "label": "成人票",
@@ -458,16 +428,19 @@ export default {
   created() {
     this.getList();
   },
+
   computed: {
     isFull() {
       return this.peopleCount >= this.totalCount;
     }
   },
   methods: {
+
     handleRowClick(row, column, event) {
       console.log(row);
       this.selectedRow = row;
     },
+
     /** 查询票务列表 */
     getList() {
       this.loading = true;
@@ -726,25 +699,7 @@ export default {
       this.download('system/ticket_services/export', {
         ...this.queryParams
       }, `ticket_services_${new Date().getTime()}.xlsx`)
-    },
-    validateCnId(rule, value, callback) {
-      // 验证身份证号格式
-      const pattern = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-      if (!pattern.test(value)) {
-        callback(new Error('请输入有效的中华人民共和国身份证号'));
-      } else {
-        callback();
-      }
-    },
-    validatePhoneNumber(rule, value, callback) {
-      // 验证手机号格式
-      const pattern = /^1[0-9]{10}$/;
-      if (!pattern.test(value)) {
-        callback(new Error('请输入有效的手机号'));
-      } else {
-        callback();
-      }
-    },
+    }
   }
 };
 </script>

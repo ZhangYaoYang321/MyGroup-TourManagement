@@ -25,4 +25,9 @@ public class SelfHotelCheckInServiceImpl implements ISelfHotelCheckInService {
     public int checkInSelfHotelCheckInById(long id) {
         return selfHotelCheckInMapper.checkInSelfHotelCheckInById(id);
     }
+
+    @Override
+    public List<String> checkInSelfHotelRooms(String date) {
+        return selfHotelCheckInMapper.checkInSelfHotelRooms(date);
+    }
 }

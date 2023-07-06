@@ -53,6 +53,7 @@ public class SelfHotelReservationController extends BaseController {
     @PostMapping
     public AjaxResult add(@RequestBody SelfHotelReservation selfHotelReservation)
     {
+        System.out.println("zzzzzzzzzzzz");
         selfHotelReservation.setOrderId(randomOrderCode());
         return toAjax(selfHotelReservationService.insertSelfHotelReservation(selfHotelReservation));
     }
