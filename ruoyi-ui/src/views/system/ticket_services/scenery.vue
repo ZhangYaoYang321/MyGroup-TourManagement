@@ -60,133 +60,133 @@
 
 <template>
   <div class="app-container">
-<!--    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">-->
-<!--      <el-form-item label="门票号" prop="ticketId">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.ticketId"-->
-<!--          placeholder="请输入门票号"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="身份证号" prop="cnId">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.cnId"-->
-<!--          placeholder="请输入身份证号"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="预约日期">-->
-<!--        <el-date-picker-->
-<!--          v-model="daterangeScheduledDate"-->
-<!--          style="width: 240px"-->
-<!--          value-format="yyyy-MM-dd"-->
-<!--          type="daterange"-->
-<!--          range-separator="-"-->
-<!--          start-placeholder="开始日期"-->
-<!--          end-placeholder="结束日期"-->
-<!--        ></el-date-picker>-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="入园时间">-->
-<!--        <el-date-picker-->
-<!--          v-model="daterangeVisitorInTime"-->
-<!--          style="width: 240px"-->
-<!--          value-format="yyyy-MM-dd"-->
-<!--          type="daterange"-->
-<!--          range-separator="-"-->
-<!--          start-placeholder="开始日期"-->
-<!--          end-placeholder="结束日期"-->
-<!--        ></el-date-picker>-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="出园时间">-->
-<!--        <el-date-picker-->
-<!--          v-model="daterangeVisitorOutTime"-->
-<!--          style="width: 240px"-->
-<!--          value-format="yyyy-MM-dd"-->
-<!--          type="daterange"-->
-<!--          range-separator="-"-->
-<!--          start-placeholder="开始日期"-->
-<!--          end-placeholder="结束日期"-->
-<!--        ></el-date-picker>-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="参观状态" prop="stateVisit">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.stateVisit"-->
-<!--          placeholder="请输入参观状态"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item label="门票类型" prop="typeTicket">-->
-<!--        <el-input-->
-<!--          v-model="queryParams.typeTicket"-->
-<!--          placeholder="请输入门票类型"-->
-<!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
-<!--        />-->
-<!--      </el-form-item>-->
-<!--      <el-form-item>-->
-<!--        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>-->
-<!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
-<!--      </el-form-item>-->
-<!--    </el-form>-->
-      <el-row :gutter="10" class="mb8">
-        <el-col :span="1.5">
-          <el-button
-            type="primary"
-            plain
-            icon="el-icon-plus"
-            size="large"
-            @click="handleAppoint"
-            v-hasPermi="['system:ticket_services:appoint']"
-          >预约</el-button>
-        </el-col>
+    <!--    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">-->
+    <!--      <el-form-item label="门票号" prop="ticketId">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.ticketId"-->
+    <!--          placeholder="请输入门票号"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="身份证号" prop="cnId">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.cnId"-->
+    <!--          placeholder="请输入身份证号"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="预约日期">-->
+    <!--        <el-date-picker-->
+    <!--          v-model="daterangeScheduledDate"-->
+    <!--          style="width: 240px"-->
+    <!--          value-format="yyyy-MM-dd"-->
+    <!--          type="daterange"-->
+    <!--          range-separator="-"-->
+    <!--          start-placeholder="开始日期"-->
+    <!--          end-placeholder="结束日期"-->
+    <!--        ></el-date-picker>-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="入园时间">-->
+    <!--        <el-date-picker-->
+    <!--          v-model="daterangeVisitorInTime"-->
+    <!--          style="width: 240px"-->
+    <!--          value-format="yyyy-MM-dd"-->
+    <!--          type="daterange"-->
+    <!--          range-separator="-"-->
+    <!--          start-placeholder="开始日期"-->
+    <!--          end-placeholder="结束日期"-->
+    <!--        ></el-date-picker>-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="出园时间">-->
+    <!--        <el-date-picker-->
+    <!--          v-model="daterangeVisitorOutTime"-->
+    <!--          style="width: 240px"-->
+    <!--          value-format="yyyy-MM-dd"-->
+    <!--          type="daterange"-->
+    <!--          range-separator="-"-->
+    <!--          start-placeholder="开始日期"-->
+    <!--          end-placeholder="结束日期"-->
+    <!--        ></el-date-picker>-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="参观状态" prop="stateVisit">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.stateVisit"-->
+    <!--          placeholder="请输入参观状态"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item label="门票类型" prop="typeTicket">-->
+    <!--        <el-input-->
+    <!--          v-model="queryParams.typeTicket"-->
+    <!--          placeholder="请输入门票类型"-->
+    <!--          clearable-->
+    <!--          @keyup.enter.native="handleQuery"-->
+    <!--        />-->
+    <!--      </el-form-item>-->
+    <!--      <el-form-item>-->
+    <!--        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>-->
+    <!--        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>-->
+    <!--      </el-form-item>-->
+    <!--    </el-form>-->
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="large"
+          @click="handleAppoint"
+          v-hasPermi="['system:ticket_services:appoint']"
+        >预约</el-button>
+      </el-col>
 
-        <el-col :span="1.5">
-          <el-button
-            type="success"
-            plain
-            icon="el-icon-search"
-            size="large"
-            @click="handleCheckInfo"
-            v-hasPermi="['system:ticket_services:checkInfo']"
-          >查询预约信息</el-button>
-        </el-col>
-        <el-col :span="1.5">
-          <el-button
-            type="warning"
-            plain
-            icon="el-icon-right"
-            size="large"
-            @click="handleInPark()"
-            v-hasPermi="['system:ticket_services:inPark']"
-          >入园登记</el-button>
-        </el-col>
-        <el-col :span="1.5">
-          <el-button
-            type="info"
-            plain
-            icon="el-icon-left"
-            size="large"
-            @click="handleOutPark()"
-            v-hasPermi="['system:ticket_services:outPark']"
-          >出园登记</el-button>
-        </el-col>
-        <el-col :span="1.5">
-          <div class="capacity">
-            <div class="peopleInfo" :class="isFull ? 'full' : 'not-full'">
-              <div class="count">
-                {{ this.peopleCount }} / {{ this.totalCount }}
-              </div>
-              <div class="status">
-                {{ isFull ? '已满' : '未满' }}
-              </div>
+      <el-col :span="1.5">
+        <el-button
+          type="success"
+          plain
+          icon="el-icon-search"
+          size="large"
+          @click="handleCheckInfo"
+          v-hasPermi="['system:ticket_services:checkInfo']"
+        >查询预约信息</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-right"
+          size="large"
+          @click="handleInPark()"
+          v-hasPermi="['system:ticket_services:inPark']"
+        >入园登记</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <el-button
+          type="info"
+          plain
+          icon="el-icon-left"
+          size="large"
+          @click="handleOutPark()"
+          v-hasPermi="['system:ticket_services:outPark']"
+        >出园登记</el-button>
+      </el-col>
+      <el-col :span="1.5">
+        <div class="capacity">
+          <div class="peopleInfo" :class="isFull ? 'full' : 'not-full'">
+            <div class="count">
+              {{ this.peopleCount }} / {{ this.totalCount }}
+            </div>
+            <div class="status">
+              {{ isFull ? '已满' : '未满' }}
             </div>
           </div>
-        </el-col>
-        <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-      </el-row>
+        </div>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
 
 
     <el-table v-loading="loading" :data="ticket_servicesList" @selection-change="handleSelectionChange"
@@ -605,7 +605,7 @@ export default {
               });
             };
           } else {
-              this.$modal.msgWarning("请输入身份证号！");
+            this.$modal.msgWarning("请输入身份证号！");
           }
         }
       });
