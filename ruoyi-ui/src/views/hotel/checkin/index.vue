@@ -121,13 +121,25 @@ export default {
     /** 入住按钮操作 */
     handleCheckedIn(row) {
       const id = row.orderId;
-      this.$modal.confirm('是否确认入住？').then(function() {
-        return checkIn(id);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("入住成功");
-      }).catch(() => {});
+      var date = new Date()
+      var year = date.getFullYear()
+      var month = date.getMonth() + 1 < 10 ?
+        '0' + (date.getMonth() + 1) : date.getMonth()+ 1
+      var day = date.getDate()< 10 ? '0' + date.getDate() : date.getDate()
+
+      if(row.startDate!=year+'-'+month+'-'+day)
+      {
+        this.$modal.msgWarning("入住失败，请联系工作人员");
+      }else{
+        this.$modal.confirm('是否确认入住？').then(function() {
+          return checkIn(id);
+        }).then(() => {
+          this.getList();
+          this.$modal.msgSuccess("入住成功");
+        }).catch(() => {});
+      }
     }
+
   }
 };
 </script>

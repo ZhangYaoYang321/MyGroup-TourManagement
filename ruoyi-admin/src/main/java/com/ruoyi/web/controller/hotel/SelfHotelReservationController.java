@@ -77,7 +77,6 @@ public class SelfHotelReservationController extends BaseController {
         System.out.println(date);
         startPage();
         List<Integer> list=selfHotelReservationService.selectSelfHotelReservationRoomsByDate(date);
-        //System.out.println(list);
         return getDataTable(list);
     }
 
@@ -90,7 +89,6 @@ public class SelfHotelReservationController extends BaseController {
     @PutMapping
     public AjaxResult edit(@RequestBody SelfHotelReservation selfHotelReservation)
     {
-        System.out.println("22222222222222222");
         return toAjax(selfHotelReservationService.updateSelfHotelReservation(selfHotelReservation));
     }
 
@@ -102,7 +100,6 @@ public class SelfHotelReservationController extends BaseController {
     @DeleteMapping("/{id}")
     public AjaxResult remove(@PathVariable("id") Long id)
     {
-        System.out.println(id);
         return toAjax(selfHotelReservationService.deleteSelfHotelReservationById(id));
     }
 

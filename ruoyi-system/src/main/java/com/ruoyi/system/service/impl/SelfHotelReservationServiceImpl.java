@@ -82,11 +82,12 @@ public class SelfHotelReservationServiceImpl implements ISelfHotelReservationSer
 
     @Override
     public int updateSelfHotelReservation(SelfHotelReservation selfHotelReservation) {
-        System.out.println("333333333333");
         String sDate=selfHotelReservation.getStartDate();
         String eDate=selfHotelReservation.getEndDate();
         String[] start=sDate.split("-");
         String[] end=eDate.split("-");
+
+
         int sy=Integer.parseInt(start[0]),sm=Integer.parseInt(start[1]),sd=Integer.parseInt(start[2]);
         int ey=Integer.parseInt(end[0]),em=Integer.parseInt(end[1]),ed=Integer.parseInt(end[2]);
         int roomnum=selfHotelReservation.getRoomNum();
