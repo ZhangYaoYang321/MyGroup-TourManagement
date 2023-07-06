@@ -7,7 +7,7 @@ import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.utils.StringUtils;
 
 /**
- * 首页
+ * 公告栏
  *
  * @author ruoyi
  */
@@ -19,7 +19,7 @@ public class SysIndexController
     private RuoYiConfig ruoyiConfig;
 
     /**
-     * 访问首页，提示语
+     * 访问公告栏，提示语
      */
     @RequestMapping("/")
     public String index()

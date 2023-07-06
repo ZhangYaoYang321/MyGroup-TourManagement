@@ -118,15 +118,26 @@ export default {
       this.queryParams.pageNum = 1;
       this.getList();
     },
-    /** 入住按钮操作 */
+    /** 退房按钮操作 */
     handleCheckedOut(row) {
       const id = row.orderId;
-      this.$modal.confirm('是否确认退房？').then(function() {
-        return checkOut(id);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("退房成功");
-      }).catch(() => {});
+      var date = new Date()
+      var year = date.getFullYear()
+      var month = date.getMonth()+ 1 < 10 ?
+        '0' + (date.getMonth() + 1) : date.getMonth()+ 1
+      var day = date.getDate()< 10 ? '0' + date.getDate() : date.getDate()
+      if(row.endDate!=year+'-'+month+'-'+day)
+      {
+        this.$modal.msgWarning("退房失败，请联系工作人员");
+      }else{
+        this.$modal.confirm('是否确认退房？').then(function() {
+          return checkOut(id);
+        }).then(() => {
+          this.getList();
+          this.$modal.msgSuccess("退房成功");
+        }).catch(() => {});
+      }
+
     }
   }
 };

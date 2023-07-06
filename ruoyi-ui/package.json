@@ -1,11 +1,11 @@
 {
   "name": "ruoyi",
   "version": "3.8.5",
-  "description": "若依管理系统",
+  "description": "旅游综合信息平台",
   "author": "若依",
   "license": "MIT",
   "scripts": {
-    "dev": "SET NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+    "dev": "NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
     "build:prod": "vue-cli-service build",
     "build:stage": "vue-cli-service build --mode staging",
     "preview": "node build/index.js --preview",

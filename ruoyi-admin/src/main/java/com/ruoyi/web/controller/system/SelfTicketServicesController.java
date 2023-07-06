@@ -158,7 +158,10 @@ public class SelfTicketServicesController extends BaseController
         List<SelfTicketServices> list = selfTicketServicesService.selectSelfTicketServicesByCnId(selfTicketServices11.getCnId());
         for(SelfTicketServices selfTicketServices1 : list){
             if(selfTicketServices1.getScheduledDate().toInstant()
-                    .atZone(ZoneId.systemDefault()).toLocalDate().equals(LocalDate.now())){
+                    .atZone(ZoneId.systemDefault()).toLocalDate().equals(
+                            selfTicketServices.getScheduledDate().toInstant()
+                                    .atZone(ZoneId.systemDefault()).toLocalDate()
+                    )){
                 return AjaxResult.error("该游客已经预约了当日门票!");
             }
         }
@@ -189,26 +192,35 @@ public class SelfTicketServicesController extends BaseController
     {
         List<SelfTicketServices> list = selfTicketServicesService.selectSelfTicketServicesByCnId(cnId);
         int i = 0;
+        List<SelfTicketServices> listIsToday = new ArrayList<>();
+
         for (SelfTicketServices sts : list) {
             LocalDate currentDate = LocalDate.now();
             boolean isScheduledTime = sts.getScheduledDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(currentDate);
             i++;
-            if (cnId.equals(sts.getCnId()) && !isScheduledTime) {
-                if(i != list.size()) continue;
-                return AjaxResult.error("请在预约日期当天入园！");
-            }
-            if (cnId.equals(sts.getCnId()) && sts.getStateVisit()!=null &&
-                    Objects.equals(sts.getStateVisit(), "1")) {
-                if(i != list.size()) continue;
-                return AjaxResult.error("请勿重复登记入园！");
-            }
-            if (cnId.equals(sts.getCnId()) && sts.getStateVisit()!=null &&
-                    Objects.equals(sts.getStateVisit(), "2")){
-                if(i != list.size()) continue;
-                return AjaxResult.error("该票已经过期！请重新预约！");
-            }
-            return toAjax(selfTicketServicesService.updateVisitorInTime2(sts.getId()));
+            if (isScheduledTime) listIsToday.add(sts);
+            System.out.println(sts.getStateVisit() + " " + Objects.equals(sts.getStateVisit(), "1"));
         }
+
+        if (!listIsToday.isEmpty()) {
+            for (SelfTicketServices j : listIsToday) {
+                if (cnId.equals(j.getCnId()) && j.getStateVisit()!=null &&
+                        Objects.equals(j.getStateVisit(), "1")) {
+                    if(i != list.size()) continue;
+                    return AjaxResult.error("请勿重复登记入园！");
+                }
+
+                if (cnId.equals(j.getCnId()) && j.getStateVisit()!=null &&
+                        Objects.equals(j.getStateVisit(), "2")){
+                    if(i != list.size()) continue;
+                    return AjaxResult.error("该票已经过期！请重新预约！");
+                }
+                return toAjax(selfTicketServicesService.updateVisitorInTime2(j.getId()));
+            }
+        } else {
+            if(i != list.size()) return AjaxResult.error("请在预约日期当天入园！");
+        }
+
         return AjaxResult.error("该游客未预约！");
     }
 

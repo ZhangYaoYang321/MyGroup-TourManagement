@@ -602,7 +602,6 @@ CREATE TABLE `self_visitors` (
   `order_id` int(11) DEFAULT NULL,
   `ticket_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `self_visitors_cn_id_uindex` (`cn_id`),
   UNIQUE KEY `self_visitors_id_uindex` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='游客表';
 
