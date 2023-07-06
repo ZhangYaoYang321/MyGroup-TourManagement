@@ -16,4 +16,6 @@ public interface SelfHotelCheckInMapper {
     public List<SelfHotelCheckIn> selectSelfHotelCheckInList(SelfHotelCheckIn selfHotelCheckIn);
 
     public int checkInSelfHotelCheckInById(long id);
+
+    public List<String> checkInSelfHotelRooms(String date);
 }

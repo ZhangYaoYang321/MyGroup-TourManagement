@@ -26,4 +26,12 @@ public interface ISelfHotelCheckInService {
      * @return 结果
      */
     public int checkInSelfHotelCheckInById(long id);
+
+    /**
+     * 查询房间数
+     *
+     * @param date 酒店订单
+     * @return 结果
+     */
+    public List<String> checkInSelfHotelRooms(String date);
 }

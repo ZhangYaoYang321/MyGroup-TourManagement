@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.SelfTicketServicesMapper">
 
     <resultMap type="SelfTicketServices" id="SelfTicketServicesResult">
@@ -59,7 +59,7 @@
             <if test="visitorOutTime != null">visitor_out_time,</if>
             <if test="stateVisit != null">state_visit,</if>
             <if test="typeTicket != null">type_ticket,</if>
-        </trim>
+         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="ticketId != null">#{ticketId},</if>
             <if test="cnId != null">#{cnId},</if>
@@ -68,7 +68,7 @@
             <if test="visitorOutTime != null">#{visitorOutTime},</if>
             <if test="stateVisit != null">#{stateVisit},</if>
             <if test="typeTicket != null">#{typeTicket},</if>
-        </trim>
+         </trim>
     </insert>
 
     <update id="updateSelfTicketServices" parameterType="SelfTicketServices">
@@ -88,7 +88,7 @@
     <update id="updateVisitorInTime" parameterType="java.lang.String">
         UPDATE self_ticket_services
         SET visitor_in_time = NOW(),
-            state_visit = 1
+        state_visit = 1
         WHERE cn_id = #{cnId}
     </update>
 
@@ -97,20 +97,6 @@
         SET visitor_out_time = NOW(),
             state_visit = 0
         WHERE cn_id = #{cnId}
-    </update>
-
-    <update id="updateVisitorInTime2" parameterType="java.lang.Long">
-        UPDATE self_ticket_services
-        SET visitor_in_time = NOW(),
-            state_visit = 1
-        WHERE id = #{id}
-    </update>
-
-    <update id="updateVisitorOutTime2" parameterType="java.lang.Long">
-        UPDATE self_ticket_services
-        SET visitor_out_time = NOW(),
-            state_visit = 0
-        WHERE id = #{id}
     </update>
 
     <delete id="deleteSelfTicketServicesById" parameterType="Long">
@@ -123,10 +109,6 @@
             #{id}
         </foreach>
     </delete>
-
-    <select id="getPeopleCounts" resultType="int">
-        select count(*) from self_ticket_services where state_visit = 1
-    </select>
 
 
 </mapper>
