@@ -190,7 +190,7 @@
 
 
     <el-table v-loading="loading" :data="ticket_servicesList" @selection-change="handleSelectionChange"
-              @row-click="handleRowClick">
+              @row-click="handleRowClick"">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="ID" align="center" prop="id" />
       <el-table-column label="门票号" align="center" prop="ticketId" />
@@ -268,8 +268,8 @@
           </el-form-item>
           <el-form-item label="门票类型" prop="typeTicket">
             <el-select v-model="form.typeTicket" placeholder="请下拉选择" clearable :style="{width: '100%'}">
-              <el-option v-for="(item, index) in field101Options" :key="index" :label="item.label"
-                         :value="item.value" :disabled="item.disabled"></el-option>
+              <el-option v-for="(item, index) in ticketsType" :key="index" :label="item.typeTicket"
+                         :value="item.id" :disabled="item.disabled"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -346,14 +346,15 @@ import {
   inParkTicket_services, outParkTicket_services, getPeopleCounts
 } from "@/api/system/ticket_services";
 import {getParkingCount} from "@/api/system/cars";
+import {getTicket_prices, listTicket_prices} from "@/api/system/ticket_prices";
 
 export default {
   name: "Ticket_services",
   data() {
     return {
-
+      // 表格数据
       selectedRow: [],
-
+      ticketsType: [],
       peopleCount: 0,
       totalCount: 10,
 
@@ -498,6 +499,8 @@ export default {
         console.log(response);
         this.totalCount = response.rows[0].value;
         this.peopleCount = response.rows[1].value;
+        this.ticketsType = response.rows[2];
+        console.log(this.ticketsType);
       });
     },
 

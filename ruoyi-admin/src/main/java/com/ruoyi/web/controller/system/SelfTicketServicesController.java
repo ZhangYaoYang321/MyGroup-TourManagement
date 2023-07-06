@@ -6,8 +6,10 @@ import java.util.*;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.system.domain.SelfParkingCars;
+import com.ruoyi.system.domain.SelfTicketPrices;
 import com.ruoyi.system.domain.SelfVisitors;
 import com.ruoyi.system.mapper.SelfTicketServicesMapper;
+import com.ruoyi.system.service.ISelfTicketPricesService;
 import com.ruoyi.system.service.ISelfVisitorsService;
 import org.apache.commons.lang3.builder.ToStringExclude;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,6 +49,9 @@ public class SelfTicketServicesController extends BaseController
 
     @Autowired
     private SelfTicketServicesMapper selfTicketServicesMapper;
+
+    @Autowired
+    private ISelfTicketPricesService selfTicketPricesService;
 
     /**
      * 查询票务列表
@@ -251,18 +256,9 @@ public class SelfTicketServicesController extends BaseController
         peopleCountMap.put("value", peopleCount);
         countsList.add(peopleCountMap);
         System.out.println("获取景区当前在园人数成功 : " + peopleCount);
+        List<SelfTicketPrices> tickets = selfTicketPricesService.selectSelfTicketPricesList(new SelfTicketPrices());
+        countsList.add(tickets);
         return getDataTable(countsList);
     }
 
-
-//        for (SelfTicketServices sts : list) {
-//            System.out.println(cnId.equals(sts.getCnId()));
-//            System.out.println(sts.getStateVisit()==null);
-//            System.out.println(!Objects.equals(sts.getStateVisit(), "1"));
-//            if (cnId.equals(sts.getCnId()) && (!Objects.equals(sts.getStateVisit(), "1") || sts.getStateVisit()==null)) {
-//                return AjaxResult.error("该游客未入园！");
-//            }
-//
-//        }
-//        return toAjax(selfTicketServicesService.updateVisitorOutTime(cnId));
 }
