@@ -59,9 +59,9 @@
           <div style="width: 100%; height: 360px; overflow-x: auto;">
             <div class="body">
               <div class="event-wrapper">
-                <div v-for="(event, index) in pagedEvents" :key="index" class="event">
+                <div v-for="(event, index) in epagedEvents" :key="index" class="event">
                   <span class="label">发生时间：</span><br>
-                  <span class="content">{{ event.emergenciesTime }}</span><br><br>
+                  <span class="content">{{ parseTime(event.emergenciesTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span><br><br>
                   <span class="label">发生地点：</span><br>
                   <span class="content">{{ event.location }}</span><br><br>
                   <span class="label">详细信息：</span><br>
@@ -75,7 +75,7 @@
                     ></div>
                   </div><br><br>
                   <span class="label" >处理部门：</span><br>
-                  <span class="content">{{ event.department }}</span><br><br>
+                  <span class="content">{{ event.department || '暂未下放，等待处理中……'}}</span><br><br>
                   <span class="label">处理状态：</span><br>
                   <div v-if="event.stateEmergencies == 0" class="status-box pink">
                     未处理
@@ -92,8 +92,8 @@
               v-for="(event, index) in emergenciesList"
               :key="index"
               class="dot"
-              :class="{ 'active': index === currentPage }"
-              @click="goToPage(index)"
+              :class="{ 'active': index === ecurrentPage }"
+              @click="goToEmergenciesPage(index)"
             ></span>
           </div>
         </el-card>
@@ -112,13 +112,40 @@
         </el-card>
       </el-col>
 
-      <el-col :span="9">
+      <el-col :span="9" style="height: 400px">
         <el-card class="update-log">
           <div slot="header" class="clearfix">
-            <span>当日投诉</span>
+            <span class="card-title">当日投诉</span>
           </div>
-          <div class="body">
-            <div id="myChart2" style="width:100%;height:400px;float:left;"></div>
+          <div style="width: 100%; height: 360px; overflow-x: auto;">
+            <div class="body">
+              <div class="event-wrapper">
+                <div v-for="(complaint, index) in cpagedComplaints" :key="index" class="event">
+                  <span class="label">投诉ID：</span><br>
+                  <span class="content">{{ complaint.complaintsId }}</span><br><br>
+                  <span class="label">投诉内容：</span><br>
+                  <span class="content">{{ complaint.complaintsMessage }}</span><br><br>
+                  <span class="label">处理状态：</span><br>
+                  <div v-if="complaint.stateComplaints == 0" class="status-box pink">
+                    未处理
+                  </div>
+                  <div v-else-if="complaint.stateComplaints == 1" class="status-box light-green">
+                    已处理
+                  </div><br><br>
+                  <span class="label">回复内容：</span><br>
+                  <span class="content">{{ complaint.complaintsReplyMessage || '暂未回复，等待处理中……' }}</span><br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-dots">
+            <span
+              v-for="(complaint, index) in complaintsList"
+              :key="index"
+              class="dot"
+              :class="{ 'active': index === ccurrentPage }"
+              @click="goToComplaintsPage(index)"
+            ></span>
           </div>
         </el-card>
       </el-col>
@@ -143,7 +170,7 @@
 
 <script>
 import { listHotel_prices } from '@/api/system/hotel_prices'
-import { listHotel_prices2, getTodayTickets } from '@/api/notificationbar'
+import { listHotel_prices2, getTodayTickets, getTodayEmergencies, getTodayComplaints } from '@/api/notificationbar'
 import { listTicket_services } from '@/api/system/ticket_services'
 import { listTicket_prices } from '@/api/system/ticket_prices'
 import {listEmergencies} from "@/api/system/emergencies";
@@ -173,9 +200,11 @@ export default {
       ticket_pricesList:[],
       hotel_pricesList:[],
       emergenciesList: [], // 事件列表数据
-      currentPage: 0, // 当前页码
-      itemsPerPage: 1, // 每页显示的事件数量
-      deptList:[],
+      ecurrentPage: 0, // 当前页码
+      eitemsPerPage: 1, // 每页显示的事件数量
+      complaintsList: [], // 投诉列表数据
+      ccurrentPage: 0, // 当前页码
+      citemsPerPage: 1, // 每页显示的投诉数量
       opinionData2: [
         { value: null, name: '已入住', itemStyle: 'red' },
         { value: null, name: '空房', itemStyle: '#1FC48D' },
@@ -208,25 +237,37 @@ export default {
       this.getList();
       this.drawLine();
       this.drawLine2();
-      this.currentPage = (this.currentPage + 1) % this.emergenciesList.length;
+      this.ecurrentPage = (this.ecurrentPage + 1) % this.emergenciesList.length;
+      this.ccurrentPage = (this.ccurrentPage + 1) % this.complaintsList.length;
     }, 5000); // 设置更新间隔，单位为毫秒，这里设置为5秒
   },
   computed: {
-    totalPages() {
-      return Math.ceil(this.emergenciesList.length / this.itemsPerPage);
+    etotalPages() {
+      return Math.ceil(this.emergenciesList.length / this.eitemsPerPage);
     },
-    pagedEvents() {
-      const startIndex = this.currentPage * this.itemsPerPage;
-      const endIndex = startIndex + this.itemsPerPage;
+    epagedEvents() {
+      const startIndex = this.ecurrentPage * this.eitemsPerPage;
+      const endIndex = startIndex + this.eitemsPerPage;
       return this.emergenciesList.slice(startIndex, endIndex);
-    }
+    },
+    ctotalPages() {
+      return Math.ceil(this.complaintsList.length / this.citemsPerPage);
+    },
+    cpagedComplaints() {
+      const startIndex = this.ccurrentPage * this.citemsPerPage;
+      const endIndex = startIndex + this.citemsPerPage;
+      return this.complaintsList.slice(startIndex, endIndex);
+    },
   },
   methods: {
     goTarget(href) {
       window.open(href, "_blank");
     },
-    goToPage(page) {
-      this.currentPage = page;
+    goToEmergenciesPage(page) {
+      this.ecurrentPage = page;
+    },
+    goToComplaintsPage(page) {
+      this.ccurrentPage = page;
     },
     drawLine () {
       listHotel_prices2().then(response => {
@@ -234,7 +275,6 @@ export default {
         this.reserved_rooms=0;
         this.check_in_rooms=0;
         for(let i in this.roomsList){
-          console.log(this.reserved_rooms.toString());
           if(this.roomsList[i]=='已预约')
             this.reserved_rooms=this.reserved_rooms+1;
           else
@@ -304,7 +344,6 @@ export default {
           count: 0
         }));
         // 更新票务数据统计
-        console.log(this.ticket_servicesList); // 检查 ticket_servicesList 数据
         for (let i in this.ticket_servicesList) {
           const ticketService = this.ticket_servicesList[i];
           const countItem = countList.find(item => item.id == ticketService.typeTicket);
@@ -312,8 +351,6 @@ export default {
             countItem.count++;
           }
         }
-        console.log(countList); // 检查 countList 数据
-
         this.myChart2 = this.$echarts.init(document.getElementById('myChart2'));
         this.myChart2.setOption({
           title: {
@@ -367,8 +404,11 @@ export default {
           this.drawLine2();
         });
       });
-      listEmergencies(this.queryParams).then(response => {
+      getTodayEmergencies(this.queryParams).then(response => {
         this.emergenciesList = response.rows;
+      });
+      getTodayComplaints(this.queryParams).then((response) => {
+        this.complaintsList = response.rows;
       });
     },
 

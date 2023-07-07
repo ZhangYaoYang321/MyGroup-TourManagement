@@ -15,3 +15,19 @@ export function getTodayTickets() {
     method: 'get',
   })
 }
+
+// 查询当日事件
+export function getTodayEmergencies() {
+  return request({
+    url: '/system/emergencies/getTodayEmergencies',
+    method: 'get',
+  })
+}
+
+// 查询当日投诉
+export function getTodayComplaints() {
+  return request({
+    url: '/system/complaints/getTodayComplaints',
+    method: 'get',
+  })
+}

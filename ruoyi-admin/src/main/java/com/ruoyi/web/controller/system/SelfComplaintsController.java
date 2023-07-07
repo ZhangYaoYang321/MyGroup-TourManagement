@@ -1,7 +1,12 @@
 package com.ruoyi.web.controller.system;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.domain.SelfEmergencies;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,5 +105,22 @@ public class SelfComplaintsController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(selfComplaintsService.deleteSelfComplaintsByIds(ids));
+    }
+
+    /**
+     * 获取当日投诉
+     */
+    @GetMapping("/getTodayComplaints")
+    public TableDataInfo getTodayComplaints() {
+        List<SelfComplaints> todayComplaints = new ArrayList<>();
+        List<SelfComplaints> complaints = selfComplaintsService.selectSelfComplaintsList(new SelfComplaints());
+        LocalDate currentDate = LocalDate.now();
+        for (SelfComplaints sc : complaints) {
+            if (sc.getComplaintsDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(currentDate)) {
+                todayComplaints.add(sc);
+            }
+        }
+        System.out.println(todayComplaints);
+        return getDataTable(todayComplaints);
     }
 }
