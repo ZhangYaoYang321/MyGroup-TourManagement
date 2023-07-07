@@ -181,13 +181,8 @@
 
 <script>
 import { listHotel_prices } from '@/api/system/hotel_prices'
-<<<<<<< Updated upstream
-import { listHotel_prices2, getTodayTickets, getTodayEmergencies, getTodayComplaints } from '@/api/notificationbar'
-import { listTicket_services } from '@/api/system/ticket_services'
-=======
-import { listHotel_prices2, getTodayTickets, getParkingCount2, getPeopleCounts2 } from '@/api/notificationbar'
-import {getPeopleCounts, listTicket_services} from '@/api/system/ticket_services'
->>>>>>> Stashed changes
+import { listHotel_prices2, getTodayTickets, getTodayEmergencies, getTodayComplaints, getParkingCount2, getPeopleCounts2 } from '@/api/notificationbar'
+import { getPeopleCounts, listTicket_services } from '@/api/system/ticket_services'
 import { listTicket_prices } from '@/api/system/ticket_prices'
 import {listEmergencies} from "@/api/system/emergencies";
 import {getDept, listDept} from "@/api/system/dept";
@@ -217,26 +212,17 @@ export default {
       ticket_pricesList:[],
       hotel_pricesList:[],
       emergenciesList: [], // 事件列表数据
-<<<<<<< Updated upstream
       ecurrentPage: 0, // 当前页码
       eitemsPerPage: 1, // 每页显示的事件数量
       complaintsList: [], // 投诉列表数据
       ccurrentPage: 0, // 当前页码
       citemsPerPage: 1, // 每页显示的投诉数量
-=======
-      currentPage: 0, // 当前页码
-      itemsPerPage: 1, // 每页显示的事件数量
-      deptList:[],
-
       peopleCountsList:[],
       parkingCountList:[],
-
       peopleCount: 0,
       totalCount: 0,
       occupiedCountCar: 0,
       totalCountCar: 0,
-
->>>>>>> Stashed changes
       opinionData2: [
         { value: null, name: '已入住', itemStyle: 'red' },
         { value: null, name: '空房', itemStyle: '#1FC48D' },
@@ -282,7 +268,6 @@ export default {
       const endIndex = startIndex + this.eitemsPerPage;
       return this.emergenciesList.slice(startIndex, endIndex);
     },
-<<<<<<< Updated upstream
     ctotalPages() {
       return Math.ceil(this.complaintsList.length / this.citemsPerPage);
     },
@@ -291,15 +276,12 @@ export default {
       const endIndex = startIndex + this.citemsPerPage;
       return this.complaintsList.slice(startIndex, endIndex);
     },
-=======
     isFull() {
       return this.peopleCount >= this.totalCount;
     },
     isFullCar() {
       return this.occupiedCountCar >= this.totalCountCar;
     }
-
->>>>>>> Stashed changes
   },
   methods: {
     goTarget(href) {
@@ -449,10 +431,9 @@ export default {
       getTodayEmergencies(this.queryParams).then(response => {
         this.emergenciesList = response.rows;
       });
-<<<<<<< Updated upstream
       getTodayComplaints(this.queryParams).then((response) => {
         this.complaintsList = response.rows;
-=======
+      });
       getPeopleCounts2().then(response => {
         this.totalCount = response.rows[0].value;
         this.peopleCount = response.rows[1].value;
@@ -460,7 +441,6 @@ export default {
       getParkingCount2().then(response => {
         this.totalCountCar = response.rows[0].value;
         this.occupiedCountCar = response.rows[1].value;
->>>>>>> Stashed changes
       });
     },
 
