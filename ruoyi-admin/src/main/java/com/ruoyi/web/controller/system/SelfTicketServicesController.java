@@ -273,4 +273,16 @@ public class SelfTicketServicesController extends BaseController
         return getDataTable(countsList);
     }
 
+    @GetMapping(value = "/getTodayTickets")
+    public TableDataInfo getTodayTickets() {
+        List<SelfTicketServices> tickets = selfTicketServicesService.selectSelfTicketServicesList(new SelfTicketServices());
+        List<SelfTicketServices> todayTickets = new ArrayList<>();
+        LocalDate currentDate = LocalDate.now();
+        for (SelfTicketServices sts : tickets) {
+            if (sts.getScheduledDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(currentDate))
+                todayTickets.add(sts);
+        }
+        System.out.println(todayTickets);
+        return getDataTable(todayTickets);
+    }
 }
