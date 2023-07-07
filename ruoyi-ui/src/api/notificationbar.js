@@ -21,6 +21,7 @@ export function getTodayTickets() {
 export function getTodayEmergencies() {
   return request({
     url: '/system/emergencies/getTodayEmergencies',
+    method: 'get',
   })
 }
 
@@ -28,7 +29,7 @@ export function getTodayEmergencies() {
 export function getTodayComplaints() {
   return request({
     url: '/system/complaints/getTodayComplaints',
-        method: 'get',
+    method: 'get',
   })
 }
 
