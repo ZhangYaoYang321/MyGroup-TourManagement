@@ -1,7 +1,13 @@
 package com.ruoyi.web.controller.system;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.system.domain.SelfTicketServices;
+import com.ruoyi.system.service.ISysDeptService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +39,9 @@ public class SelfEmergenciesController extends BaseController
 {
     @Autowired
     private ISelfEmergenciesService selfEmergenciesService;
+
+    @Autowired
+    private ISysDeptService sysDeptService;
 
     /**
      * 查询事件列表
@@ -100,5 +109,24 @@ public class SelfEmergenciesController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(selfEmergenciesService.deleteSelfEmergenciesByIds(ids));
+    }
+
+    /**
+     * 获取当日事件
+     */
+    @GetMapping("/getTodayEmergencies")
+    public TableDataInfo getTodayEmergencies() {
+        List<SelfEmergencies> todayEmergencies = new ArrayList<>();
+        List<SelfEmergencies> emergencies = selfEmergenciesService.selectSelfEmergenciesList(new SelfEmergencies());
+        LocalDate currentDate = LocalDate.now();
+        for (SelfEmergencies se : emergencies) {
+            if (se.getEmergenciesTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(currentDate)) {
+                if (se.getDepartment() != null) {
+                    se.setDepartment(sysDeptService.selectDeptById(Long.valueOf(se.getDepartment())).getDeptName());
+                }
+                todayEmergencies.add(se);
+            }
+        }
+        return getDataTable(todayEmergencies);
     }
 }
