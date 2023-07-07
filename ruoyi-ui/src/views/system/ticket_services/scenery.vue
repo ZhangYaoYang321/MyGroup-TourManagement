@@ -190,7 +190,7 @@
 
 
     <el-table v-loading="loading" :data="ticket_servicesList" @selection-change="handleSelectionChange"
-              @row-click="handleRowClick"">
+              @row-click="handleRowClick">
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column label="ID" align="center" prop="id" />
       <el-table-column label="门票号" align="center" prop="ticketId" />

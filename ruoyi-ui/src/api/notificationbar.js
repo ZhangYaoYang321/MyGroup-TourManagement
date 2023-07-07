@@ -16,6 +16,7 @@ export function getTodayTickets() {
   })
 }
 
+
 // 查询当日事件
 export function getTodayEmergencies() {
   return request({
@@ -28,6 +29,22 @@ export function getTodayEmergencies() {
 export function getTodayComplaints() {
   return request({
     url: '/system/complaints/getTodayComplaints',
+    method: 'get',
+  })
+}
+
+// 查询景区人数
+export function getPeopleCounts2() {
+  return request({
+    url: '/system/ticket_services/getPeopleCounts',
+    method: 'get',
+  })
+}
+
+//查询停车场车辆数
+export function getParkingCount2() {
+  return request({
+    url: '/system/cars/getParkingCount',
     method: 'get',
   })
 }
