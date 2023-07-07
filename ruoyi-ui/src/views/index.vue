@@ -49,6 +49,95 @@
         </el-card>
       </el-col>
     </el-row>
+
+    <el-row :gutter="20" style="margin-top: 10px">
+      <el-col :span="9" style="height: 400px">
+        <el-card class="update-log">
+          <div slot="header" class="clearfix">
+            <span class="card-title">当日事件</span>
+          </div>
+          <div style="width: 100%; height: 360px; overflow-x: auto;">
+            <div class="body">
+              <div class="event-wrapper">
+                <div v-for="(event, index) in pagedEvents" :key="index" class="event">
+                  <span class="label">发生时间：</span><br>
+                  <span class="content">{{ event.emergenciesTime }}</span><br><br>
+                  <span class="label">发生地点：</span><br>
+                  <span class="content">{{ event.location }}</span><br><br>
+                  <span class="label">详细信息：</span><br>
+                  <span class="content">{{ event.emergenciesMessage }}</span><br><br>
+                  <span class="label">紧急程度：</span><br>
+                  <div class="urgency-bar">
+                    <div
+                      v-for="level in 3"
+                      :key="level"
+                      :class="['urgency-bar-item', { 'ur-active': level <= event.emergenciesLevel }, { 'ur-inactive': level > event.emergenciesLevel }]"
+                    ></div>
+                  </div><br><br>
+                  <span class="label" >处理部门：</span><br>
+                  <span class="content">{{ event.department }}</span><br><br>
+                  <span class="label">处理状态：</span><br>
+                  <div v-if="event.stateEmergencies == 0" class="status-box pink">
+                    未处理
+                  </div>
+                  <div v-else-if="event.stateEmergencies == 1" class="status-box light-green">
+                    已处理
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-dots">
+            <span
+              v-for="(event, index) in emergenciesList"
+              :key="index"
+              class="dot"
+              :class="{ 'active': index === currentPage }"
+              @click="goToPage(index)"
+            ></span>
+          </div>
+        </el-card>
+      </el-col>
+
+      <el-col :span="3">
+        <el-card class="update-log">
+          <div slot="header" class="clearfix">
+            <span>景区流量</span>
+          </div>
+          <div class="body" style="width:100%;height:400px;float:left;">
+            <p v-for="room in hotel_pricesList" :key="room.typeRoom">
+              {{ room.typeRoom }}：<br>{{ room.priceRoom }}元<br>
+            </p>
+          </div>
+        </el-card>
+      </el-col>
+
+      <el-col :span="9">
+        <el-card class="update-log">
+          <div slot="header" class="clearfix">
+            <span>当日投诉</span>
+          </div>
+          <div class="body">
+            <div id="myChart2" style="width:100%;height:400px;float:left;"></div>
+          </div>
+        </el-card>
+      </el-col>
+
+      <el-col :span="3">
+        <el-card class="update-log">
+          <div slot="header" class="clearfix">
+            <span>停车场流量</span>
+          </div>
+          <div class="body" style="width:100%;height:400px;float:left;">
+            <p v-for="ticket in ticket_pricesList" :key="ticket.typeTicket">
+              {{ ticket.typeTicket }}：<br>{{ ticket.priceTicket }}元<br>
+            </p>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+
+
   </div>
 </template>
 
@@ -57,6 +146,8 @@ import { listHotel_prices } from '@/api/system/hotel_prices'
 import { listHotel_prices2, getTodayTickets } from '@/api/notificationbar'
 import { listTicket_services } from '@/api/system/ticket_services'
 import { listTicket_prices } from '@/api/system/ticket_prices'
+import {listEmergencies} from "@/api/system/emergencies";
+import {getDept, listDept} from "@/api/system/dept";
 
 export default {
   name: "Index",
@@ -81,6 +172,10 @@ export default {
       roomsList:[],
       ticket_pricesList:[],
       hotel_pricesList:[],
+      emergenciesList: [], // 事件列表数据
+      currentPage: 0, // 当前页码
+      itemsPerPage: 1, // 每页显示的事件数量
+      deptList:[],
       opinionData2: [
         { value: null, name: '已入住', itemStyle: 'red' },
         { value: null, name: '空房', itemStyle: '#1FC48D' },
@@ -113,11 +208,25 @@ export default {
       this.getList();
       this.drawLine();
       this.drawLine2();
+      this.currentPage = (this.currentPage + 1) % this.emergenciesList.length;
     }, 5000); // 设置更新间隔，单位为毫秒，这里设置为5秒
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.emergenciesList.length / this.itemsPerPage);
+    },
+    pagedEvents() {
+      const startIndex = this.currentPage * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.emergenciesList.slice(startIndex, endIndex);
+    }
   },
   methods: {
     goTarget(href) {
       window.open(href, "_blank");
+    },
+    goToPage(page) {
+      this.currentPage = page;
     },
     drawLine () {
       listHotel_prices2().then(response => {
@@ -258,6 +367,9 @@ export default {
           this.drawLine2();
         });
       });
+      listEmergencies(this.queryParams).then(response => {
+        this.emergenciesList = response.rows;
+      });
     },
 
   }
@@ -324,6 +436,92 @@ export default {
       margin-inline-end: 0;
       padding-inline-start: 40px;
     }
+  }
+
+  .page-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: gray;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+
+  .active {
+    background-color: black;
+  }
+
+  .label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px;
+  }
+
+  .content {
+    font-size: 16px;
+    color: #666;
+  }
+
+  .status-box {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .pink {
+    background-color: pink;
+    color: white;
+  }
+
+  .light-green {
+    background-color: lightgreen;
+    color: black;
+  }
+
+  .urgency-bar {
+    display: flex;
+    align-items: center;
+    height: 20px;
+    width: 50%;
+  }
+
+  .urgency-bar-item {
+    flex: 1;
+    height: 100%;
+    transition: background-color 0.3s;
+  }
+
+  .urgency-bar-item:nth-child(1) {
+    background-color: lightblue;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  .urgency-bar-item:nth-child(2) {
+    background-color: orange;
+  }
+
+  .urgency-bar-item:nth-child(3) {
+    background-color: purple;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .ur-active {
+    opacity: 1;
+  }
+
+  .ur-inactive {
+    background-color: lightgray !important;
   }
 }
 </style>

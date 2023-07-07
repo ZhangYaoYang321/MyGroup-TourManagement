@@ -282,7 +282,6 @@ public class SelfTicketServicesController extends BaseController
             if (sts.getScheduledDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().isEqual(currentDate))
                 todayTickets.add(sts);
         }
-        System.out.println(todayTickets);
         return getDataTable(todayTickets);
     }
 }
