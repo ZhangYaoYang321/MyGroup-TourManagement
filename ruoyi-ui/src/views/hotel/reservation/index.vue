@@ -9,7 +9,6 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['hotel:orders:add']"
         >新增</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -51,14 +50,12 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['hotel:reservation:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['hotel:orders:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -1240,7 +1237,7 @@ export default {
 <style scoped type='text/css' >
 
 .el-button--warning{
-  width: 58px;
+  width: 50px;
   height:36px;
   text-align: center;
   background-color: rgb(78, 168, 246);
@@ -1249,7 +1246,7 @@ export default {
 }
 
 .el-button--info{
-  width: 58px;
+  width: 50px;
   height:36px;
   text-align: center;
   background-color: rgb(181, 184, 187);
@@ -1258,7 +1255,7 @@ export default {
 }
 
 .el-button--success{
-  width: 58px;
+  width: 50px;
   height:36px;
   text-align: center;
   background-color: rgb(72, 141, 197);
@@ -1267,7 +1264,7 @@ export default {
 }
 
 .el-button--danger{
-  width: 58px;
+  width: 50px;
   height:36px;
   text-align: center;
   background-color: rgb(53, 146, 224);

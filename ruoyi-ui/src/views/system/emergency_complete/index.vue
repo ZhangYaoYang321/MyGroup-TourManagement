@@ -50,7 +50,6 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['system:emergency_complete:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -66,7 +65,7 @@
       <el-table-column label="紧急程度" align="center" prop="emergenciesLevel" />
       <el-table-column label="发生日期" align="center" prop="emergenciesTime" width="180">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.emergenciesTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.emergenciesTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -76,14 +75,12 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:emergency_complete:edit']"
           >已处理</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:emergency_complete:edit']"
           >待处理</el-button>
         </template>
       </el-table-column>

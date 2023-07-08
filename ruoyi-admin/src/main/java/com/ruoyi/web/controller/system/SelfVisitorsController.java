@@ -37,7 +37,7 @@ public class SelfVisitorsController extends BaseController
     /**
      * 查询游客列表
      */
-    @PreAuthorize("@ss.hasPermi('system:visitors:list')")
+
     @GetMapping("/list")
     public TableDataInfo list(SelfVisitors selfVisitors)
     {
@@ -49,7 +49,7 @@ public class SelfVisitorsController extends BaseController
     /**
      * 导出游客列表
      */
-    @PreAuthorize("@ss.hasPermi('system:visitors:export')")
+
     @Log(title = "游客", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfVisitors selfVisitors)
@@ -62,7 +62,7 @@ public class SelfVisitorsController extends BaseController
     /**
      * 获取游客详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:visitors:query')")
+
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class SelfVisitorsController extends BaseController
     /**
      * 新增游客
      */
-    @PreAuthorize("@ss.hasPermi('system:visitors:add')")
+
     @Log(title = "游客", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfVisitors selfVisitors)
@@ -83,7 +83,7 @@ public class SelfVisitorsController extends BaseController
     /**
      * 修改游客
      */
-    @PreAuthorize("@ss.hasPermi('system:visitors:edit')")
+
     @Log(title = "游客", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfVisitors selfVisitors)
@@ -94,7 +94,7 @@ public class SelfVisitorsController extends BaseController
     /**
      * 删除游客
      */
-    @PreAuthorize("@ss.hasPermi('system:visitors:remove')")
+
     @Log(title = "游客", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
@@ -102,17 +102,4 @@ public class SelfVisitorsController extends BaseController
         return toAjax(selfVisitorsService.deleteSelfVisitorsByIds(ids));
     }
 
-//
-//
-//    /**
-//     * 游客预约
-//     */
-//    @PreAuthorize("@ss.hasPermi('system:visitors:appoint')")
-//    @Log(title = "游客", businessType = BusinessType.INSERT)
-//    @PostMapping("/appoint")
-//    public AjaxResult appoint(@RequestBody SelfVisitors selfVisitors)
-//    {
-//
-//        return toAjax(selfVisitorsService.insertSelfVisitors(selfVisitors));
-//    }
 }

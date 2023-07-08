@@ -32,11 +32,9 @@ public class SelfHotelReservationController extends BaseController {
     @Autowired
     private ISelfHotelReservationService selfHotelReservationService;
 
-
     /**
      * 查询酒店订单列表
      */
-    @PreAuthorize("@ss.hasPermi('hotel:reservation:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfHotelReservation selfHotelReservation)
     {
@@ -48,7 +46,6 @@ public class SelfHotelReservationController extends BaseController {
     /**
      * 新增酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('hotel:reservation:add')")
     @Log(title = "酒店预约", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfHotelReservation selfHotelReservation)
@@ -60,7 +57,6 @@ public class SelfHotelReservationController extends BaseController {
     /**
      * 获取酒店订单详细信息
      */
-    @PreAuthorize("@ss.hasPermi('hotel:reservation:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -70,7 +66,6 @@ public class SelfHotelReservationController extends BaseController {
     /**
      * 获取酒店房间详细信息
      */
-    @PreAuthorize("@ss.hasPermi('hotel:reservation:query')")
     @GetMapping(value = "/1/{date}")
     public TableDataInfo listRooms(@PathVariable("date") String date)
     {
@@ -84,7 +79,6 @@ public class SelfHotelReservationController extends BaseController {
     /**
      * 修改酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('hotel:reservation:edit')")
     @Log(title = "酒店预约", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfHotelReservation selfHotelReservation)
@@ -95,7 +89,6 @@ public class SelfHotelReservationController extends BaseController {
     /**
      * 删除酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('hotel:reservation:remove')")
     @Log(title = "酒店预约", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")
     public AjaxResult remove(@PathVariable("id") Long id)

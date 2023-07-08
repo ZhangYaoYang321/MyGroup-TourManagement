@@ -30,7 +30,6 @@ public class SelfHotelCheckOutController extends BaseController {
     /**
      * 查询酒店订单列表
      */
-    @PreAuthorize("@ss.hasPermi('hotel:checkout:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfHotelCheckOut selfHotelCheckOut)
     {
@@ -41,7 +40,6 @@ public class SelfHotelCheckOutController extends BaseController {
     /**
      * 删除酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('hotel:checkout:submit')")
     @Log(title = "酒店入住", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")
     public AjaxResult checkOut(@PathVariable("id") Long id)

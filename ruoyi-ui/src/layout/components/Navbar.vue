@@ -5,8 +5,13 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!topNav"/>
     <top-nav id="topmenu-container" class="topmenu-container" v-if="topNav"/>
 
+
     <div class="right-menu">
-<!--      <template v-if="device!=='mobile'">-->
+      <!-- <span style="margin-right: 20px">
+         {{weatherData.city}}: {{weatherData.data[0].wea}}
+         <img :src="weatherImg" v-bind:style="{width:'20px',height:'20px'}">
+       </span>
+             <template v-if="device!=='mobile'">-->
 <!--        <search id="header-search" class="right-menu-item" />-->
 <!--        -->
 <!--        <el-tooltip content="源码地址" effect="dark" placement="bottom">-->
@@ -24,8 +29,8 @@
 <!--        </el-tooltip>-->
 
 <!--      </template>-->
-
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+
         <div class="avatar-wrapper">
           <img :src="avatar" class="user-avatar">
           <i class="el-icon-caret-bottom" />
@@ -43,6 +48,10 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+
+    <span class="weather">
+      <iframe scrolling="no" src="https://tianqiapi.com/api.php?style=tx&skin=pitaya&city=成都&fontsize=13" frameborder="0" width="100%" height="50" allowtransparency="true"></iframe>
+    </span>
   </div>
 </template>
 
@@ -56,8 +65,14 @@ import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 import RuoYiGit from '@/components/RuoYi/Git'
 import RuoYiDoc from '@/components/RuoYi/Doc'
+import axios from 'axios'
 
 export default {
+  data() {
+    return {
+      city:'成都'
+    }
+  },
   components: {
     Breadcrumb,
     TopNav,
@@ -145,6 +160,8 @@ export default {
     vertical-align: top;
   }
 
+
+
   .right-menu {
     float: right;
     height: 100%;
@@ -196,5 +213,14 @@ export default {
       }
     }
   }
+
+  .weather{
+       float: right;
+       height: 100%;
+       line-height: 50px;
+       margin-top: 15px;
+       margin-right:5px;
+     }
+
 }
 </style>

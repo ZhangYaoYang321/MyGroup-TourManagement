@@ -37,7 +37,6 @@ public class SelfComplaintCompleteController extends BaseController
     /**
      * 查询投诉列表
      */
-    @PreAuthorize("@ss.hasPermi('system:complaint_complete:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfComplaintComplete selfComplaintComplete)
     {
@@ -49,7 +48,6 @@ public class SelfComplaintCompleteController extends BaseController
     /**
      * 导出投诉列表
      */
-    @PreAuthorize("@ss.hasPermi('system:complaint_complete:export')")
     @Log(title = "投诉", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfComplaintComplete selfComplaintComplete)
@@ -62,7 +60,6 @@ public class SelfComplaintCompleteController extends BaseController
     /**
      * 获取投诉详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:complaint_complete:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +69,6 @@ public class SelfComplaintCompleteController extends BaseController
     /**
      * 新增投诉
      */
-    @PreAuthorize("@ss.hasPermi('system:complaint_complete:add')")
     @Log(title = "投诉", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfComplaintComplete selfComplaintComplete)
@@ -83,7 +79,6 @@ public class SelfComplaintCompleteController extends BaseController
     /**
      * 修改投诉
      */
-    @PreAuthorize("@ss.hasPermi('system:complaint_complete:edit')")
     @Log(title = "投诉", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfComplaintComplete selfComplaintComplete)
@@ -94,7 +89,6 @@ public class SelfComplaintCompleteController extends BaseController
     /**
      * 删除投诉
      */
-    @PreAuthorize("@ss.hasPermi('system:complaint_complete:remove')")
     @Log(title = "投诉", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

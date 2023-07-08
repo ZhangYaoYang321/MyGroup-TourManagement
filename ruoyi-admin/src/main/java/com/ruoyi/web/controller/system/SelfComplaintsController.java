@@ -42,7 +42,6 @@ public class SelfComplaintsController extends BaseController
     /**
      * 查询投诉列表
      */
-    @PreAuthorize("@ss.hasPermi('system:complaints:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfComplaints selfComplaints)
     {
@@ -54,7 +53,6 @@ public class SelfComplaintsController extends BaseController
     /**
      * 导出投诉列表
      */
-    @PreAuthorize("@ss.hasPermi('system:complaints:export')")
     @Log(title = "投诉", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfComplaints selfComplaints)
@@ -67,7 +65,6 @@ public class SelfComplaintsController extends BaseController
     /**
      * 获取投诉详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:complaints:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -77,7 +74,6 @@ public class SelfComplaintsController extends BaseController
     /**
      * 新增投诉
      */
-    @PreAuthorize("@ss.hasPermi('system:complaints:add')")
     @Log(title = "投诉", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfComplaints selfComplaints)
@@ -88,7 +84,6 @@ public class SelfComplaintsController extends BaseController
     /**
      * 修改投诉
      */
-    @PreAuthorize("@ss.hasPermi('system:complaints:edit')")
     @Log(title = "投诉", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfComplaints selfComplaints)
@@ -99,7 +94,6 @@ public class SelfComplaintsController extends BaseController
     /**
      * 删除投诉
      */
-    @PreAuthorize("@ss.hasPermi('system:complaints:remove')")
     @Log(title = "投诉", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
