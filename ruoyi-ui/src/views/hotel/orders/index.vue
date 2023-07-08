@@ -9,7 +9,6 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['hotel:orders:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -20,7 +19,6 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['hotel:orders:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -31,7 +29,6 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['hotel:orders:remove']"
         >删除</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -41,7 +38,6 @@
           icon="el-icon-download"
           size="mini"
           @click="handleExport"
-          v-hasPermi="['hotel:orders:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -63,14 +59,12 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['hotel:reservation:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['hotel:orders:remove']"
           >删除</el-button>
         </template>
       </el-table-column>

@@ -35,7 +35,6 @@ public class SelfHotelCheckInController extends BaseController {
     /**
      * 查询酒店订单列表
      */
-    @PreAuthorize("@ss.hasPermi('hotel:checkin:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfHotelCheckIn selfHotelCheckIn)
     {
@@ -47,7 +46,6 @@ public class SelfHotelCheckInController extends BaseController {
     /**
      * 查询酒店房间数
      */
-    @PreAuthorize("@ss.hasPermi('hotel:checkin:query')")
     @GetMapping("/rooms")
     public TableDataInfo listRoom(SelfHotelCheckIn selfHotelCheckIn)
     {
@@ -59,7 +57,6 @@ public class SelfHotelCheckInController extends BaseController {
     /**
      * 删除酒店订单
      */
-    @PreAuthorize("@ss.hasPermi('hotel:checkin:submit')")
     @Log(title = "酒店入住", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")
     public AjaxResult checkIn(@PathVariable("id") Long id)

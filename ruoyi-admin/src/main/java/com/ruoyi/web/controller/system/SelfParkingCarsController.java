@@ -45,7 +45,6 @@ public class SelfParkingCarsController extends BaseController
     /**
      * 查询车辆列表
      */
-    @PreAuthorize("@ss.hasPermi('system:cars:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfParkingCars selfParkingCars)
     {
@@ -55,7 +54,6 @@ public class SelfParkingCarsController extends BaseController
     /**
      * 导出车辆列表
      */
-    @PreAuthorize("@ss.hasPermi('system:cars:export')")
     @Log(title = "车辆", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfParkingCars selfParkingCars)
@@ -68,7 +66,6 @@ public class SelfParkingCarsController extends BaseController
     /**
      * 获取车辆详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:cars:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -78,7 +75,6 @@ public class SelfParkingCarsController extends BaseController
     /**
      * 新增车辆
      */
-    @PreAuthorize("@ss.hasPermi('system:cars:add')")
     @Log(title = "车辆", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfParkingCars selfParkingCars)
@@ -89,7 +85,6 @@ public class SelfParkingCarsController extends BaseController
     /**
      * 修改车辆
      */
-    @PreAuthorize("@ss.hasPermi('system:cars:edit')")
     @Log(title = "车辆", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfParkingCars selfParkingCars)
@@ -112,7 +107,6 @@ public class SelfParkingCarsController extends BaseController
     /**
      * 删除车辆
      */
-    @PreAuthorize("@ss.hasPermi('system:cars:remove')")
     @Log(title = "车辆", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
@@ -123,7 +117,6 @@ public class SelfParkingCarsController extends BaseController
     /**
      * 车辆入场
      */
-    @PreAuthorize("@ss.hasPermi('system:cars:parking')")
     @Log(title = "车辆入场", businessType = BusinessType.INSERT)
     @GetMapping("/parkingCars/{carIdKey}")
     public AjaxResult parking(@PathVariable String carIdKey) {
@@ -147,7 +140,6 @@ public class SelfParkingCarsController extends BaseController
     /**
      * 车辆出场
      */
-    @PreAuthorize("@ss.hasPermi('system:cars:leaving')")
     @Log(title = "车辆出场", businessType = BusinessType.UPDATE)
     @GetMapping("/leavingCars/{carIdKey}")
     public AjaxResult leaving(@PathVariable String carIdKey) {
@@ -176,7 +168,6 @@ public class SelfParkingCarsController extends BaseController
     /**
      * 获取车辆信息
      */
-    @PreAuthorize("@ss.hasPermi('system:cars:search')")
     @GetMapping("/searchCars/{carIdKey}")
     public TableDataInfo search(@PathVariable String carIdKey) {
         SelfParkingCars car = new SelfParkingCars();

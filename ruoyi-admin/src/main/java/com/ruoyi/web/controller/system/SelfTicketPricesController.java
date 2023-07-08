@@ -37,7 +37,6 @@ public class SelfTicketPricesController extends BaseController
     /**
      * 查询票价列表
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_prices:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfTicketPrices selfTicketPrices)
     {
@@ -49,7 +48,6 @@ public class SelfTicketPricesController extends BaseController
     /**
      * 导出票价列表
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_prices:export')")
     @Log(title = "票价", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfTicketPrices selfTicketPrices)
@@ -62,7 +60,6 @@ public class SelfTicketPricesController extends BaseController
     /**
      * 获取票价详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_prices:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +69,6 @@ public class SelfTicketPricesController extends BaseController
     /**
      * 新增票价
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_prices:add')")
     @Log(title = "票价", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfTicketPrices selfTicketPrices)
@@ -83,7 +79,6 @@ public class SelfTicketPricesController extends BaseController
     /**
      * 修改票价
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_prices:edit')")
     @Log(title = "票价", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfTicketPrices selfTicketPrices)
@@ -94,7 +89,6 @@ public class SelfTicketPricesController extends BaseController
     /**
      * 删除票价
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_prices:remove')")
     @Log(title = "票价", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

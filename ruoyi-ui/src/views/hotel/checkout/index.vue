@@ -36,7 +36,6 @@
             type="text"
             icon="el-icon-edit"
             @click="handleCheckedOut(scope.row)"
-            v-hasPermi="['hotel:checkout:submit']"
           >退房</el-button>
         </template>
       </el-table-column>

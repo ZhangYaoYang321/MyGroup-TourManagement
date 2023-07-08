@@ -139,7 +139,7 @@
             icon="el-icon-plus"
             size="large"
             @click="handleAppoint"
-            v-hasPermi="['system:ticket_services:appoint']"
+
           >预约</el-button>
         </el-col>
 
@@ -150,7 +150,7 @@
             icon="el-icon-search"
             size="large"
             @click="handleCheckInfo"
-            v-hasPermi="['system:ticket_services:checkInfo']"
+
           >查询预约信息</el-button>
         </el-col>
         <el-col :span="1.5">
@@ -160,7 +160,7 @@
             icon="el-icon-right"
             size="large"
             @click="handleInPark()"
-            v-hasPermi="['system:ticket_services:inPark']"
+
           >入园登记</el-button>
         </el-col>
         <el-col :span="1.5">
@@ -170,7 +170,7 @@
             icon="el-icon-left"
             size="large"
             @click="handleOutPark()"
-            v-hasPermi="['system:ticket_services:outPark']"
+
           >出园登记</el-button>
         </el-col>
         <el-col :span="1.5">
@@ -224,14 +224,14 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:ticket_services:edit']"
+
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system:ticket_services:remove']"
+
           >删除</el-button>
         </template>
       </el-table-column>

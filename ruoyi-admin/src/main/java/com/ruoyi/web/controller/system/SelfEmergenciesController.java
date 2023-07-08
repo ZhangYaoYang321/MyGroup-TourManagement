@@ -46,7 +46,6 @@ public class SelfEmergenciesController extends BaseController
     /**
      * 查询事件列表
      */
-    @PreAuthorize("@ss.hasPermi('system:emergencies:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfEmergencies selfEmergencies)
     {
@@ -58,7 +57,6 @@ public class SelfEmergenciesController extends BaseController
     /**
      * 导出事件列表
      */
-    @PreAuthorize("@ss.hasPermi('system:emergencies:export')")
     @Log(title = "事件", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfEmergencies selfEmergencies)
@@ -71,7 +69,6 @@ public class SelfEmergenciesController extends BaseController
     /**
      * 获取事件详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:emergencies:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -81,7 +78,6 @@ public class SelfEmergenciesController extends BaseController
     /**
      * 新增事件
      */
-    @PreAuthorize("@ss.hasPermi('system:emergencies:add')")
     @Log(title = "事件", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfEmergencies selfEmergencies)
@@ -92,7 +88,6 @@ public class SelfEmergenciesController extends BaseController
     /**
      * 修改事件
      */
-    @PreAuthorize("@ss.hasPermi('system:emergencies:edit')")
     @Log(title = "事件", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfEmergencies selfEmergencies)
@@ -103,7 +98,6 @@ public class SelfEmergenciesController extends BaseController
     /**
      * 删除事件
      */
-    @PreAuthorize("@ss.hasPermi('system:emergencies:remove')")
     @Log(title = "事件", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

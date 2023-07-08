@@ -37,7 +37,6 @@ public class SelfHotelRoomsController extends BaseController
     /**
      * 查询房间列表
      */
-    @PreAuthorize("@ss.hasPermi('system:rooms:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfHotelRooms selfHotelRooms)
     {
@@ -49,7 +48,6 @@ public class SelfHotelRoomsController extends BaseController
     /**
      * 导出房间列表
      */
-    @PreAuthorize("@ss.hasPermi('system:rooms:export')")
     @Log(title = "房间", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfHotelRooms selfHotelRooms)
@@ -62,7 +60,6 @@ public class SelfHotelRoomsController extends BaseController
     /**
      * 获取房间详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:rooms:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +69,6 @@ public class SelfHotelRoomsController extends BaseController
     /**
      * 新增房间
      */
-    @PreAuthorize("@ss.hasPermi('system:rooms:add')")
     @Log(title = "房间", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfHotelRooms selfHotelRooms)
@@ -83,7 +79,6 @@ public class SelfHotelRoomsController extends BaseController
     /**
      * 修改房间
      */
-    @PreAuthorize("@ss.hasPermi('system:rooms:edit')")
     @Log(title = "房间", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfHotelRooms selfHotelRooms)
@@ -94,7 +89,6 @@ public class SelfHotelRoomsController extends BaseController
     /**
      * 删除房间
      */
-    @PreAuthorize("@ss.hasPermi('system:rooms:remove')")
     @Log(title = "房间", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

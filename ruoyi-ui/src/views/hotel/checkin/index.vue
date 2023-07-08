@@ -36,7 +36,6 @@
             type="text"
             icon="el-icon-edit"
             @click="handleCheckedIn(scope.row)"
-            v-hasPermi="['hotel:checkin:submit']"
           >入住</el-button>
         </template>
       </el-table-column>

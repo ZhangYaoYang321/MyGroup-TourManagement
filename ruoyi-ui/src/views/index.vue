@@ -157,7 +157,7 @@
       </el-col>
 
       <el-col :span="3" style="height: 400px">
-        <el-card :class="isFull ? 'card-full' : 'card-not-full'">
+        <el-card :class="isFullCar ? 'card-full' : 'card-not-full'">
           <div slot="header" class="clearfix">
             <span>停车场流量</span>
           </div>

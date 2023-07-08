@@ -56,7 +56,7 @@ public class SelfTicketServicesController extends BaseController
     /**
      * 查询票务列表
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:list')")
+
     @GetMapping("/list")
     public TableDataInfo list(SelfTicketServices selfTicketServices)
     {
@@ -68,7 +68,7 @@ public class SelfTicketServicesController extends BaseController
     /**
      * 导出票务列表
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:export')")
+
     @Log(title = "票务", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfTicketServices selfTicketServices)
@@ -81,7 +81,7 @@ public class SelfTicketServicesController extends BaseController
     /**
      * 获取票务详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:query')")
+
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -91,7 +91,7 @@ public class SelfTicketServicesController extends BaseController
     /**
      * 新增票务
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:add')")
+
     @Log(title = "票务", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfTicketServices selfTicketServices)
@@ -105,7 +105,7 @@ public class SelfTicketServicesController extends BaseController
     /**
      * 修改票务
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:edit')")
+
     @Log(title = "票务", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfTicketServices selfTicketServices)
@@ -116,7 +116,7 @@ public class SelfTicketServicesController extends BaseController
     /**
      * 删除票务
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:remove')")
+
     @Log(title = "票务", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
@@ -135,7 +135,7 @@ public class SelfTicketServicesController extends BaseController
     /**
      * 游客预约
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:appoint')")
+
     @Log(title = "票务", businessType = BusinessType.INSERT)
     @PostMapping("/appoint")
     public AjaxResult appoint(@RequestBody SelfTicketServices selfTicketServices)
@@ -176,7 +176,7 @@ public class SelfTicketServicesController extends BaseController
     /**
      * 游客查询信息
      */
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:checkInfo')")
+
     @GetMapping(value = "/checkInfo/{cnId}")
     public TableDataInfo checkInfo(@PathVariable("cnId") String cnId)
     {
@@ -186,7 +186,7 @@ public class SelfTicketServicesController extends BaseController
         return getDataTable(list);
     }
 
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:inPark')")
+
     @GetMapping(value = "/inPark/{cnId}")
     public AjaxResult inPark(@PathVariable("cnId") String cnId)
     {
@@ -224,7 +224,7 @@ public class SelfTicketServicesController extends BaseController
         return AjaxResult.error("该游客未预约！");
     }
 
-    @PreAuthorize("@ss.hasPermi('system:ticket_services:outPark')")
+
     @GetMapping(value = "/outPark/{cnId}")
     public AjaxResult outPark(@PathVariable("cnId") String cnId)
     {

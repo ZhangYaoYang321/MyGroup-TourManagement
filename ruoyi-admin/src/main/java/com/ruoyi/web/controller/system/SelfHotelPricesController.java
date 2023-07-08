@@ -37,7 +37,6 @@ public class SelfHotelPricesController extends BaseController
     /**
      * 查询酒店价格列表
      */
-    @PreAuthorize("@ss.hasPermi('system:hotel_prices:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfHotelPrices selfHotelPrices)
     {
@@ -49,7 +48,6 @@ public class SelfHotelPricesController extends BaseController
     /**
      * 导出酒店价格列表
      */
-    @PreAuthorize("@ss.hasPermi('system:hotel_prices:export')")
     @Log(title = "酒店价格", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfHotelPrices selfHotelPrices)
@@ -62,7 +60,6 @@ public class SelfHotelPricesController extends BaseController
     /**
      * 获取酒店价格详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:hotel_prices:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +69,6 @@ public class SelfHotelPricesController extends BaseController
     /**
      * 新增酒店价格
      */
-    @PreAuthorize("@ss.hasPermi('system:hotel_prices:add')")
     @Log(title = "酒店价格", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfHotelPrices selfHotelPrices)
@@ -83,7 +79,6 @@ public class SelfHotelPricesController extends BaseController
     /**
      * 修改酒店价格
      */
-    @PreAuthorize("@ss.hasPermi('system:hotel_prices:edit')")
     @Log(title = "酒店价格", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfHotelPrices selfHotelPrices)
@@ -94,7 +89,6 @@ public class SelfHotelPricesController extends BaseController
     /**
      * 删除酒店价格
      */
-    @PreAuthorize("@ss.hasPermi('system:hotel_prices:remove')")
     @Log(title = "酒店价格", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

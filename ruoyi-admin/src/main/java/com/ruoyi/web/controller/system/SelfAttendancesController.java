@@ -38,7 +38,6 @@ public class SelfAttendancesController extends BaseController
     /**
      * 查询考勤信息列表
      */
-    @PreAuthorize("@ss.hasPermi('system:attendances:list')")
     @GetMapping("/list")
     public TableDataInfo list(SelfAttendances selfAttendances)
     {
@@ -61,7 +60,6 @@ public class SelfAttendancesController extends BaseController
     /**
      * 导出考勤信息列表
      */
-    @PreAuthorize("@ss.hasPermi('system:attendances:export')")
     @Log(title = "考勤信息", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SelfAttendances selfAttendances)
@@ -74,7 +72,6 @@ public class SelfAttendancesController extends BaseController
     /**
      * 获取考勤信息详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:attendances:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -84,7 +81,6 @@ public class SelfAttendancesController extends BaseController
     /**
      * 新增考勤信息
      */
-    @PreAuthorize("@ss.hasPermi('system:attendances:add')")
     @Log(title = "考勤信息", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SelfAttendances selfAttendances)
@@ -95,7 +91,6 @@ public class SelfAttendancesController extends BaseController
     /**
      * 修改考勤信息
      */
-    @PreAuthorize("@ss.hasPermi('system:attendances:edit')")
     @Log(title = "考勤信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SelfAttendances selfAttendances)
@@ -106,7 +101,6 @@ public class SelfAttendancesController extends BaseController
     /**
      * 删除考勤信息
      */
-    @PreAuthorize("@ss.hasPermi('system:attendances:remove')")
     @Log(title = "考勤信息", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
