@@ -87,8 +87,47 @@ export const constantRoutes = [
         meta: { title: '个人中心', icon: 'user' }
       }
     ]
+  },
+
+ // 新增景点推荐页面路由
+  {
+    path: '/scenic',
+    component: Layout,
+    hidden: false, // 不在侧边栏隐藏
+    children: [
+      {
+        path: 'recommendation', // 访问路径：/scenic/recommendation
+        name: 'ScenicRecommendation', // 唯一路由名（必填）
+        component: () => import('@/views/scenic/recommendation'), // 页面组件路径
+        meta: { 
+          title: '景点推荐', // 侧边栏和面包屑显示的标题
+          icon: 'el-icon-map-location', // 侧边栏图标（需提前准备svg图标）
+          noCache: false // 是否缓存页面（默认false）
+        }
+      }
+    ]
+  },
+
+  // 新增AI问答页面路由
+  {
+    path: '/ai',
+    component: Layout,
+    hidden: false,
+    children: [
+      {
+        path: 'chat', // 访问路径：/ai/chat
+        name: 'AiChat',
+        component: () => import('@/views/ai/chat'),
+        meta: { 
+          title: 'AI问答', 
+          icon: 'el-icon-message' 
+        }
+      }
+    ]
   }
 ]
+
+
 
 // 动态路由，基于用户权限动态去加载
 export const dynamicRoutes = [
